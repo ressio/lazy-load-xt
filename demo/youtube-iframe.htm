@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>YouTube</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="../libs/jquery/jquery.js"></script>
+    <script src="../dist/jquery.lazyloadxt.min.js"></script>
+    <script>
+        $.lazyLoadXT = {
+            selector: "img, iframe[data-src]"
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="page-header">
+            <h1>Youtube</h1>
+            <p class="lead">Lazy loading of YouTube videos.</p>
+        </div>
+
+        <script>
+        var youtube = ['fPmruHc4S9Q', 'fzbudwJy9aU', 'zb8z6U9UpKE', 'gj0Rz-uP4Mk', 'R1QRTHHlJ-I',
+                       'yRhq-yO1KN8', 'fJ9rUzIMcZQ'];
+        for(var i in youtube) {
+            var video = youtube[i];
+            document.write('<p><iframe width="300" height="225" data-src="http://www.youtube.com/embed/'+video+'?rel=0"'
+                             +' frameborder="0" allowfullscreen></iframe></p>');
+        }
+        </script>
+    </div>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>AJAX</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="../libs/jquery/jquery.js"></script>
+    <script src="../dist/jquery.lazyloadxt.min.js"></script>
+    <script>
+    $(window).on('ajaxComplete', function() {
+        setTimeout(function() {
+            $(window).lazyLoadXT();
+        }, 50);
+    });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="page-header">
+            <h1>AJAX</h1>
+            <p class="lead">Work with AJAX-loaded content.</p>
+        </div>
+        <p><a class="btn btn-primary btn-lg" role="button" href="#"
+              onclick="$('#ajax').load('ajax.htm #ajax');return false;">Reload</a></p>
+        <div id="ajax">
+            <p><img data-src="http://lorempixel.com/300/200/abstract" width="300" height="200"></p>
+            <p><img data-src="http://lorempixel.com/300/200/abstract" width="300" height="200"></p>
+            <p><img data-src="http://lorempixel.com/300/200/abstract" width="300" height="200"></p>
+            <p><img data-src="http://lorempixel.com/300/200/abstract" width="300" height="200"></p>
+            <p><img data-src="http://lorempixel.com/300/200/abstract" width="300" height="200"></p>
+            <p><img data-src="http://lorempixel.com/300/200/abstract" width="300" height="200"></p>
+            <p><img data-src="http://lorempixel.com/300/200/abstract" width="300" height="200"></p>
+            <p><img data-src="http://lorempixel.com/300/200/abstract" width="300" height="200"></p>
+            <p><img data-src="http://lorempixel.com/300/200/abstract" width="300" height="200"></p>
+            <p><img data-src="http://lorempixel.com/300/200/abstract" width="300" height="200"></p>
+        </div>
+    </div>
+</body>
+</html>

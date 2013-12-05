@@ -1,0 +1,42 @@
+{
+  "name": "lazyloadxt",
+  "version": "0.8.0",
+  "description": "Lazy Load XT is a jQuery plugin for images, videos and other media",
+  "homepage": "https://github.com/ressio/lazy-load-xt",
+  "author": {
+    "name": "RESS.io",
+    "email": "hello@ress.io",
+    "url": "http://ress.io/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ressio/lazy-load-xt.git"
+  },
+  "keywords": ["lazy", "load", "jquery", "images", "video", "media"],
+  "bugs": "https://github.com/ressio/lazy-load-xt/issues",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/ressio/lazy-load-xt/blob/master/LICENSE-MIT"
+    }
+  ],
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "scripts": {
+    "build"   : "npm install && grunt",
+    "start"   : "grunt watch",
+    "test"    : "grunt qunit"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-cli": "~0.1.11",
+    "grunt-contrib-clean": "~0.4.0",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-jshint": "~0.6.0",
+    "grunt-contrib-qunit": "~0.2.0",
+    "grunt-contrib-uglify": "~0.2.0",
+    "grunt-contrib-watch": "~0.4.0"
+  }
+}

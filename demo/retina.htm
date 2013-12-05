@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Retina</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="../libs/jquery/jquery.js"></script>
+    <script src="../dist/jquery.lazyloadxt.js"></script>
+    <script>
+        (function($, dpr) {
+            if (dpr>1)
+                $.lazyLoadXT = {
+                    srcAttr: 'data-src-' + (dpr > 2 ? '3x' : (dpr > 1.5 ? '2x' : '1.5x'))
+                };
+        })(jQuery, window.devicePixelRatio || 1);
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="page-header">
+            <h1>Retina</h1>
+            <p class="lead">Example of responsive images for different pixel densities.</p>
+        </div>
+        <script>
+        var category = 'nature', count = 10;
+        for(var i=1; i<=count; i++) {
+            document.write('<p><img data-src="http://lorempixel.com/300/200/'+category+'/'+i+'"'
+                            +' data-src-1.5x="http://lorempixel.com/450/300/'+category+'/'+i+'"'
+                            +' data-src-2x="http://lorempixel.com/600/400/'+category+'/'+i+'"'
+                            +' data-src-3x="http://lorempixel.com/900/600/'+category+'/'+i+'" width="300" height="200"></p>');
+        }
+        </script>
+    </div>
+</body>
+</html>

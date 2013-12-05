@@ -1,0 +1,29 @@
+{
+  "name": "lazyloadxt",
+  "version": "0.8.0",
+  "title": "Lazy Load XT for jQuery",
+  "description": "Lazy Load XT is a jQuery plugin for images, videos and other media",
+  "homepage": "https://github.com/ressio/lazy-load-xt",
+  "author": {
+    "name": "RESS.io",
+    "email": "hello@ress.io",
+    "url": "http://ress.io/"
+  },
+  "keywords": ["lazy", "load", "jquery", "images", "video", "media"],
+  "bugs": "https://github.com/ressio/lazy-load-xt/issues",
+  "docs": "https://github.com/ressio/lazy-load-xt",
+  "demo": "https://github.com/ressio/lazy-load-xt",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/ressio/lazy-load-xt/blob/master/LICENSE-MIT"
+    }
+  ],
+  "dependencies": {
+      "jquery": ">=1.7"
+  },
+  "files": [
+    "dist/jquery.lazyloadxt.js",
+    "dist/jquery.lazyloadxt.min.js"
+  ]
+}

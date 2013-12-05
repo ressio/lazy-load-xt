@@ -1,5 +1,4 @@
 {
-  "private": true,
   "name": "lazyloadxt",
   "description": "Lazy load XT is a jQuery plugin for images, videos and other media",
   "version": "0.8.0",

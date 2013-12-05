@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Demos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="demo/css/style.css">
+    <script src="libs/jquery/jquery.js"></script>
+    <script src="dist/jquery.lazyloadxt.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="page-header">
+            <h1>jQuery Lazy Load XT plugin</h1>
+            <p class="lead">Lazy Load XT is a jQuery plugin for images, videos and other media.</p>
+        </div>
+        <div class="list-group">
+            <a href="demo/index.htm" class="list-group-item">
+                <h4 class="list-group-item-heading">Demos</h4>
+                <p class="list-group-item-text">Demonstration of features</p>
+            </a>
+            <a href="https://github.com/ressio/lazy-load-xt" class="list-group-item">
+                <h4 class="list-group-item-heading">Documentation</h4>
+                <p class="list-group-item-text">Documentation and sources on GitHub</p>
+            </a>
+            <a href="https://github.com/ressio/lazy-load-xt/issues" class="list-group-item">
+                <h4 class="list-group-item-heading">Bug tracker</h4>
+                <p class="list-group-item-text">Send bug reports or feature requests</p>
+            </a>
+        </div>
+        <script>
+        var category = 'cats', count = 10;
+        for(var i=1; i<=count; i+=2) {
+            document.write('<p><img data-src="http://lorempixel.com/300/200/'+category+'/'+i+'" width="300" height="200"> <img data-src="http://lorempixel.com/300/200/'+category+'/'+(i+1)+'" width="300" height="200"></p>');
+        }
+        </script>
+    </div>
+</body>
+</html>

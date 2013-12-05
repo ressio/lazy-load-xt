@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Video</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="../libs/jquery/jquery.js"></script>
+    <script src="../dist/jquery.lazyloadxt.min.js"></script>
+    <script>
+        $.lazyLoadXT = {
+            selector: "img, audio, video",
+            onShow: function() {
+                if (/AUDIO|VIDEO/.test(this.tagName)) {
+                    var $el = $(this);
+                    $el.attr('poster', $el.attr('data-poster')).removeAttr('data-poster');
+                    $el.children().each(function () {
+                        if (/SOURCE|TRACK/.test(this.tagName)) {
+                            var $child = $(this);
+                            $child.attr('src', $child.attr('data-src')).removeAttr('data-src');
+                        }
+                    });
+                    this.load();
+                }
+            }
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="page-header">
+            <h1>Video</h1>
+            <p class="lead">Lazy loading of &lt;video&gt; content.</p>
+        </div>
+        <script>
+        // videos from https://archive.org/details/movies
+        var videos  = [
+            [
+                'https://archive.org/download/TomAndJerryInANightBeforeChristmas/TomAndJerryInANightBeforeChristmas.thumbs/TomAndJerry-003-NightBeforeChristmas1941_000027.jpg',
+                'https://archive.org/download/TomAndJerryInANightBeforeChristmas/TomAndJerry-003-NightBeforeChristmas1941.mp4',
+                'https://archive.org/download/TomAndJerryInANightBeforeChristmas/TomAndJerry-003-NightBeforeChristmas1941.ogv'
+            ],
+            [
+                'https://archive.org/download/Popeye_forPresident/Popeye_forPresident.thumbs/Popeye_forPresident_000030.jpg',
+                'https://archive.org/download/Popeye_forPresident/Popeye_forPresident_512kb.mp4',
+                'https://archive.org/download/Popeye_forPresident/Popeye_forPresident.ogv'
+            ],
+            [
+                'https://archive.org/download/Popeye_meetsSinbadtheSailor/Popeye_meetsSinbadtheSailor.thumbs/Popeye_meetsSinbadtheSailor_000060.jpg',
+                'https://archive.org/download/Popeye_meetsSinbadtheSailor/Popeye_meetsSinbadtheSailor_512kb.mp4',
+                'https://archive.org/download/Popeye_meetsSinbadtheSailor/Popeye_meetsSinbadtheSailor.ogv'
+            ],
+            [
+                'https://archive.org/download/PopeyeAliBaba/PopeyeAliBaba.thumbs/PopeyeAliBaba_000060.jpg',
+                'https://archive.org/download/PopeyeAliBaba/PopeyeAliBaba_512kb.mp4',
+                'https://archive.org/download/PopeyeAliBaba/PopeyeAliBaba.ogv'
+            ],
+            [
+                'https://archive.org/download/Popeye_Nearlyweds/Popeye_Nearlyweds.thumbs/Popeye_Nearlyweds_000030.jpg',
+                'https://archive.org/download/Popeye_Nearlyweds/Popeye_Nearlyweds_512kb.mp4',
+                'https://archive.org/download/Popeye_Nearlyweds/Popeye_Nearlyweds.ogv'
+            ],
+            [
+                'https://archive.org/download/cco_TomandJerryPianoTooners/cco_TomandJerryPianoTooners.thumbs/TomJerry_Piano_Tooners_000030.jpg',
+                'https://archive.org/download/cco_TomandJerryPianoTooners/TomJerry_Piano_Tooners_512kb.mp4',
+                'https://archive.org/download/cco_TomandJerryPianoTooners/TomJerry_Piano_Tooners.ogv'
+            ],
+            [
+                'https://archive.org/download/Jolly_Fish_1932/Jolly_Fish_1932.thumbs/Tom_and_Jerry_Jolly_Fish_1932_000030.jpg',
+                'https://archive.org/download/Jolly_Fish_1932/Tom_and_Jerry_Jolly_Fish_1932_512kb.mp4',
+                'https://archive.org/download/Jolly_Fish_1932/Tom_and_Jerry_Jolly_Fish_1932.ogv'
+            ],
+            [
+                'https://archive.org/download/Christmas_Comes_But_Once_A_Year_1936/Christmas_Comes_But_Once_A_Year_1936.thumbs/Christmas_Comes_But_Once_A_Year_1936_000030.jpg',
+                'https://archive.org/download/Christmas_Comes_But_Once_A_Year_1936/Christmas_Comes_But_Once_A_Year_1936_512kb.mp4',
+                'https://archive.org/download/Christmas_Comes_But_Once_A_Year_1936/Christmas_Comes_But_Once_A_Year_1936.ogv'
+            ],
+            [
+                'https://archive.org/download/GoldRushDaze/GoldRushDaze.thumbs/goldrushdaze_000030.jpg',
+                'https://archive.org/download/GoldRushDaze/goldrushdaze_512kb.mp4',
+                'https://archive.org/download/GoldRushDaze/goldrushdaze.ogv'
+            ],
+            [
+                'https://archive.org/download/SnowFoolin/SnowFoolin.thumbs/ClaCinOnl_an_SnowFoolin_000030.jpg',
+                'https://archive.org/download/SnowFoolin/ClaCinOnl_an_SnowFoolin_512kb.mp4',
+                'https://archive.org/download/SnowFoolin/ClaCinOnl_an_SnowFoolin.ogv'
+            ],
+            [
+                'https://archive.org/download/Jerky_Turkey_1945/Jerky_Turkey_1945.thumbs/Jerky_Turkey_1945_000030.jpg',
+                'https://archive.org/download/Jerky_Turkey_1945/Jerky_Turkey_1945_512kb.mp4',
+                'https://archive.org/download/Jerky_Turkey_1945/Jerky_Turkey_1945.ogv'
+            ],
+            [
+                'https://archive.org/download/Barnyard_Bunk_1932/Barnyard_Bunk_1932.thumbs/Tom_and_Jerry_Barnyard_Bunk_1932_000030.jpg',
+                'https://archive.org/download/Barnyard_Bunk_1932/Tom_and_Jerry_Barnyard_Bunk_1932_512kb.mp4',
+                'https://archive.org/download/Barnyard_Bunk_1932/Tom_and_Jerry_Barnyard_Bunk_1932.ogv'
+            ]
+        ];
+        for(var i in videos) {
+            var video = videos[i];
+            document.write('<p><video width="320" height="240" data-poster="'+video[0]+'" controls>'+
+                            '<source data-src="'+video[1]+'" type=\'video/mp4; codecs="avc1.42E01E, mp4a.40.2"\'>'+
+                            '<source data-src="'+video[2]+'" type=\'video/ogg; codecs="theora, vorbis"\'>'+
+                            '</video></p>');
+        }
+        </script>
+    </div>
+</body>
+</html>

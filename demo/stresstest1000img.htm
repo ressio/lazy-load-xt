@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Stress Test</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="../libs/jquery/jquery.js"></script>
+    <script src="../dist/jquery.lazyloadxt.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="page-header">
+            <h1>Stress Test</h1>
+            <p class="lead">Test of work on page with 1000 images.</p>
+        </div>
+        <script>
+        (function () {
+            var template = '<p><img data-src="http://lorempixel.com/300/200/city" width="300" height="200"></p>';
+            for (var i = 0; i < 1000; ++i) {
+                document.write(template);
+            }
+        })();
+        </script>
+    </div>
+</body>
+</html>

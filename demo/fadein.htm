@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Fade-in</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="../libs/jquery/jquery.js"></script>
+    <script src="../dist/jquery.lazyloadxt.min.js"></script>
+    <style>
+        .lazy-hidden {
+            opacity: 0;
+        }
+        .lazy-loaded {
+            -webkit-transition: opacity 0.3s;
+            -moz-transition: opacity 0.3s;
+            -ms-transition: opacity 0.3s;
+            -o-transition: opacity 0.3s;
+            transition: opacity 0.3s;
+            opacity: 1;
+        }
+    </style>
+    <script>
+        $.lazyLoadXT = {
+            onInit: { addClass: 'lazy-hidden' },
+            onLoad: { addClass: 'lazy-loaded', removeClass: 'lazy-hidden' }
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="page-header">
+            <h1>Fade-in</h1>
+            <p class="lead">Lazy loading with fade-in effect.</p>
+        </div>
+        <script>
+        var category = 'food', count = 10;
+        for(var i=1; i<=count; i++) {
+            document.write('<p><img data-src="http://lorempixel.com/300/200/'+category+'/'+i+'" width="300" height="200"></p>');
+        }
+        </script>
+    </div>
+</body>
+</html>

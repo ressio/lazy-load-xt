@@ -15,7 +15,9 @@
     - [Hi-DPI (Retina) images](#hi-dpi-retina-images)
     - [AJAX](#ajax)
     - [Youtube Videos](#youtube-videos)
+    - [Support `<video>` tag](#support-video-tag)
 - [Demo](#demo)
+- [Example of page preparation in PHP](#example-of-page-preparation-in-php)
 - [Download](#download)
 - [License](#license)
 - [Version History](#version-history)
@@ -26,7 +28,7 @@
 Mobile-oriented, fast and extensible jQuery plugin for lazy loading of images/videos with build-in support of
 jQueryMobile framework.
 
-Currently tested in IE 10-11, Chrome 30-31, Firefox 24, Safari 5, Opera 12.
+Currently tested in IE 10-11, Chrome 30-31, Firefox 24, Safari 5, Opera 12, Android 2.3 stock browser.
 
 
 ## Usage
@@ -224,7 +226,7 @@ $.lazyLoadXT = {
 };
 ```
 
-### Support <source> and <track> tags
+### Support `<video>` tag
 
 It's just an example of how to start loading source of `<source>` or `<track>` tags when parent `<audio>` or
 `<video>` element is visible:

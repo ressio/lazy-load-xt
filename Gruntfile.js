@@ -9,11 +9,11 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
     banner: {
       full:  '/*! <%= pkg.title || pkg.name %> v<%= pkg.version %> <%= grunt.template.today("yyyy-mm-dd") %>\n' +
-             '<%= pkg.homepage ? "* " + pkg.homepage + "\\n" : "" %>' +
-             '* (C) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;\n' +
-             '* Licensed under <%= _.pluck(pkg.licenses, "type").join(", ") %> */\n',
-      short: '/* <%= pkg.title || pkg.name %> v<%= pkg.version %>' +
-             ' | Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */\n'
+             '<%= pkg.homepage ? " * " + pkg.homepage + "\\n" : "" %>' +
+             ' * (C) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>\n' +
+             ' * Licensed under <%= _.pluck(pkg.licenses, "type").join(", ") %> */\n',
+      short: '/* <%= pkg.title || pkg.name %> <%= pkg.version %>' +
+             ' | <%= _.pluck(pkg.licenses, "type").join(", ") %> License */\n'
     },
     // Task configuration.
     clean: {

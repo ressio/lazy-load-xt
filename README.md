@@ -8,6 +8,7 @@
 - [Usage](#usage)
 - [Options](#options)
 - [Advanced initialization](#advanced-initialization)
+- [Events](#events)
 - [More than images](#more-than-images)
 - [Extendability](#extendability)
     - [Spinner](#spinner)
@@ -38,23 +39,23 @@ Currently tested in IE 10-11, Chrome 30-31, Firefox 24, Safari 5, Opera 12, Andr
 2. Replace `src` attribute in your `<img>`es to `data-src`. Optionally add a placeholder `src` and a fallback image (in
    the latter case it's necessary to mark first image with `class="lazy"`, see item 3 below):
 
-```html
-<img class="lazy" data-src="lazy.jpg" width="100" height="100">
-<noscript><img src="lazy.jpg" width="100" height="100"></noscript>
-```
+    ```html
+    <img class="lazy" data-src="lazy.jpg" width="100" height="100">
+    <noscript><img src="lazy.jpg" width="100" height="100"></noscript>
+    ```
 
-It's recommended to keep the order of attributes in both `<img>` tags, such a code will be effectively gzipped.
+    It's recommended to keep the order of attributes in both `<img>` tags, such a code will be effectively gzipped.
 
 3. If you use fallback image, hide first image using CSS (otherwise browsers with disabled javascript will display both
    images):
 
-```css
-img.lazy {
-  display: none;
-}
-```
+    ```css
+    img.lazy {
+      display: none;
+    }
+    ```
 
-Lazy Load XT plugin removes this class (`classNojs` option) at image initialization.
+    Lazy Load XT plugin removes this class (`classNojs` option) at image initialization.
 
 
 ## Options
@@ -76,62 +77,76 @@ You can create this object at any time before jQuery's `ready` event, both befor
 * **selector**: selector for elements that should be lazy-loaded (default `'img'`)
 * **srcAttr**: attribute containing actual `src` path, see example below in [Hi-DPI (Retina) images]
   (#hi-dpi-retina-images) section (default `'data-src'`)
-* **classNojs**: class name used to hide main image (outside of `<noscript>` tag),
-  the plugin removes this class to make images visible (default `'lazy'`)
+* **classNojs**: class name used to hide duplicated element (outside of `<noscript>` tag) in the case of disabled
+  JavaScript in browser, the plugin removes this class to make images visible (default `'lazy'`)
 * **blankImage**: blank image for used until actual image is not loaded (default is transparent 1x1 gif image in
   data-uri format `'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'`)
 * **edgeY**: expand visible page area (viewport) in vertical direction by specified amount of pixels,
-  so that images start to load even if they are not visible, but will be visible after scroll by `edgeY` pixels
+  so that elements start to load even if they are not visible, but will be visible after scroll by `edgeY` pixels
   (default `0`)
 * **edgeX**: expand visible page area in horizontal direction by specified amount of pixels (default `0`)
 * **throttle**: time interval (in ms) to check for visible elements, the plugin uses it to speed up page work in the
   case of flow of page change events (default `99`)
-* **visibleOnly**: added for compatibility with original Lazy Load Plugin by Mika Tuupola,
-  being disabled this option forces the plugin to check image position only, but not to check that it is actually
-  visible (default `true`)
+* **visibleOnly**: added for compatibility with original
+  [Lazy Load Plugin](https://github.com/tuupola/jquery_lazyload) by Mika Tuupola, being disabled this option forces
+  the plugin to check element position only, but not to check that it is actually visible (default `true`)
 * **loadEvent**: space-separated list of events when the plugin starts to found new elements matching `selector`
   (default `'pageshow'` to check AJAX-loaded content in jQueryMobile and to support backward navigation in iPhone)
 * **updateEvent**: space-separated list of events when the plugin starts to check what elements are visible in
   current viewport (default `'load orientationchange resize scroll'`)
-* **onInit**: handler called when the plugin push elements into internal list of "lazy" elements,
-  it may be either a function (DOM element is accessible using `this` object) or an object with `addClass` and
+* **oninit**: handler called when the plugin push elements into internal list of "lazy" elements,
+  it may be either a function (DOM element is accessible using `this` object) or an object with `addClass` and/or
   `removeClass` properties (`addClass` is a space-separated list of class names that should be added to the elements,
   and `removeClass` contains class names that should be removed, `removeClass` has higher priority in the case of
   identical class names) (default `null`)
-* **onShow**: handler called when an element appears in viewport area, it may be either a function or an object by
-  analogy to `onInit` handler, see example below in [Spinner](#spinner) section (default `null`)
-* **onLoad**: handler called when image is successfully loaded, it may be either a function or an object by analogy
-  to `onInit` handler (default `null`)
-* **onError**: handler called when browser cannot load image, it may be either a function or an object by analogy to
-  `onInit` handler (default `null`)
+* **onshow**: handler called when an element appears in viewport area, it may be either a function or an object by
+  analogy to `oninit` handler, see example below in [Spinner](#spinner) section (default `null`)
+* **onload**: handler called when element is successfully loaded, it may be either a function or an object by analogy
+  to `oninit` handler (default `null`)
+* **onerror**: handler called when browser cannot load the element, it may be either a function or an object by analogy
+  to `oninit` handler (default `null`)
 
 
 ## Advanced initialization
 
-Possible ways to initialize images:
+Possible ways to initialize elements:
 
 1. `$(container).lazyLoadXT();`
-2. `$(container).LoadXT(selector);`
-3. `$(img.selector).LoadXT();`
+2. `$(container).lazyLoadXT(selector);`
+3. `$(img.selector).lazyLoadXT();`
+
+
+## Events
+
+Lazy Load XT plugin triggers following events for loading elements (just before call to corresponding handler in
+`$.lazyLoadXT` options):
+
+* `lazyinit`, the plugin push elements into internal list of "lazy" elements
+* `lazyshow`, element appears in viewport area
+* `lazyload`, element is successfully loaded
+* `lazyerror`, browser cannot load the element
+
+Unlike global handlers `$.lazyLoadXT`, using this events it's possible to assign individual handlers for media
+elements.
 
 
 ## More than images
 
 Images are not the only page elements that may be lazy loaded. Though default value for `$.lazyLoadXT.selector` is
-`'img'`, you can append it by `iframe` to use lazy-loading for iframes, `video, source` for videos,
-etc. Full list of supported tags include all tags with `src` attribute: `<audio>`, `<embed>`, `<frame>`, `<iframe>`,
-`<img>`, `<video>`. Usage is the same: just rename `'src'` attribute to `'data-src'` (or what is specified in your
-`$.lazyLoadXT.srcAttr`) and add `<noscript>`ed version if necessary.
+`'img'`, you can append it by `iframe` to use lazy-loading for iframes, `video` for videos,
+etc. Full list of supported tags include all tags with `src` attribute: `<audio>`, `<embed>`, `<frame>`,
+`<iframe>`, `<img>`, `<video>`. Usage is the same: just rename `'src'` attribute to `'data-src'` (or what is
+specified in your `$.lazyLoadXT.srcAttr`) and add `<noscript>`ed version if necessary.
 
 
 ## Extendability
 
-Lazy Load XT plugin may be easily extended using `onInit`, `onShow`, `onLoad` and `onError` event. Some examples are
+Lazy Load XT plugin may be easily extended using `oninit`, `onshow`, `onload` and `onerror` event. Some examples are
 listed below.
 
 ### Spinner
 
-To display animated spinner while image is loading, you can set/reset CSS class in `onShow`/`onLoad` events:
+To display animated spinner while image is loading, you can set/reset CSS class in `onshow`/`onload` events:
 
 ```css
 /* CSS */
@@ -143,15 +158,15 @@ To display animated spinner while image is loading, you can set/reset CSS class 
 ```javascript
 /* JS */
 $.lazyLoadXT = {
-  onShow:  { addClass: 'lazy-hidden' },
-  onLoad:  { removeClass: 'lazy-hidden' },
-  onError: { removeClass: 'lazy-hidden' }
+  onshow:  { addClass:    'lazy-hidden' },
+  onload:  { removeClass: 'lazy-hidden' },
+  onerror: { removeClass: 'lazy-hidden' }
 };
 ```
 
 ### Fade-in animation
 
-To add fade-in animation you can use following sample of `onLoad` event and CSS rules:
+To add fade-in animation you can use following sample of `onload` event and CSS rules:
 
 ```css
 /* CSS */
@@ -171,8 +186,8 @@ To add fade-in animation you can use following sample of `onLoad` event and CSS 
 ```javascript
 /* JS */
 $.lazyLoadXT = {
-  onInit: { addClass: 'lazy-hidden' },
-  onLoad: { addClass: 'lazy-loaded', removeClass: 'lazy-hidden' }
+  oninit: { addClass: 'lazy-hidden' },
+  onload: { addClass: 'lazy-loaded', removeClass: 'lazy-hidden' }
 };
 ```
 
@@ -241,7 +256,7 @@ It's just an example of how to start loading source of `<source>` or `<track>` t
 ```javascript
 $.lazyLoadXT = {
   selector: "img, audio, video",
-  onShow: function() {
+  onshow: function() {
     if (/AUDIO|VIDEO/.test(this.tagName)) {
       var $el = $(this);
       $el.attr('poster', $el.attr('data-poster'));

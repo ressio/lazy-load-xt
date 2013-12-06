@@ -1,7 +1,7 @@
 {
   "name": "lazyloadxt",
   "title": "Lazy Load XT",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "Lazy Load XT is a jQuery plugin for images, videos and other media",
   "homepage": "https://github.com/ressio/lazy-load-xt",
   "author": {

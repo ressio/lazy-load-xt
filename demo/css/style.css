@@ -1,3 +1,6 @@
+img {
+    box-shadow: inset 0 0 0 1px #ccc;
+}
 .container > p, .ui-content > p, #ajax > p {
     text-align: center;
 }

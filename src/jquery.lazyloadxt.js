@@ -18,10 +18,10 @@
             visibleOnly: true,
             loadEvent: 'pageshow', // check AJAX-loaded content in jQueryMobile
             updateEvent: 'load orientationchange resize scroll', // page-modified events
-            onInit: null, // init handler
-            onShow: null, // start loading handler
-            onLoad: null, // load success handler
-            onError: null // error handler
+            oninit: null, // init handler
+            onshow: null, // start loading handler
+            onload: null, // load success handler
+            onerror: null // error handler
         },
         $window = $(window),
         elements = [],
@@ -40,17 +40,20 @@
 
     /**
      * Process function/object event handler
-     * @param {Function} handler
-     * @param {HTMLElement} el
+     * @param {string} event suffix
+     * @param {jQuery} $el
      */
-    function triggerEvent(handler, el) {
+    function triggerEvent(event, $el) {
+        $el.trigger('lazy' + event);
+        var handler = options['on' + event];
         if (handler) {
             if ($.isFunction(handler)) {
-                handler.call(el);
+                handler.call($el[0]);
             } else {
-                $(el).addClass(handler.addClass).removeClass(handler.removeClass);
+                $el.addClass(handler.addClass).removeClass(handler.removeClass);
             }
         }
+        // queue next check as images may be resized after loading of actual file
         queueCheckLazyElements();
     }
 
@@ -74,7 +77,7 @@
             $el.attr('src', options.blankImage);
         }
 
-        triggerEvent(options.onInit, $el[0]);
+        triggerEvent('init', $el);
 
         elements.unshift($el); // push it in the first position as we iterate elements in reverse order
     }
@@ -97,18 +100,18 @@
 
 
     /**
-     * Trigger onLoad handler
+     * Trigger onload handler
      */
     function triggerLoad() {
-        triggerEvent(options.onLoad, this);
+        triggerEvent('load', $(this));
     }
 
 
     /**
-     * Trigger onError handler
+     * Trigger onerror handler
      */
     function triggerError() {
-        triggerEvent(options.onError, this);
+        triggerEvent('error', $(this));
     }
 
 
@@ -141,7 +144,7 @@
                 if ((elTop < viewportBottom) && (elTop + $el.height() > viewportTop) &&
                     (elLeft < viewportRight) && (elLeft + $el.width() > viewportLeft)) {
 
-                    triggerEvent(options.onShow, el);
+                    triggerEvent('show', $el);
 
                     var src = isFuncSrcAttr ? srcAttr($el) : $el.attr(srcAttr);
                     if (src) {

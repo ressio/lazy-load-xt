@@ -11,7 +11,7 @@
     <script>
         $.lazyLoadXT = {
             selector: "img, audio, video",
-            onShow: function() {
+            onshow: function() {
                 if (/AUDIO|VIDEO/.test(this.tagName)) {
                     var $el = $(this);
                     $el.attr('poster', $el.attr('data-poster')).removeAttr('data-poster');

@@ -304,9 +304,17 @@ Dev version: [jquery.lazyloadxt.js](https://raw.github.com/ressio/lazy-load-xt/m
 Minified version:
 [jquery.lazyloadxt.min.js](https://raw.github.com/ressio/lazy-load-xt/master/dist/jquery.lazyloadxt.min.js)
 
+Install and manage Lazy Load XT using [Bower](http://bower.io/)
+
+    $ bower install lazyloadxt
+
+Install and manage using [NPM](https://npmjs.org/)
+
+    $ npm install lazyloadxt
+
 View the Project on GitHub: [https://github.com/ressio/lazy-load-xt](https://github.com/ressio/lazy-load-xt)
 
-If you have any feature to request or bug to report please use github issues.
+If you have any feature to request or bug to report please use GitHub issues.
 
 
 ## License

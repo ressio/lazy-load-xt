@@ -342,3 +342,5 @@ Lazy Load XT is licensed under the [MIT license](http://opensource.org/licenses/
 - [**0.8.1**](https://github.com/ressio/lazy-load-xt/tree/0.8.1) (06.12.2013): Add support of `lazyinit`, `lazyshow`,
  `lazyload`, and `lazyerror` events
 - [**0.8.0**](https://github.com/ressio/lazy-load-xt/tree/0.8.0) (05.12.2013): Initial release
+
+![](https://cruel-carlota.pagodabox.com/0eccd1ad34a7b6d3a7006126609c2f81)

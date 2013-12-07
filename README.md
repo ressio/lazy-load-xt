@@ -343,4 +343,4 @@ Lazy Load XT is licensed under the [MIT license](http://opensource.org/licenses/
  `lazyload`, and `lazyerror` events
 - [**0.8.0**](https://github.com/ressio/lazy-load-xt/tree/0.8.0) (05.12.2013): Initial release
 
-![](https://cruel-carlota.pagodabox.com/0eccd1ad34a7b6d3a7006126609c2f81)
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-46280150-1','github.com');ga('send','pageview');</script>

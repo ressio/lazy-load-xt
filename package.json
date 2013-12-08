@@ -25,9 +25,9 @@
     "node": ">= 0.8.0"
   },
   "scripts": {
-    "build"   : "npm install && grunt",
-    "start"   : "grunt watch",
-    "test"    : "grunt qunit"
+    "build": "npm install && grunt",
+    "start": "grunt watch",
+    "test": "grunt qunit"
   },
   "dependencies": {},
   "devDependencies": {

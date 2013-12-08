@@ -1,7 +1,7 @@
 {
   "name": "lazyloadxt",
   "description": "Lazy load XT is a jQuery plugin for images, videos and other media",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "main": "dist/jquery.lazyloadxt.min.js",
   "authors": ["RESS.io"],
   "homepage": "https://github.com/ressio/lazy-load-xt",

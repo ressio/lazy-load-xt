@@ -11,7 +11,7 @@
   },
   "keywords": ["lazy", "load", "jquery", "images", "video", "media"],
   "bugs": "https://github.com/ressio/lazy-load-xt/issues",
-  "docs": "https://github.com/ressio/lazy-load-xt",
+  "docs": "https://github.com/ressio/lazy-load-xt#readme",
   "demo": "http://ressio.github.io/lazy-load-xt/demo/index.htm",
   "licenses": [
     {

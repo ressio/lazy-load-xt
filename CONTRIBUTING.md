@@ -30,4 +30,4 @@ Assuming that you don't see any red, you're ready to go. Just be sure to run `gr
 1. Update the documentation to reflect any changes.
 1. Push to your fork and submit a pull request.
 
-[![githalytics.com alpha](https://cruel-carlota.pagodabox.com/b4de45e42f829e0c7eb3dc06831e6362 "githalytics.com")](http://githalytics.com/ressio/lazy-load-xt)
+[![githalytics.com alpha](https://cruel-carlota.pagodabox.com/ce20db9f22e205daddcd819e106c8995 "githalytics.com")](http://githalytics.com/ressio/lazy-load-xt)

@@ -10,13 +10,13 @@
 - [Advanced initialization](#advanced-initialization)
 - [Events](#events)
 - [More than images](#more-than-images)
+    - [`<iframe>`-embedded Videos (YouTube, Vimeo, etc.)](#iframe-embedded-videos-youtube-vimeo-etc)
+    - [Support `<video>` tag](#support-video-tag)
 - [Extendability](#extendability)
     - [Spinner](#spinner)
     - [Fade-in animation](#fade-in-animation)
     - [Hi-DPI (Retina) images](#hi-dpi-retina-images)
     - [AJAX](#ajax)
-    - [Youtube Videos](#youtube-videos)
-    - [Support `<video>` tag](#support-video-tag)
 - [Demo](#demo)
 - [Example of page preparation in PHP](#example-of-page-preparation-in-php)
 - [Download](#download)
@@ -62,14 +62,14 @@ Currently tested in IE 10-11, Chrome 30-31, Firefox 24, Safari 5, Opera 12, Andr
 
 The plugin is very extensible and supports a lot of options that are stored in $.lazyLoadXT object:
 ```javascript
-$.lazyLoadXT = {
+$.lazyLoadXT.extend({
   edgeY:  200,
   srcAttr: 'data-src'
-}
+});
 ```
 
-You can create this object at any time before jQuery's `ready` event, both before and after loading of
-`jquery.lazyloadxt.min.js`.
+You can either create this object before loading of `jquery.lazyloadxt.js` or extend it after loading (but before
+jQuery's `ready` event).
 
 * **autoInit**: auto initialization of the plugin, that is processing of all elements matching `selector` selector in
   jQuery's `ready` event, if it is disabled you have to do such initialization manually as explained in [Advanced
@@ -109,7 +109,7 @@ You can create this object at any time before jQuery's `ready` event, both befor
 
 ## Advanced initialization
 
-Possible ways to initialize elements:
+Possible ways to initialize elements if auto initialization doesn't suit you:
 
 1. `$(container).lazyLoadXT();`
 2. `$(container).lazyLoadXT(selector);`
@@ -126,7 +126,7 @@ Lazy Load XT plugin triggers following events for loading elements (just before 
 * `lazyload`, element is successfully loaded
 * `lazyerror`, browser cannot load the element
 
-Unlike global handlers `$.lazyLoadXT`, using this events it's possible to assign individual handlers for media
+Unlike global handlers `$.lazyLoadXT`, using these events it's possible to assign individual handlers for media
 elements.
 
 
@@ -138,11 +138,48 @@ etc. Full list of supported tags include all tags with `src` attribute: `<audio>
 `<iframe>`, `<img>`, `<video>`. Usage is the same: just rename `'src'` attribute to `'data-src'` (or what is
 specified in your `$.lazyLoadXT.srcAttr`) and add `<noscript>`ed version if necessary.
 
+We distribute special "extra" version of the plugin with additional code for lazyloading of `<video>` elements and
+`<iframe>`ed YouTube videos. To use this version just load `jquery.lazyloadxt.extra.js` instead of
+`jquery.lazyloadxt.js`.
+
+
+### `<iframe>`-embedded Videos (YouTube, Vimeo, etc.)
+
+Most of video hostings allow to embed videos as `<iframe>`s (e.g. Youtube, Vimeo, DailyMotion, and even KickStarter)
+and they may be lazy loaded in the way similar to images (by replacing `src` attribute by `data-src`):
+
+```html
+<script src="jquery.lazyloadxt.extra.js"></script>
+```
+
+```html
+<iframe width="420" height="315" data-src="//www.youtube.com/embed/uOzO9O15gwI?rel=0" frameborder="0" allowfullscreen></iframe>
+```
+
+
+### Support `<video>` tag
+
+It is easy too, just replace `src` attribute by `data-src` and `poster` by `data-poster` (if exists).
+
+```html
+<script src="jquery.lazyloadxt.extra.js"></script>
+```
+
+```html
+<video data-poster="/path/to/poster.jpg" width="320" height="240" controls>
+  <source data-src="/path/to/video.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
+  <source data-src="/path/to/video.ogv" type='video/ogg; codecs="theora, vorbis"'>
+</video>
+
+<video data-src="/path/to/video2.mp4" width="320" height="240" controls>
+```
+
 
 ## Extendability
 
 Lazy Load XT plugin may be easily extended using `oninit`, `onshow`, `onload` and `onerror` event. Some examples are
 listed below.
+
 
 ### Spinner
 
@@ -157,12 +194,13 @@ To display animated spinner while image is loading, you can set/reset CSS class 
 
 ```javascript
 /* JS */
-$.lazyLoadXT = {
+$.lazyLoadXT.extend({
   onshow:  { addClass:    'lazy-hidden' },
   onload:  { removeClass: 'lazy-hidden' },
   onerror: { removeClass: 'lazy-hidden' }
-};
+});
 ```
+
 
 ### Fade-in animation
 
@@ -185,10 +223,10 @@ To add fade-in animation you can use following sample of `onload` event and CSS 
 
 ```javascript
 /* JS */
-$.lazyLoadXT = {
+$.lazyLoadXT.extend({
   oninit: { addClass: 'lazy-hidden' },
   onload: { addClass: 'lazy-loaded', removeClass: 'lazy-hidden' }
-};
+});
 ```
 
 
@@ -198,11 +236,10 @@ The code below allows you to use `data-src-3x` attribute for screens with 3x den
 `data-src-2x` for 2x density (e.g. iPhones 4+), and `data-src-1.5x` for 1.5x density (e.g. HTC Incredible S).
 
 ```javascript
+/* JS */
 (function($, dpr) {
   if (dpr>1)
-    $.lazyLoadXT = {
-      srcAttr: 'data-src-' + (dpr > 2 ? '3x' : (dpr > 1.5 ? '2x' : '1.5x'))
-    };
+    $.lazyLoadXT.srcAttr = 'data-src-' + (dpr > 2 ? '3x' : (dpr > 1.5 ? '2x' : '1.5x'));
 })(jQuery, window.devicePixelRatio || 1);
 ```
 
@@ -212,10 +249,12 @@ But in real world it's better to set `srcAttr` function and choose most suitable
 ### AJAX
 
 If you use jQuery-based AJAX navigation and don't like to change existing AJAX callbacks,
-you can apply lazy loading to new loaded content using `ajaxComplete` event (50ms delay is to be sure that content
-is inserted to page):
+you can apply lazy loading to new loaded content using `ajaxComplete` event. Note that `$.lazyLoadXT.loadEvent =
+'pageshow ajaxComplete';` may not work correctly because of content is not added to the page at the time of
+`ajaxComplete` event, that's why it's better to postpone initialization by `setTimeout`:
 
 ```javascript
+/* JS */
 $(window).on('ajaxComplete', function() {
   setTimeout(function() {
     $(window).lazyLoadXT();
@@ -223,54 +262,6 @@ $(window).on('ajaxComplete', function() {
 });
 ```
 
-Note: `loadEvent: 'pageshow ajaxComplete'` may not work because of content is not added to the page at the time of
-`ajaxComplete` event.
-
-
-### Youtube Videos
-
-Youtube videos are `iframe`-embedded pages and they may be lazy loaded in the way similar to images:
-
-```html
-<iframe width="420" height="315" data-src="//www.youtube.com/embed/uOzO9O15gwI?rel=0" frameborder="0" allowfullscreen></iframe>
-```
-
-```javascript
-$.lazyLoadXT = {
-  selector: "img, iframe[data-src]"
-};
-```
-
-### Support `<video>` tag
-
-It's just an example of how to start loading source of `<source>` or `<track>` tags when parent `<audio>` or
-`<video>` element is visible:
-
-```html
-<video data-poster="/path/to/poster.jpg" width="320" height="240" controls>
-  <source data-src="/path/to/video.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
-  <source data-src="/path/to/video.ogv" type='video/ogg; codecs="theora, vorbis"'>
-</video>
-```
-
-```javascript
-$.lazyLoadXT = {
-  selector: "img, audio, video",
-  onshow: function() {
-    if (/AUDIO|VIDEO/.test(this.tagName)) {
-      var $el = $(this);
-      $el.attr('poster', $el.attr('data-poster'));
-      $el.children().each(function () {
-        if (/SOURCE|TRACK/.test(this.tagName)) {
-          var $child = $(this);
-          $child.attr('src', $child.attr('data-src'));
-        }
-      });
-      this.load();
-    }
-  }
-};
-```
 
 ## Demo
 
@@ -284,6 +275,7 @@ add `<noscript>` fallback image, etc.), it's possible to do html page postproces
 Here is example of how to do it using PHP:
 
 ```php
+/* PHP */
 function addLazyLoading($html) {
     $dom = new DOMDocument();
     if(!@$dom->loadHTML('<?xml encoding="UTF-8">' . $html)) // trick to set charset
@@ -314,10 +306,12 @@ function addLazyLoading($html) {
 
 ## Download
 
-Dev version: [jquery.lazyloadxt.js](https://raw.github.com/ressio/lazy-load-xt/master/dist/jquery.lazyloadxt.js)
+Dev version: [jquery.lazyloadxt.js](https://raw.github.com/ressio/lazy-load-xt/master/dist/jquery.lazyloadxt.js) /
+[jquery.lazyloadxt.extra.js](https://raw.github.com/ressio/lazy-load-xt/master/dist/jquery.lazyloadxt.extra.js)
 
 Minified version:
-[jquery.lazyloadxt.min.js](https://raw.github.com/ressio/lazy-load-xt/master/dist/jquery.lazyloadxt.min.js)
+[jquery.lazyloadxt.min.js](https://raw.github.com/ressio/lazy-load-xt/master/dist/jquery.lazyloadxt.min.js) /
+[jquery.lazyloadxt.extra.min.js](https://raw.github.com/ressio/lazy-load-xt/master/dist/jquery.lazyloadxt.extra.min.js)
 
 Install and manage Lazy Load XT using [Bower](http://bower.io/)
 

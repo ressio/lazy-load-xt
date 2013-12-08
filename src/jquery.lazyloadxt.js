@@ -78,7 +78,7 @@
             .data('lazied', 1)
             .removeClass(options.classNojs);
 
-        if (options.blankImage && !$el.attr('src') && $el[0].tagName === 'IMG') {
+        if (options.blankImage && $el[0].tagName === 'IMG' && !$el.attr('src')) {
             $el.attr('src', options.blankImage);
         }
 

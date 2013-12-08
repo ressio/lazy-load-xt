@@ -7,25 +7,7 @@
     <link href="../libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <script src="../libs/jquery/jquery.js"></script>
-    <script src="../dist/jquery.lazyloadxt.min.js"></script>
-    <script>
-        $.lazyLoadXT = {
-            selector: "img, audio, video",
-            onshow: function() {
-                if (/AUDIO|VIDEO/.test(this.tagName)) {
-                    var $el = $(this);
-                    $el.attr('poster', $el.attr('data-poster')).removeAttr('data-poster');
-                    $el.children().each(function () {
-                        if (/SOURCE|TRACK/.test(this.tagName)) {
-                            var $child = $(this);
-                            $child.attr('src', $child.attr('data-src')).removeAttr('data-src');
-                        }
-                    });
-                    this.load();
-                }
-            }
-        };
-    </script>
+    <script src="../dist/jquery.lazyloadxt.extra.min.js"></script>
 </head>
 <body>
     <div class="container">

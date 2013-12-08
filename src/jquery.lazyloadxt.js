@@ -37,6 +37,7 @@
      */
         waitingMode = 0;
 
+    $.lazyLoadXT = $.extend(options, $.lazyLoadXT);
 
     /**
      * Process function/object event handler
@@ -237,8 +238,6 @@
      * Initialization
      */
     $(document).ready(function () {
-        $.lazyLoadXT = $.extend(options, $.lazyLoadXT);
-
         $window.bind(options.loadEvent, initLazyElements);
         $window.bind(options.updateEvent, queueCheckLazyElements);
 

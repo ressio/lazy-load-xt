@@ -51,7 +51,9 @@
             if ($.isFunction(handler)) {
                 handler.call($el[0]);
             } else {
-                $el.addClass(handler.addClass).removeClass(handler.removeClass);
+                $el
+                    .addClass(handler.addClass)
+                    .removeClass(handler.removeClass);
             }
         }
         // queue next check as images may be resized after loading of actual file
@@ -72,7 +74,9 @@
         if ($el.data('lazied')) {
             return;
         }
-        $el.data('lazied', 1).removeClass(options.classNojs);
+        $el
+            .data('lazied', 1)
+            .removeClass(options.classNojs);
 
         if (options.blankImage && !$el.attr('src') && $el[0].tagName === 'IMG') {
             $el.attr('src', options.blankImage);
@@ -149,7 +153,8 @@
 
                     var src = isFuncSrcAttr ? srcAttr($el) : $el.attr(srcAttr);
                     if (src) {
-                        $el.on('load', triggerLoad)
+                        $el
+                            .on('load', triggerLoad)
                             .on('error', triggerError)
                             .attr('src', src);
                     }
@@ -216,7 +221,9 @@
                 if (this === window) {
                     $(selector).each(addElement);
                 } else {
-                    $(this).find(selector).each(addElement);
+                    $(this)
+                        .find(selector)
+                        .each(addElement);
                 }
             }
         });

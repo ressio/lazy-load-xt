@@ -333,6 +333,8 @@ Lazy Load XT is licensed under the [MIT license](http://opensource.org/licenses/
 
 ## Version History
 
+- [**0.8.2**](https://github.com/ressio/lazy-load-xt/tree/0.8.2) (08.12.2013): Built-in support of videos in
+ `jquery.lazyloadxt.extra.js`
 - [**0.8.1**](https://github.com/ressio/lazy-load-xt/tree/0.8.1) (06.12.2013): Add support of `lazyinit`, `lazyshow`,
  `lazyload`, and `lazyerror` events
 - [**0.8.0**](https://github.com/ressio/lazy-load-xt/tree/0.8.0) (05.12.2013): Initial release

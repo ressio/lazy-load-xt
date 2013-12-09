@@ -178,9 +178,9 @@
      */
     function timeoutLazyElements() {
         if (waitingMode > 1) {
+            waitingMode = 1;
             checkLazyElements();
             setTimeout(timeoutLazyElements, options.throttle);
-            waitingMode = 1;
         } else {
             waitingMode = 0;
         }

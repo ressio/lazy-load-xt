@@ -257,9 +257,9 @@
      */
     $(document).ready(function () {
         $window
-            .bind(options.loadEvent, initLazyElements)
-            .bind(options.updateEvent, queueCheckLazyElements)
-            .bind(options.forceEvent, forceLoadAll);
+            .on(options.loadEvent, initLazyElements)
+            .on(options.updateEvent, queueCheckLazyElements)
+            .on(options.forceEvent, forceLoadAll);
 
         if (options.autoInit) {
             initLazyElements(); // standard initialization

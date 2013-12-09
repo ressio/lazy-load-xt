@@ -18,6 +18,7 @@
             visibleOnly: true,
             loadEvent: 'pageshow', // check AJAX-loaded content in jQueryMobile
             updateEvent: 'load orientationchange resize scroll', // page-modified events
+            forceEvent: '', // force loading of all elements
             oninit: null, // init handler
             onshow: null, // start loading handler
             onload: null, // load success handler
@@ -122,8 +123,9 @@
 
     /**
      * Load visible elements
+     * @param {bool} [force] loading of all elements
      */
-    function checkLazyElements() {
+    function checkLazyElements(force) {
         if (!elements.length) {
             return;
         }
@@ -141,13 +143,14 @@
             // remove items that are not in DOM
             if (!el.parentNode) {
                 elements.splice(i, 1);
-            } else if (!options.visibleOnly || el.offsetWidth > 0 || el.offsetHeight > 0) {
+            } else if (force || !options.visibleOnly || el.offsetWidth > 0 || el.offsetHeight > 0) {
                 var offset = $el.offset(),
                     elTop = offset.top,
                     elLeft = offset.left;
 
-                if ((elTop < viewportBottom) && (elTop + $el.height() > viewportTop) &&
-                    (elLeft < viewportRight) && (elLeft + $el.width() > viewportLeft)) {
+                if (force ||
+                    ((elTop < viewportBottom) && (elTop + $el.height() > viewportTop) &&
+                        (elLeft < viewportRight) && (elLeft + $el.width() > viewportLeft))) {
 
                     triggerEvent('show', $el);
 
@@ -242,11 +245,21 @@
 
 
     /**
+     * Loading of all elements
+     */
+    function forceLoadAll() {
+        checkLazyElements(true);
+    }
+
+
+    /**
      * Initialization
      */
     $(document).ready(function () {
-        $window.bind(options.loadEvent, initLazyElements);
-        $window.bind(options.updateEvent, queueCheckLazyElements);
+        $window
+            .bind(options.loadEvent, initLazyElements)
+            .bind(options.updateEvent, queueCheckLazyElements)
+            .bind(options.forceEvent, forceLoadAll);
 
         if (options.autoInit) {
             initLazyElements(); // standard initialization

@@ -94,6 +94,8 @@ jQuery's `ready` event).
   (default `'pageshow'` to check AJAX-loaded content in jQueryMobile and to support backward navigation in iPhone)
 * **updateEvent**: space-separated list of events when the plugin starts to check what elements are visible in
   current viewport (default `'load orientationchange resize scroll'`)
+* **forceEvent**: space-separated list of events when the plugin starts to load all images independently of are
+  they visible or not (default `''`)
 * **oninit**: handler called when the plugin push elements into internal list of "lazy" elements,
   it may be either a function (DOM element is accessible using `this` object) or an object with `addClass` and/or
   `removeClass` properties (`addClass` is a space-separated list of class names that should be added to the elements,
@@ -332,7 +334,7 @@ Lazy Load XT is licensed under the [MIT license](http://opensource.org/licenses/
 ## Version History
 
 - [**0.8.3**](https://github.com/ressio/lazy-load-xt/tree/0.8.3) (10.12.2013): Speed up initialization,
-  additional examples of extendability in `/src` directory
+  new `forceEvent` option, additional examples of extendability in `/src` directory
 - [**0.8.2**](https://github.com/ressio/lazy-load-xt/tree/0.8.2) (08.12.2013): Built-in support of videos in
  `jquery.lazyloadxt.extra.js`
 - [**0.8.1**](https://github.com/ressio/lazy-load-xt/tree/0.8.1) (06.12.2013): Add support of `lazyinit`, `lazyshow`,

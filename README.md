@@ -29,7 +29,8 @@
 Mobile-oriented, fast and extensible jQuery plugin for lazy loading of images/videos with build-in support of
 jQueryMobile framework.
 
-Currently tested in IE 10-11, Chrome 30-31, Firefox 24, Safari 5, Opera 12, Android 2.3 stock browser.
+Currently tested in IE 6-11, Chrome 1-31, Firefox 1.5-27.0, Safari 3-7, Opera 10.6-18.0, iOS 5-7, Android 2.3-4.4,
+Amazon Kindle Fire 2 and HD 8.9.
 
 
 ## Usage

@@ -4,7 +4,7 @@
 (function ($, window) {
     'use strict';
 
-    $.lazyLoadXT.forceEvent = 'beforeprint';
+    $.lazyLoadXT.forceEvent += ' beforeprint';
 
     if (window.matchMedia) {
         window

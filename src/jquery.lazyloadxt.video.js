@@ -4,7 +4,7 @@
 (function ($) {
     'use strict';
 
-    $.lazyLoadXT.selector = 'img,video,iframe[data-src]';
+    $.lazyLoadXT.selector += ',video,iframe[data-src]';
 
     $(document).on('lazyshow', 'video', function () {
         var $this = $(this);

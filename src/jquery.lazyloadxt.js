@@ -219,6 +219,9 @@
     $.fn.lazyLoadXT = function (selector) {
         selector = selector || options.selector;
 
+        // stop call of queueCheckLazyElements->timeoutLazyElements by triggerEvent('init')
+        waitingMode = 2;
+
         this.each(function () {
             if ('src' in this) {
                 addElement(this);
@@ -233,6 +236,8 @@
             }
         });
 
+        // run check of visibility
+        waitingMode = 0;
         queueCheckLazyElements();
         return this;
     };

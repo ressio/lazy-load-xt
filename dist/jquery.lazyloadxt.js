@@ -1,4 +1,4 @@
-/*! Lazy Load XT v0.8.2 2013-12-08
+/*! Lazy Load XT v0.8.3 2013-12-10
  * https://github.com/ressio/lazy-load-xt
  * (C) 2013 RESS.io
  * Licensed under MIT */
@@ -17,6 +17,7 @@
             visibleOnly: true,
             loadEvent: 'pageshow', // check AJAX-loaded content in jQueryMobile
             updateEvent: 'load orientationchange resize scroll', // page-modified events
+            forceEvent: '', // force loading of all elements
             oninit: null, // init handler
             onshow: null, // start loading handler
             onload: null, // load success handler
@@ -121,8 +122,9 @@
 
     /**
      * Load visible elements
+     * @param {bool} [force] loading of all elements
      */
-    function checkLazyElements() {
+    function checkLazyElements(force) {
         if (!elements.length) {
             return;
         }
@@ -140,13 +142,14 @@
             // remove items that are not in DOM
             if (!el.parentNode) {
                 elements.splice(i, 1);
-            } else if (!options.visibleOnly || el.offsetWidth > 0 || el.offsetHeight > 0) {
+            } else if (force || !options.visibleOnly || el.offsetWidth > 0 || el.offsetHeight > 0) {
                 var offset = $el.offset(),
                     elTop = offset.top,
                     elLeft = offset.left;
 
-                if ((elTop < viewportBottom) && (elTop + $el.height() > viewportTop) &&
-                    (elLeft < viewportRight) && (elLeft + $el.width() > viewportLeft)) {
+                if (force ||
+                    ((elTop < viewportBottom) && (elTop + $el.height() > viewportTop) &&
+                        (elLeft < viewportRight) && (elLeft + $el.width() > viewportLeft))) {
 
                     triggerEvent('show', $el);
 
@@ -174,9 +177,9 @@
      */
     function timeoutLazyElements() {
         if (waitingMode > 1) {
+            waitingMode = 1;
             checkLazyElements();
             setTimeout(timeoutLazyElements, options.throttle);
-            waitingMode = 1;
         } else {
             waitingMode = 0;
         }
@@ -193,9 +196,11 @@
         }
 
         // fast check for scroll event without new visible elements
-        calcViewport();
-        if (e && e.type === 'scroll' && topLazy >= viewportBottom) {
-            return;
+        if (e && e.type === 'scroll') {
+            calcViewport();
+            if (topLazy >= viewportBottom) {
+                return;
+            }
         }
 
         if (!waitingMode) {
@@ -213,6 +218,9 @@
     $.fn.lazyLoadXT = function (selector) {
         selector = selector || options.selector;
 
+        // stop call of queueCheckLazyElements->timeoutLazyElements by triggerEvent('init')
+        waitingMode = 2;
+
         this.each(function () {
             if ('src' in this) {
                 addElement(this);
@@ -227,6 +235,8 @@
             }
         });
 
+        // run check of visibility
+        waitingMode = 0;
         queueCheckLazyElements();
         return this;
     };
@@ -241,11 +251,21 @@
 
 
     /**
+     * Loading of all elements
+     */
+    function forceLoadAll() {
+        checkLazyElements(true);
+    }
+
+
+    /**
      * Initialization
      */
     $(document).ready(function () {
-        $window.bind(options.loadEvent, initLazyElements);
-        $window.bind(options.updateEvent, queueCheckLazyElements);
+        $window
+            .on(options.loadEvent, initLazyElements)
+            .on(options.updateEvent, queueCheckLazyElements)
+            .on(options.forceEvent, forceLoadAll);
 
         if (options.autoInit) {
             initLazyElements(); // standard initialization

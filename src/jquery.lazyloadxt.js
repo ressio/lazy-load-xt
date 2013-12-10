@@ -197,9 +197,11 @@
         }
 
         // fast check for scroll event without new visible elements
-        calcViewport();
-        if (e && e.type === 'scroll' && topLazy >= viewportBottom) {
-            return;
+        if (e && e.type === 'scroll') {
+            calcViewport();
+            if (topLazy >= viewportBottom) {
+                return;
+            }
         }
 
         if (!waitingMode) {

@@ -321,8 +321,6 @@ Install and manage using [NPM](https://npmjs.org/)
 
     $ npm install lazyloadxt
 
-View the Project on GitHub: [https://github.com/ressio/lazy-load-xt](https://github.com/ressio/lazy-load-xt)
-
 If you have any feature to request or bug to report please use GitHub issues.
 
 
@@ -333,6 +331,8 @@ Lazy Load XT is licensed under the [MIT license](http://opensource.org/licenses/
 
 ## Version History
 
+- [**0.8.3**](https://github.com/ressio/lazy-load-xt/tree/0.8.3) (10.12.2013): Speed up initialization,
+  additional examples of extendability in `/src` directory
 - [**0.8.2**](https://github.com/ressio/lazy-load-xt/tree/0.8.2) (08.12.2013): Built-in support of videos in
  `jquery.lazyloadxt.extra.js`
 - [**0.8.1**](https://github.com/ressio/lazy-load-xt/tree/0.8.1) (06.12.2013): Add support of `lazyinit`, `lazyshow`,

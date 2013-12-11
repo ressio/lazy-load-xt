@@ -14,11 +14,11 @@
         }
     </style>
     <script>
-    $.lazyLoadXT = {
+    $.lazyLoadXT.extend({
         onshow:  { addClass: 'lazy-hidden' },
         onload:  { removeClass: 'lazy-hidden' },
         onerror: { removeClass: 'lazy-hidden' }
-    };
+    });
     </script>
 </head>
 <body>

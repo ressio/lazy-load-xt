@@ -4,6 +4,8 @@
 (function ($) {
     'use strict';
 
+    $.lazyLoadXT.srcsetAttr = 'data-srcset';
+
     var reUrl = /^\s*([^\s]*)/,
         reWidth = /\s(\d+)w/,
         reHeight = /\s(\d+)h/,
@@ -25,7 +27,7 @@
 
     $(document).on('lazyshow', function () {
         var $this = $(this),
-            srcset = $this.attr('data-srcset'),
+            srcset = $this.attr($.lazyLoadXT.srcsetAttr),
             viewport = {
                 width: window.innerWidth || document.documentElement.clientWidth,
                 height: window.innerHeight || document.documentElement.clientHeight,

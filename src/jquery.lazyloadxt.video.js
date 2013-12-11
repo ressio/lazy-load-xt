@@ -5,21 +5,24 @@
     'use strict';
 
     $.lazyLoadXT.selector += ',video,iframe[data-src]';
+    $.lazyLoadXT.videoPoster = 'data-poster';
 
     $(document).on('lazyshow', 'video', function () {
-        var $this = $(this);
+        var $this = $(this),
+            srcPoster = $.lazyLoadXT.videoPoster,
+            srcAttr = $.lazyLoadXT.srcAttr,
+            isFuncSrcAttr = $.isFunction(srcAttr);
+
         $this
-            .attr('poster', $this.attr('data-poster'))
-            .removeAttr('data-poster')
+            .attr('poster', $this.attr(srcPoster))
             .children()
             .each(function () {
                 if (/source|track/i.test(this.tagName)) {
                     var $child = $(this);
-                    $child
-                        .attr('src', $child.attr('data-src'))
-                        .removeAttr('data-src');
+                    $child.attr('src', isFuncSrcAttr ? srcAttr($child) : $child.attr(srcAttr));
                 }
             });
+
         // reload video
         this.load();
     });

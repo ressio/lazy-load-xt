@@ -11,9 +11,7 @@
     <script>
         (function($, dpr) {
             if (dpr>1)
-                $.lazyLoadXT = {
-                    srcAttr: 'data-src-' + (dpr > 2 ? '3x' : (dpr > 1.5 ? '2x' : '1.5x'))
-                };
+                $.lazyLoadXT.srcAttr = 'data-src-' + (dpr > 2 ? '3x' : (dpr > 1.5 ? '2x' : '1.5x'));
         })(jQuery, window.devicePixelRatio || 1);
     </script>
 </head>

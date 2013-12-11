@@ -1,7 +1,7 @@
 /*jslint browser:true */
 /*jshint browser:true, jquery:true */
 
-(function ($) {
+(function ($, window, document) {
     'use strict';
 
     $.lazyLoadXT.srcsetAttr = 'data-srcset';
@@ -82,4 +82,4 @@
         $this.attr('src', list[0].url);
     });
 
-}(window.jQuery || window.Zepto));
+}(window.jQuery || window.Zepto, window, document));

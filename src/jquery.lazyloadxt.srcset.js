@@ -11,15 +11,15 @@
         infty = [0, Infinity],
         one = [0, 1];
 
-    function max(array, field) {
+    function max(array, property) {
         return Math.max.apply(null, $.map(array, function (item) {
-            return item[field];
+            return item[property];
         }));
     }
 
-    function min(array, field) {
+    function min(array, property) {
         return Math.min.apply(null, $.map(array, function (item) {
-            return item[field];
+            return item[property];
         }));
     }
 

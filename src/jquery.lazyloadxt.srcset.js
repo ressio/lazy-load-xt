@@ -25,6 +25,7 @@
         }));
     }
 
+    // based on http://www.whatwg.org/specs/web-apps/current-work/multipage/embedded-content-1.html#processing-the-image-candidates
     $(document).on('lazyshow', function () {
         var $this = $(this),
             srcset = $this.attr($.lazyLoadXT.srcsetAttr),

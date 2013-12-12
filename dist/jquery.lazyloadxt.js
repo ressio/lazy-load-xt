@@ -1,9 +1,9 @@
-/*! Lazy Load XT v0.8.3 2013-12-10
+/*! Lazy Load XT v0.8.4 2013-12-12
  * https://github.com/ressio/lazy-load-xt
  * (C) 2013 RESS.io
  * Licensed under MIT */
 
-(function ($, window) {
+(function ($, window, document) {
 // options
     var options = {
             autoInit: true,
@@ -46,6 +46,7 @@
      */
     function triggerEvent(event, $el) {
         $el.trigger('lazy' + event);
+
         var handler = options['on' + event];
         if (handler) {
             if ($.isFunction(handler)) {
@@ -56,6 +57,7 @@
                     .removeClass(handler.removeClass);
             }
         }
+
         // queue next check as images may be resized after loading of actual file
         queueCheckLazyElements();
     }
@@ -140,7 +142,7 @@
                 el = $el[0];
 
             // remove items that are not in DOM
-            if (!el.parentNode) {
+            if (!$.contains(document.body, el)) {
                 elements.splice(i, 1);
             } else if (force || !options.visibleOnly || el.offsetWidth > 0 || el.offsetHeight > 0) {
                 var offset = $el.offset(),
@@ -205,7 +207,7 @@
 
         if (!waitingMode) {
             waitingMode = 2;
-            timeoutLazyElements();
+            setTimeout(timeoutLazyElements, 0);
         } else {
             waitingMode = 2;
         }
@@ -217,9 +219,6 @@
      */
     $.fn.lazyLoadXT = function (selector) {
         selector = selector || options.selector;
-
-        // stop call of queueCheckLazyElements->timeoutLazyElements by triggerEvent('init')
-        waitingMode = 2;
 
         this.each(function () {
             if ('src' in this) {
@@ -235,8 +234,6 @@
             }
         });
 
-        // run check of visibility
-        waitingMode = 0;
         queueCheckLazyElements();
         return this;
     };
@@ -272,4 +269,4 @@
         }
     });
 
-}(window.jQuery || window.Zepto, window));
+}(window.jQuery || window.Zepto, window, document));

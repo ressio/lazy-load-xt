@@ -47,6 +47,7 @@
      */
     function triggerEvent(event, $el) {
         $el.trigger('lazy' + event);
+
         var handler = options['on' + event];
         if (handler) {
             if ($.isFunction(handler)) {
@@ -57,6 +58,7 @@
                     .removeClass(handler.removeClass);
             }
         }
+
         // queue next check as images may be resized after loading of actual file
         queueCheckLazyElements();
     }

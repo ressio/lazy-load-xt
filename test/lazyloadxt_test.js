@@ -53,4 +53,4 @@
             start();
         }, 300);
     });
-}(window.jQuery||window.Zepto));
+}(window.jQuery || window.Zepto));

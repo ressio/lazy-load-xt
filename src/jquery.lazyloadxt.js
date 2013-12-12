@@ -172,6 +172,10 @@
                 }
             }
         }
+
+        if (!elements.length) {
+            $(document).trigger('lazyloadall');
+        }
     }
 
 

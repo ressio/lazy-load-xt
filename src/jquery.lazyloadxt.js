@@ -2,7 +2,7 @@
 /*jshint browser:true, jquery:true */
 /*jshint -W040:false */ /* to don't alert on "this" in triggerLoad and triggerError */
 
-(function ($, window) {
+(function ($, window, document) {
     'use strict';
 
     // options
@@ -141,7 +141,7 @@
                 el = $el[0];
 
             // remove items that are not in DOM
-            if (!el.parentNode) {
+            if (!$.contains(document, el)) {
                 elements.splice(i, 1);
             } else if (force || !options.visibleOnly || el.offsetWidth > 0 || el.offsetHeight > 0) {
                 var offset = $el.offset(),
@@ -273,4 +273,4 @@
         }
     });
 
-}(window.jQuery || window.Zepto, window));
+}(window.jQuery || window.Zepto, window, document));

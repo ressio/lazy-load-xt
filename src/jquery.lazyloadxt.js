@@ -211,11 +211,10 @@
         }
 
         if (!waitingMode) {
-            waitingMode = 2;
             setTimeout(timeoutLazyElements, 0);
-        } else {
-            waitingMode = 2;
         }
+
+        waitingMode = 2;
     }
 
     /**

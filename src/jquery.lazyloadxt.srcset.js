@@ -5,6 +5,7 @@
     'use strict';
 
     $.lazyLoadXT.srcsetAttr = 'data-srcset';
+    $.lazyLoadXT.srcsetBaseAttr = 'data-srcset-base';
 
     var reUrl = /^\s*([^\s]*)/,
         reWidth = /\s(\d+)w/,
@@ -29,6 +30,7 @@
     $(document).on('lazyshow', function () {
         var $this = $(this),
             srcset = $this.attr($.lazyLoadXT.srcsetAttr),
+            srcsetBase = $this.attr($.lazyLoadXT.srcsetBaseAttr) || '',
             viewport = {
                 width: window.innerWidth || document.documentElement.clientWidth,
                 height: window.innerHeight || document.documentElement.clientHeight,
@@ -80,7 +82,7 @@
             return item.dpr === limit;
         });
 
-        $this.attr('src', list[0].url);
+        $this.attr('src', srcsetBase + list[0].url);
     });
 
 }(window.jQuery || window.Zepto, window, document));

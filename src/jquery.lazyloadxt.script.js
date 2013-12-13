@@ -6,8 +6,12 @@
 
     var dataLazyTag = $.lazyLoadXT.dataLazyTag || 'data-lazy-tag';
 
-    window.Z = function (tag, inner) {
+    window.Lb = function (tag, inner) {
         document.write((inner ? '<div ' : '<br ') + dataLazyTag + '="' + (tag || 'img') + '" ');
+    };
+
+    window.Le = function () {
+        document.write('</div ');
     };
 
     $(document).ready(function () {

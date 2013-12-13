@@ -85,4 +85,4 @@
         $this.attr('src', srcsetBase + list[0].url);
     });
 
-}(window.jQuery || window.Zepto, window, document));
+})(window.jQuery || window.Zepto, window, document);

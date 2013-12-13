@@ -8,4 +8,4 @@
         $.lazyLoadXT.blankImage = '//upload.wikimedia.org/wikipedia/en/d/d0/Clear.gif';
     }
 
-}(window.jQuery || window.Zepto));
+})(window.jQuery || window.Zepto);

@@ -138,7 +138,7 @@ elements.
 Images are not the only page elements that may be lazy loaded. Though default value for `$.lazyLoadXT.selector` is
 `'img'`, you can append it by `iframe` to use lazy-loading for iframes, `video` for videos,
 etc. Full list of supported tags include all tags with `src` attribute: `<audio>`, `<embed>`, `<frame>`,
-`<iframe>`, `<img>`, `<video>`. Usage is the same: just rename `'src'` attribute to `'data-src'` (or what is
+`<iframe>`, `<img>`, `<video>`, `<input type="image">`. Usage is the same: just rename `'src'` attribute to `'data-src'` (or what is
 specified in your `$.lazyLoadXT.srcAttr`) and add `<noscript>`ed version if necessary.
 
 We distribute special "extra" version of the plugin with additional code for lazyloading of `<video>` elements and

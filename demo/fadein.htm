@@ -22,7 +22,7 @@
         }
     </style>
     <script>
-        $.lazyLoadXT.extend({
+        $.extend($.lazyLoadXT, {
             oninit: { addClass: 'lazy-hidden' },
             onload: { addClass: 'lazy-loaded', removeClass: 'lazy-hidden' }
         });

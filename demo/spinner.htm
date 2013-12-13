@@ -14,7 +14,7 @@
         }
     </style>
     <script>
-    $.lazyLoadXT.extend({
+    $.extend($.lazyLoadXT, {
         onshow:  { addClass: 'lazy-hidden' },
         onload:  { removeClass: 'lazy-hidden' },
         onerror: { removeClass: 'lazy-hidden' }

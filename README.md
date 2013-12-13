@@ -63,7 +63,7 @@ Amazon Kindle Fire 2 and HD 8.9.
 
 The plugin is very extensible and supports a lot of options that are stored in $.lazyLoadXT object:
 ```javascript
-$.lazyLoadXT.extend({
+$.extend($.lazyLoadXT, {
   edgeY:  200,
   srcAttr: 'data-src'
 });
@@ -197,7 +197,7 @@ To display animated spinner while image is loading, you can set/reset CSS class 
 
 ```javascript
 /* JS */
-$.lazyLoadXT.extend({
+$.extend($.lazyLoadXT, {
   onshow:  { addClass:    'lazy-hidden' },
   onload:  { removeClass: 'lazy-hidden' },
   onerror: { removeClass: 'lazy-hidden' }
@@ -226,7 +226,7 @@ To add fade-in animation you can use following sample of `onload` event and CSS 
 
 ```javascript
 /* JS */
-$.lazyLoadXT.extend({
+$.extend($.lazyLoadXT, {
   oninit: { addClass: 'lazy-hidden' },
   onload: { addClass: 'lazy-loaded', removeClass: 'lazy-hidden' }
 });

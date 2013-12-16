@@ -111,14 +111,14 @@ If you have any feature to request or bug to report please use
 
 ## Usage
 
-First of all it’s necessary to load jQuery and Lazy Load XT script. There are three versions of Lazy Load XT:
+First of all it's necessary to load jQuery and Lazy Load XT script. There are three versions of Lazy Load XT:
 
-1. `jquery.lazyloadxt.js`, standard version for lazy loading of images only).
+1. `jquery.lazyloadxt.js`, standard version for lazy loading of images only.
 
-2. `jquery.lazyloadxt.extra.js`, version with included video add-on for lazy loading of both images and videos.
+2. `jquery.lazyloadxt.extra.js`, version with included video addon for lazy loading of both images and videos.
 
 3. `jquery.lazyloadxt.simple.js`, version of minimal size with excluded support of on* handlers, lazy* events,
-    `blankImage` option and add-ons.
+    `blankImage` option and addons.
 
 To make media elements (`img`, `video`, `source`, `iframe`) to be lazy loaded, rename `src` attribute to `data-src`.
 It is highly recommended to set `width` and `height` attributes. Optionally you can add a placeholder `src` to bypass

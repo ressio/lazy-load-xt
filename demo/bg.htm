@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Background images addon</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="../libs/jquery/jquery.js"></script>
+    <script src="../dist/jquery.lazyloadxt.js"></script>
+    <script src="../dist/jquery.lazyloadxt.bg.js"></script>
+</head>
+<body>
+<div class="container">
+    <nav class="navbar navbar-inverse" role="navigation">
+        <span class="navbar-brand">Lazy Load XT</span>
+        <ul class="nav navbar-nav">
+            <li><a href="../index.htm">Home</a></li>
+            <li class="active"><a href="index.htm">Demos</a></li>
+            <li><a href="https://github.com/ressio/lazy-load-xt/">GitHub</a></li>
+            <li><iframe allowtransparency="true" frameborder="0" scrolling="0" width="135" height="30"
+                        src="http://ghbtns.com/github-btn.html?user=ressio&amp;repo=lazy-load-xt&amp;type=watch&amp;count=true&amp;size=large"></iframe>
+            <li><iframe allowtransparency="true" frameborder="0" scrolling="0" width="135" height="30"
+                        src="http://ghbtns.com/github-btn.html?user=ressio&amp;repo=lazy-load-xt&amp;type=fork&amp;count=true&amp;size=large"></iframe>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="http://ress.io/">RESS.io</a></li>
+        </ul>
+    </nav>
+    <div class="page-header">
+        <h1>Background images addon</h1>
+        <p class="lead">Example of lazy loading of background images.</p>
+    </div>
+    <script>
+        var category = 'business', count = 10;
+        for(var i=1; i<=count; i++) {
+            document.write('<p data-bg="http://lorempixel.com/300/200/'+category+'/'+i+'" style="width:300px;height:200px"></p>');
+        }
+    </script>
+</div>
+<script type="text/javascript">var _gaq=_gaq||[];_gaq.push(["_setAccount","UA-46297160-1"]);_gaq.push(["_trackPageview"]);(function(){var a=document.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"==document.location.protocol?"https://ssl":"http://www")+".google-analytics.com/ga.js";var b=document.getElementsByTagName("script")[0];b.parentNode.insertBefore(a,b)})();</script>
+</body>
+</html>

@@ -1,18 +1,20 @@
-/*jslint browser:true */
+/*jslint browser:true, plusplus:true, vars:true, regexp:false */
 /*jshint browser:true, jquery:true */
 
 (function ($, window, document) {
     'use strict';
 
-    $.lazyLoadXT.srcsetAttr = 'data-srcset';
-    $.lazyLoadXT.srcsetBaseAttr = 'data-srcset-base';
-
-    var reUrl = /^\s*([^\s]*)/,
-        reWidth = /\s(\d+)w/,
-        reHeight = /\s(\d+)h/,
-        reDpr = /\s([\d\.]+)x/,
+    var options = $.lazyLoadXT,
+        reUrl = /^\s*([^\s]*)/,
+        reWidth = /[^\s]\s+(\d+)w/,
+        reHeight = /[^\s]\s+(\d+)h/,
+        reDpr = /[^\s]\s+([\d\.]+)x/,
         infty = [0, Infinity],
         one = [0, 1];
+
+    options.srcsetAttr = 'data-srcset';
+    options.srcsetBaseAttr = 'data-srcset-base';
+    options.srcsetExtAttr = 'data-srcset-ext';
 
     function max(array, property) {
         return Math.max.apply(null, $.map(array, function (item) {
@@ -27,23 +29,15 @@
     }
 
     // based on http://www.whatwg.org/specs/web-apps/current-work/multipage/embedded-content-1.html#processing-the-image-candidates
-    $(document).on('lazyshow', function () {
-        var $this = $(this),
-            srcset = $this.attr($.lazyLoadXT.srcsetAttr),
-            srcsetBase = $this.attr($.lazyLoadXT.srcsetBaseAttr) || '',
-            viewport = {
-                width: window.innerWidth || document.documentElement.clientWidth,
-                height: window.innerHeight || document.documentElement.clientHeight,
-                dpr: window.devicePixelRatio || 1
-            },
-            list,
-            limit;
+    $(document).on('lazyshow', function (e) {
+        var $this = $(e.target),
+            srcset = $this.attr(options.srcsetAttr);
 
         if (!srcset) {
             return;
         }
 
-        list = srcset.split(',').map(function (item) {
+        var list = srcset.split(',').map(function (item) {
             return {
                 url: reUrl.exec(item)[1],
                 width: (reWidth.exec(item) || infty)[1],
@@ -55,6 +49,15 @@
         if (!list.length) {
             return;
         }
+
+        var srcsetBase = $this.attr(options.srcsetBaseAttr) || '',
+            srcsetExt = $this.attr(options.srcsetExtAttr) || '',
+            viewport = {
+                width: window.innerWidth || document.documentElement.clientWidth,
+                height: window.innerHeight || document.documentElement.clientHeight,
+                dpr: window.devicePixelRatio || 1
+            },
+            limit;
 
         limit = max(list, 'width');
         list = $.grep(list, function (item) {
@@ -82,7 +85,7 @@
             return item.dpr === limit;
         });
 
-        $this.attr('src', srcsetBase + list[0].url);
+        $this.attr('src', srcsetBase + list[0].url + srcsetExt);
     });
 
 })(window.jQuery || window.Zepto, window, document);

@@ -36,6 +36,36 @@ module.exports = function (grunt) {
             extra: {
                 src: ['src/jquery.<%= pkg.name %>.js', 'src/jquery.<%= pkg.name %>.video.js'],
                 dest: 'dist/jquery.<%= pkg.name %>.extra.js'
+            },
+
+            simple: {
+                src: ['src/jquery.<%= pkg.name %>.simple.js'],
+                dest: 'dist/jquery.<%= pkg.name %>.simple.js'
+            },
+
+            autoload: {
+                src: ['src/jquery.<%= pkg.name %>.autoload.js'],
+                dest: 'dist/jquery.<%= pkg.name %>.autoload.js'
+            },
+            bg: {
+                src: ['src/jquery.<%= pkg.name %>.bg.js'],
+                dest: 'dist/jquery.<%= pkg.name %>.bg.js'
+            },
+            print: {
+                src: ['src/jquery.<%= pkg.name %>.print.js'],
+                dest: 'dist/jquery.<%= pkg.name %>.print.js'
+            },
+            script: {
+                src: ['src/jquery.<%= pkg.name %>.script.js'],
+                dest: 'dist/jquery.<%= pkg.name %>.script.js'
+            },
+            srcset: {
+                src: ['src/jquery.<%= pkg.name %>.srcset.js'],
+                dest: 'dist/jquery.<%= pkg.name %>.srcset.js'
+            },
+            video: {
+                src: ['src/jquery.<%= pkg.name %>.video.js'],
+                dest: 'dist/jquery.<%= pkg.name %>.video.js'
             }
         },
         uglify: {
@@ -50,6 +80,36 @@ module.exports = function (grunt) {
             extra: {
                 src: '<%= concat.extra.dest %>',
                 dest: 'dist/jquery.<%= pkg.name %>.extra.min.js'
+            },
+
+            simple: {
+                src: '<%= concat.simple.dest %>',
+                dest: 'dist/jquery.<%= pkg.name %>.simple.min.js'
+            },
+
+            autoload: {
+                src: '<%= concat.autoload.dest %>',
+                dest: 'dist/jquery.<%= pkg.name %>.autoload.min.js'
+            },
+            bg: {
+                src: '<%= concat.bg.dest %>',
+                dest: 'dist/jquery.<%= pkg.name %>.bg.min.js'
+            },
+            print: {
+                src: '<%= concat.print.dest %>',
+                dest: 'dist/jquery.<%= pkg.name %>.print.min.js'
+            },
+            script: {
+                src: '<%= concat.script.dest %>',
+                dest: 'dist/jquery.<%= pkg.name %>.script.min.js'
+            },
+            srcset: {
+                src: '<%= concat.srcset.dest %>',
+                dest: 'dist/jquery.<%= pkg.name %>.srcset.min.js'
+            },
+            video: {
+                src: '<%= concat.video.dest %>',
+                dest: 'dist/jquery.<%= pkg.name %>.video.min.js'
             }
         },
         qunit: {

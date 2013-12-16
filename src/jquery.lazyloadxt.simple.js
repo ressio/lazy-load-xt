@@ -9,7 +9,6 @@
             selector: 'img',
             srcAttr: 'data-src',
             classNojs: 'lazy',
-            blankImage: 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
             edgeX: 0,
             edgeY: 0,
             throttle: 99,
@@ -50,10 +49,6 @@
         $el
             .data('lazied', 1)
             .removeClass(options.classNojs);
-
-        if (options.blankImage && !$el.attr('src')) {
-            $el.attr('src', options.blankImage);
-        }
 
         elements.unshift($el); // push it in the first position as we iterate elements in reverse order
     }

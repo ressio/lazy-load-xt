@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Responsive images with srcset addon</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="../libs/jquery/jquery.js"></script>
+    <script src="../dist/jquery.lazyloadxt.js"></script>
+    <script src="../dist/jquery.lazyloadxt.srcset.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="page-header">
+        <h1>Responsive images with srcset addon</h1>
+        <p class="lead">Lazy loading of responsive images.</p>
+    </div>
+    <script>
+        var category = 'technics', count = 10;
+        for(var i=1; i<=count; i++) {
+            document.write('<p>' +
+                    '<img data-srcset-base="http://lorempixel.com/"' +
+                    ' data-srcset-ext="/'+category+'/'+i+'"' +
+                    ' data-srcset="450/300 1.5x, 600/400 2x, 900/600 3x, 300/200"' +
+                    ' width="300" height="200"></p>');
+        }
+    </script>
+</div>
+</body>
+</html>

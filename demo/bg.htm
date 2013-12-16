@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Background images addon</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="../libs/jquery/jquery.js"></script>
+    <script src="../dist/jquery.lazyloadxt.js"></script>
+    <script src="../dist/jquery.lazyloadxt.bg.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="page-header">
+        <h1>Background images addon</h1>
+        <p class="lead">Example of lazy loading of background images.</p>
+    </div>
+    <script>
+        var category = 'business', count = 10;
+        for(var i=1; i<=count; i++) {
+            document.write('<p data-bg="http://lorempixel.com/300/200/'+category+'/'+i+'" style="width:300px;height:200px"></p>');
+        }
+    </script>
+</div>
+</body>
+</html>

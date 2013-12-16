@@ -1,5 +1,5 @@
-/*! Lazy Load XT v0.8.4 2013-12-12
- * https://github.com/ressio/lazy-load-xt
+/*! Lazy Load XT v0.8.5 2013-12-16
+ * http://ressio.github.io/lazy-load-xt
  * (C) 2013 RESS.io
  * Licensed under MIT */
 
@@ -171,6 +171,10 @@
                 }
             }
         }
+
+        if (!elements.length) {
+            $(document).trigger('lazyloadall');
+        }
     }
 
 
@@ -206,11 +210,10 @@
         }
 
         if (!waitingMode) {
-            waitingMode = 2;
             setTimeout(timeoutLazyElements, 0);
-        } else {
-            waitingMode = 2;
         }
+
+        waitingMode = 2;
     }
 
     /**
@@ -269,21 +272,22 @@
         }
     });
 
-}(window.jQuery || window.Zepto, window, document));
+})(window.jQuery || window.Zepto, window, document);
 
 
 (function ($) {
-$.lazyLoadXT.selector += ',video,iframe[data-src]';
-    $.lazyLoadXT.videoPoster = 'data-poster';
+var options = $.lazyLoadXT;
+
+    options.selector += ',video,iframe[data-src]';
+    options.videoPoster = 'data-poster';
 
     $(document).on('lazyshow', 'video', function () {
         var $this = $(this),
-            srcPoster = $.lazyLoadXT.videoPoster,
-            srcAttr = $.lazyLoadXT.srcAttr,
+            srcAttr = options.srcAttr,
             isFuncSrcAttr = $.isFunction(srcAttr);
 
         $this
-            .attr('poster', $this.attr(srcPoster))
+            .attr('poster', $this.attr(options.videoPoster))
             .children()
             .each(function () {
                 if (/source|track/i.test(this.tagName)) {
@@ -296,4 +300,4 @@ $.lazyLoadXT.selector += ',video,iframe[data-src]';
         this.load();
     });
 
-}(window.jQuery || window.Zepto));
+})(window.jQuery || window.Zepto);

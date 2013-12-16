@@ -1,16 +1,19 @@
-/*jslint browser:true */
+/*jslint browser:true, plusplus:true, vars:true */
 /*jshint browser:true, jquery:true */
 
 (function ($) {
     'use strict';
 
-    $.lazyLoadXT.selector += ',[data-bg]';
+    var options = $.lazyLoadXT,
+        bgAttr = options.bgAttr || 'data-bg';
 
-    $(document).on('lazyshow', function () {
-        var $this = $(this);
+    options.selector += ',[' + bgAttr + ']';
+
+    $(document).on('lazyshow', function (e) {
+        var $this = $(e.target);
         $this
-            .css('background-image', "url('" + $this.attr('data-bg') + "')")
-            .removeAttr('data-bg');
+            .css('background-image', "url('" + $this.attr(bgAttr) + "')")
+            .removeAttr(bgAttr);
     });
 
 })(window.jQuery || window.Zepto);

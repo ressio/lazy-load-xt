@@ -65,30 +65,35 @@
 
 
     /**
-     * Add element to lazy-load list
-     * Call: addElement(idx, el) or addElement(el)
-     * @param idx
-     * @param {HTMLElement} [el]
+     * Add new elements to lazy-load list:
+     * $(elements).lazyLoadXT() or $(window).lazyLoadXT()
      */
-    function addElement(idx, el) {
-        var $el = $(el || idx);
+    $.fn.lazyLoadXT = function () {
+        return this.each(function () {
+            if (this === window) {
+                $(options.selector).lazyLoadXT();
+                return;
+            }
 
-        // prevent duplicates
-        if ($el.data('lazied')) {
-            return;
-        }
-        $el
-            .data('lazied', 1)
-            .removeClass(options.classNojs);
+            var $el = $(this);
 
-        if (options.blankImage && $el[0].tagName === 'IMG' && !$el.attr('src')) {
-            $el.attr('src', options.blankImage);
-        }
+            // prevent duplicates
+            if ($el.data('lazied')) {
+                return;
+            }
+            $el
+                .data('lazied', 1)
+                .removeClass(options.classNojs);
 
-        triggerEvent('init', $el);
+            if (options.blankImage && $el[0].tagName === 'IMG' && !$el.attr('src')) {
+                $el.attr('src', options.blankImage);
+            }
 
-        elements.unshift($el); // push it in the first position as we iterate elements in reverse order
-    }
+            triggerEvent('init', $el);
+
+            elements.unshift($el); // push it in the first position as we iterate elements in reverse order
+        });
+    };
 
 
     /**
@@ -218,36 +223,10 @@
     }
 
     /**
-     * Add batch of new elements: $(container).lazyLoadXT([optional selector])
-     * or single one:             $(image).lazyLoadXT()
-     */
-    $.fn.lazyLoadXT = function (selector) {
-        selector = selector || options.selector;
-
-        this.each(function () {
-            if ('src' in this) {
-                addElement(this);
-            } else {
-                if (this === window) {
-                    $(selector).each(addElement);
-                } else {
-                    $(this)
-                        .find(selector)
-                        .each(addElement);
-                }
-            }
-        });
-
-        queueCheckLazyElements();
-        return this;
-    };
-
-
-    /**
      * Initialize list of hidden elements
      */
     function initLazyElements() {
-        $window.lazyLoadXT();
+        $(window).lazyLoadXT();
     }
 
 

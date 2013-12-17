@@ -41,30 +41,6 @@
     $.lazyLoadXT = $.extend(options, $.lazyLoadXT);
 
     /**
-     * Process function/object event handler
-     * @param {string} event suffix
-     * @param {jQuery} $el
-     */
-    function triggerEvent(event, $el) {
-        $el.trigger('lazy' + event);
-
-        var handler = options['on' + event];
-        if (handler) {
-            if ($.isFunction(handler)) {
-                handler.call($el[0]);
-            } else {
-                $el
-                    .addClass(handler.addClass)
-                    .removeClass(handler.removeClass);
-            }
-        }
-
-        // queue next check as images may be resized after loading of actual file
-        queueCheckLazyElements();
-    }
-
-
-    /**
      * Add new elements to lazy-load list:
      * $(elements).lazyLoadXT() or $(window).lazyLoadXT()
      */
@@ -81,6 +57,7 @@
             if ($el.data('lazied')) {
                 return;
             }
+
             $el
                 .data('lazied', 1)
                 .removeClass(options.classNojs);
@@ -109,6 +86,30 @@
         viewportBottom = scrollTop + (window.innerHeight || $window.height()) + edgeY;
         viewportLeft = scrollLeft - edgeX;
         viewportRight = scrollLeft + (window.innerWidth || $window.width()) + edgeX;
+    }
+
+
+    /**
+     * Process function/object event handler
+     * @param {string} event suffix
+     * @param {jQuery} $el
+     */
+    function triggerEvent(event, $el) {
+        $el.trigger('lazy' + event);
+
+        var handler = options['on' + event];
+        if (handler) {
+            if ($.isFunction(handler)) {
+                handler.call($el[0]);
+            } else {
+                $el
+                    .addClass(handler.addClass)
+                    .removeClass(handler.removeClass);
+            }
+        }
+
+        // queue next check as images may be resized after loading of actual file
+        queueCheckLazyElements();
     }
 
 

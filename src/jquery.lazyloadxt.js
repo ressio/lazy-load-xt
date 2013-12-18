@@ -44,7 +44,12 @@
      * Add new elements to lazy-load list:
      * $(elements).lazyLoadXT() or $(window).lazyLoadXT()
      */
-    $.fn.lazyLoadXT = function () {
+    $.fn.lazyLoadXT = function (overrides) {
+        overrides = overrides || {};
+
+        var blankImage = overrides.blankImage || options.blankImage,
+            classNojs = overrides.classNojs || options.classNojs;
+
         return this.each(function () {
             if (this === window) {
                 $(options.selector).lazyLoadXT();
@@ -60,15 +65,19 @@
 
             $el
                 .data('lazied', 1)
-                .removeClass(options.classNojs);
+                .removeClass(classNojs);
 
-            if (options.blankImage && $el[0].tagName === 'IMG' && !$el.attr('src')) {
-                $el.attr('src', options.blankImage);
+            if (blankImage && $el[0].tagName === 'IMG' && !$el.attr('src')) {
+                $el.attr('src', blankImage);
             }
 
             triggerEvent('init', $el);
 
-            elements.unshift($el); // push it in the first position as we iterate elements in reverse order
+            var objdata = {o: $el};
+            $.each(['srcAttr', 'edgeX', 'edgeY', 'visibleOnly'], function (i, name) {
+                objdata[name] = overrides[name] || options[name];
+            });
+            elements.unshift(objdata); // push it in the first position as we iterate elements in reverse order
         });
     };
 
@@ -77,15 +86,11 @@
      * Save visible viewport boundary to viewportXXX variables
      */
     function calcViewport() {
-        var scrollTop = $window.scrollTop(),
-            scrollLeft = window.pageXOffset || 0,
-            edgeX = options.edgeX,
-            edgeY = options.edgeY;
+        viewportTop = $window.scrollTop();
+        viewportBottom = viewportTop + (window.innerHeight || $window.height());
 
-        viewportTop = scrollTop - edgeY;
-        viewportBottom = scrollTop + (window.innerHeight || $window.height()) + edgeY;
-        viewportLeft = scrollLeft - edgeX;
-        viewportRight = scrollLeft + (window.innerWidth || $window.width()) + edgeX;
+        viewportLeft = window.pageXOffset || 0;
+        viewportRight = viewportLeft + (window.innerWidth || $window.width());
     }
 
 
@@ -141,28 +146,28 @@
         topLazy = Infinity;
         calcViewport();
 
-        var i = elements.length - 1,
-            srcAttr = options.srcAttr,
-            isFuncSrcAttr = $.isFunction(srcAttr);
-        for (; i >= 0; i--) {
-            var $el = elements[i],
+        for (var i = elements.length - 1; i >= 0; i--) {
+            var objData = elements[i],
+                $el = objData.o,
                 el = $el[0];
 
             // remove items that are not in DOM
             if (!$.contains(document.body, el)) {
                 elements.splice(i, 1);
-            } else if (force || !options.visibleOnly || el.offsetWidth > 0 || el.offsetHeight > 0) {
+            } else if (force || !objData.visibleOnly || el.offsetWidth > 0 || el.offsetHeight > 0) {
                 var offset = $el.offset(),
                     elTop = offset.top,
-                    elLeft = offset.left;
+                    elLeft = offset.left,
+                    topEdge = elTop - objData.edgeY;
 
                 if (force ||
-                    ((elTop < viewportBottom) && (elTop + $el.height() > viewportTop) &&
-                        (elLeft < viewportRight) && (elLeft + $el.width() > viewportLeft))) {
+                    ((topEdge < viewportBottom) && (elTop + $el.height() > viewportTop - objData.edgeY) &&
+                        (elLeft < viewportRight + objData.edgeX) && (elLeft + $el.width() > viewportLeft - objData.edgeX))) {
 
                     triggerEvent('show', $el);
 
-                    var src = isFuncSrcAttr ? srcAttr($el) : $el.attr(srcAttr);
+                    var srcAttr = objData.srcAttr,
+                        src = $.isFunction(srcAttr) ? srcAttr($el) : $el.attr(srcAttr);
                     if (src) {
                         $el
                             .on('load', triggerLoad)
@@ -172,8 +177,8 @@
 
                     elements.splice(i, 1);
                 } else {
-                    if (elTop < topLazy) {
-                        topLazy = elTop;
+                    if (topEdge < topLazy) {
+                        topLazy = topEdge;
                     }
                 }
             }

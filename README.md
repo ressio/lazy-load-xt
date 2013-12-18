@@ -655,7 +655,9 @@ Here is example of how to do it using PHP:
 
 ## Version History
 
-- [**0.8.5**](https://github.com/ressio/lazy-load-xt/tree/0.8.5) (15.12.2013): New addons, “simple” version,
+- [**0.8.6**](https://github.com/ressio/lazy-load-xt/tree/0.8.6) (18.12.2013): New "widget" addon, support of per
+  element options
+- [**0.8.5**](https://github.com/ressio/lazy-load-xt/tree/0.8.5) (15.12.2013): New addons, "simple" version,
   `lazyloadall` event, slight reduce minified size
 - [**0.8.4**](https://github.com/ressio/lazy-load-xt/tree/0.8.4) (12.12.2013): Fixed check of removed elements,
    support of `$.lazyLoadXT.videoPoster` parameter, additional examples in `src` (srcset polyfill, transparent

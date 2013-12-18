@@ -1,4 +1,4 @@
-/*! Lazy Load XT v0.8.5 2013-12-16
+/*! Lazy Load XT v0.8.6 2013-12-18
  * http://ressio.github.io/lazy-load-xt
  * (C) 2013 RESS.io
  * Licensed under MIT */
@@ -34,26 +34,36 @@
 
     $.lazyLoadXT = $.extend(options, $.lazyLoadXT);
 
-
     /**
-     * Add element to lazy-load list
-     * Call: addElement(idx, el) or addElement(el)
-     * @param idx
-     * @param {HTMLElement} [el]
+     * Add new elements to lazy-load list:
+     * $(elements).lazyLoadXT() or $(window).lazyLoadXT()
      */
-    function addElement(idx, el) {
-        var $el = $(el || idx);
+    $.fn.lazyLoadXT = function () {
+        this.each(function () {
+            if (this === window) {
+                $(options.selector).lazyLoadXT();
+                return;
+            }
 
-        // prevent duplicates
-        if ($el.data('lazied')) {
-            return;
-        }
-        $el
-            .data('lazied', 1)
-            .removeClass(options.classNojs);
+            var $el = $(this);
 
-        elements.unshift($el); // push it in the first position as we iterate elements in reverse order
-    }
+            // prevent duplicates
+            if ($el.data('lazied')) {
+                return;
+            }
+
+            $el
+                .data('lazied', 1)
+                .removeClass(options.classNojs);
+
+            elements.unshift($el); // push it in the first position as we iterate elements in reverse order
+        });
+
+        // queue next check as images may be resized after loading of actual file
+        queueCheckLazyElements();
+
+        return this;
+    };
 
 
     /**
@@ -150,6 +160,7 @@
         if (!waitingMode) {
             setTimeout(timeoutLazyElements, 0);
         }
+
         waitingMode = 2;
     }
 
@@ -158,8 +169,7 @@
      * Initialize list of hidden elements
      */
     function initLazyElements() {
-        $(options.selector).each(addElement);
-        queueCheckLazyElements();
+        $(window).lazyLoadXT();
     }
 
 

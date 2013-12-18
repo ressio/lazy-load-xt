@@ -228,11 +228,13 @@
         waitingMode = 2;
     }
 
+
     /**
      * Initialize list of hidden elements
      */
     function initLazyElements() {
         $(window).lazyLoadXT();
+        queueCheckLazyElements();
     }
 
 

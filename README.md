@@ -10,7 +10,6 @@
 - [Demo](#demo)
 - [Advanced initialization](#advanced-initialization)
 - [Browsers with disabled JavaScript](#browsers-with-disabled-javascript)
-- [Limitations](#limitations)
 - [Options](#options)
 - [Events](#events)
 - [More than images](#more-than-images)
@@ -178,12 +177,6 @@ We recommend to keep the order of attributes in both `<img>` tags, because of su
 Alternative approach is based on tagging images/videos with `<script>` tag. It is realized using
 `jquery.lazyloadxt.script.js` addon and is described in [corresponding addon’s section](#script-based-tagging)
 (note that this approach is experimental and currently is not compatible with AJAX).
-
-
-## Limitations
-Unlike other lazy loading plugins, Lazy Load XT uses global collection of "lazy" elements and shared settings. This
-allows to get better performance, but in most cases it is impossible to have two or more containers with independent
-set of settings.
 
 
 ## Options

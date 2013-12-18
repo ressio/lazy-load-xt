@@ -9,13 +9,9 @@
     var options = {
             autoInit: true,
             selector: 'img',
-            srcAttr: 'data-src',
             classNojs: 'lazy',
             blankImage: 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
-            edgeX: 0,
-            edgeY: 0,
             throttle: 99,
-            visibleOnly: true,
             loadEvent: 'pageshow', // check AJAX-loaded content in jQueryMobile
             updateEvent: 'load orientationchange resize scroll', // page-modified events
             forceEvent: '', // force loading of all elements
@@ -23,6 +19,12 @@
             onshow: null, // start loading handler
             onload: null, // load success handler
             onerror: null // error handler
+        },
+        elementOptions = {
+            srcAttr: 'data-src',
+            edgeX: 0,
+            edgeY: 0,
+            visibleOnly: true
         },
         $window = $(window),
         elements = [],
@@ -38,7 +40,7 @@
      */
         waitingMode = 0;
 
-    $.lazyLoadXT = $.extend(options, $.lazyLoadXT);
+    $.lazyLoadXT = $.extend(options, elementOptions, $.lazyLoadXT);
 
     /**
      * Add new elements to lazy-load list:
@@ -53,31 +55,32 @@
         return this.each(function () {
             if (this === window) {
                 $(options.selector).lazyLoadXT();
-                return;
+            } else {
+                var $el = $(this),
+                    objData,
+                    prop;
+
+                // prevent duplicates
+                if ($el.data('lazied')) {
+                    return;
+                }
+
+                $el
+                    .data('lazied', 1)
+                    .removeClass(classNojs);
+
+                if (blankImage && $el[0].tagName === 'IMG' && !$el.attr('src')) {
+                    $el.attr('src', blankImage);
+                }
+
+                triggerEvent('init', $el);
+
+                objData = {o: $el};
+                for (prop in elementOptions) {
+                    objData[prop] = overrides[prop] || options[prop];
+                }
+                elements.unshift(objData); // push it in the first position as we iterate elements in reverse order
             }
-
-            var $el = $(this);
-
-            // prevent duplicates
-            if ($el.data('lazied')) {
-                return;
-            }
-
-            $el
-                .data('lazied', 1)
-                .removeClass(classNojs);
-
-            if (blankImage && $el[0].tagName === 'IMG' && !$el.attr('src')) {
-                $el.attr('src', blankImage);
-            }
-
-            triggerEvent('init', $el);
-
-            var objdata = {o: $el};
-            $.each(['srcAttr', 'edgeX', 'edgeY', 'visibleOnly'], function (i, name) {
-                objdata[name] = overrides[name] || options[name];
-            });
-            elements.unshift(objdata); // push it in the first position as we iterate elements in reverse order
         });
     };
 
@@ -158,11 +161,13 @@
                 var offset = $el.offset(),
                     elTop = offset.top,
                     elLeft = offset.left,
-                    topEdge = elTop - objData.edgeY;
+                    edgeX = objData.edgeX,
+                    edgeY = objData.edgeY,
+                    topEdge = elTop - edgeY;
 
                 if (force ||
-                    ((topEdge < viewportBottom) && (elTop + $el.height() > viewportTop - objData.edgeY) &&
-                        (elLeft < viewportRight + objData.edgeX) && (elLeft + $el.width() > viewportLeft - objData.edgeX))) {
+                    ((topEdge < viewportBottom) && (elTop + $el.height() > viewportTop - edgeY) &&
+                        (elLeft < viewportRight + edgeX) && (elLeft + $el.width() > viewportLeft - edgeX))) {
 
                     triggerEvent('show', $el);
 

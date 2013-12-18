@@ -23,10 +23,12 @@
     - [AJAX](#ajax)
     - [Support of IE6/7](#support-of-ie6-7)
 - [Addons](#addons)
-    - [`<script>`-based tagging](#script-based-tagging)
+    - [Video](#video)
     - [Responsive images](#responsive-images)
+    - [Widgets](#widgets)
     - [Print](#print)
     - [Background image](#background-image)
+    - [`<script>`-based tagging](#script-based-tagging)
     - [Deferred autoload](#deferred-autoload)
 - [Example of page preparation in PHP](#example-of-page-preparation-in-php)
 - [Version History](#version-history)
@@ -145,6 +147,9 @@ There are two ways to initialize elements if auto initialization doesn't suit yo
 3. `$(elements).lazyLoadXT();` to initialize all selected elements.
 
 For example, `$(container).find(selector).lazyLoadXT();` initializes elements matching `selector` inside `container`.
+
+You can pass optional argument to override default `$.lazyLoadXT` options. The following options only may be overridden:
+`srcAttr`, `edgeX`, `edgeY`, `visibleOnly`, `blankImage`, `classNojs`.
 
 Note: don’t forget to disable auto initialization with `$.lazyLoadXT.autoInit=false;` if you like to use manual
 initialization of all elements.
@@ -461,6 +466,58 @@ this addon doesn't require browser to support `srcset` attribute draft.
 Demo: http://ressio.github.io/lazy-load-xt/demo/srcset.htm
 
 
+### Widgets
+
+Images and videos are not the only heavy parts of the page. Nowadays it's hard to find website that doesn't use
+widgets for different social medias (like Twitter, Facebook, Google+, etc.). If integration with such resource is done
+using `<iframe>` tag, you can use "extra" version of Lazy Load XT to make it lazy loaded:
+
+    ```html
+    <script src="jquery.lazyloadxt.extra.js">
+    ```
+
+    ```html
+    <!-- Facebook Recommend Widget -->
+    <iframe data-src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fressio.github.io%2Flazy-load-xt&amp;width&amp;layout=button_count&amp;action=recommend&amp;show_faces=true&amp;share=true&amp;height=21"
+            scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:21px;" allowTransparency="true"></iframe>
+    ```
+
+Demo: http://ressio.github.io/lazy-load-xt/demo/widget-iframe.htm
+
+But in most cases JavaScript is used to embed widgets. Specially for this case we have universal
+`jquery.lazyloadxt.widget.js` addon that allows to add some html code to the page when other element become visible.
+The code should wrapped in html comment inside a `div` with assigned `id` attribute, and the element should have
+`data-lazy-widget` attribute with value of that `id`:
+
+
+    ```html
+    <script src="jquery.lazyloadxt.js">
+    <script src="jquery.lazyloadxt.widget.js">
+    ```
+
+    ```html
+    <!-- Google +1 Button -->
+    <div data-lazy-widget="gplus" class="g-plusone" data-annotation="inline" data-width="300"></div>
+    <div id="gplus"><!--
+    <script type="text/javascript">
+        (function() {
+            var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+            po.src = 'https://apis.google.com/js/platform.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+        })();
+    </script>
+    --></div>
+    ```
+
+Options:
+
+**$.lazyLoadXT.widgetAttr** name of attribute with `id` of commented html code (by default `'data-lazy-widget'`).
+Note: `widgetAttr` option should be set before loading of `jquery.lazyloadxt.widget.js` as it is used to alter
+`$.lazyLoadXT.selector` option.
+
+Demo: http://ressio.github.io/lazy-load-xt/demo/widget.htm
+
+
 ### Print
 
 It is another issue of lazy loading: if user prints the page, only loaded images will be printed. This addon allows
@@ -496,7 +553,7 @@ viewport area.
 
 Options:
 
-**$.lazyLoadXT.bgAttr** name of attribute with path to background image (by default `'data-bg'`). Note: attribute
+**$.lazyLoadXT.bgAttr** name of attribute with path to background image (by default `'data-bg'`). Note: option
 should be set before loading of `jquery.lazyloadxt.bg.js` as it is used to alter `$.lazyLoadXT.selector` option.
 
 Demo: http://ressio.github.io/lazy-load-xt/demo/bg.htm

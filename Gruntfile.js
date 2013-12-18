@@ -66,6 +66,10 @@ module.exports = function (grunt) {
             video: {
                 src: ['src/jquery.<%= pkg.name %>.video.js'],
                 dest: 'dist/jquery.<%= pkg.name %>.video.js'
+            },
+            widget: {
+                src: ['src/jquery.<%= pkg.name %>.widget.js'],
+                dest: 'dist/jquery.<%= pkg.name %>.widget.js'
             }
         },
         uglify: {
@@ -110,6 +114,10 @@ module.exports = function (grunt) {
             video: {
                 src: '<%= concat.video.dest %>',
                 dest: 'dist/jquery.<%= pkg.name %>.video.min.js'
+            },
+            widget: {
+                src: '<%= concat.widget.dest %>',
+                dest: 'dist/jquery.<%= pkg.name %>.widget.min.js'
             }
         },
         qunit: {

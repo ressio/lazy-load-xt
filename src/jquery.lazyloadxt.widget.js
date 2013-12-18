@@ -11,12 +11,18 @@
     options.selector += ',[' + widgetAttr + ']';
 
     $(document).on('lazyshow', '[' + widgetAttr + ']', function () {
-        var $div = $('#' + $(this).attr(widgetAttr)),
+        var $this = $(this),
+            id = $this.attr(widgetAttr),
             match;
-        if ($div.length) {
-            match = reComment.exec($div.html());
+
+        if (id) {
+            $this = $('#' + id);
+        }
+
+        if ($this.length) {
+            match = reComment.exec($this.html());
             if (match) {
-                $div.replaceWith($.trim(match[1]));
+                $this.replaceWith($.trim(match[1]));
             }
         }
     });

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Lazy Load XT Test Suite</title>
+  <!-- Load local jQuery. This can be overridden with a ?jquery=___ param. -->
+  <script src="../libs/jquery-loader.js"></script>
+  <!-- Load local QUnit. -->
+  <link rel="stylesheet" href="../libs/qunit/qunit.css" media="screen">
+  <script src="../libs/qunit/qunit.js"></script>
+  <!-- Load local lib and tests. -->
+  <script src="../src/jquery.lazyloadxt.simple.js"></script>
+  <script src="lazyloadxt_test.js"></script>
+  <!-- Removing access to jQuery and $. But it'll still be available as _$, if
+       you REALLY want to mess around with jQuery in the console. REMEMBER WE
+       ARE TESTING A PLUGIN HERE, THIS HELPS ENSURE BEST PRACTICES. REALLY. -->
+  <script>window._$ = jQuery.noConflict(true);</script>
+</head>
+<body>
+  <div id="qunit"></div>
+  <div id="qunit-fixture">
+  </div>
+  <div id="visible-container">
+      <p><img data-src="http://lorempixel.com/300/200/transport/1" width="300" height="200"></p>
+      <p><img data-src="http://lorempixel.com/300/200/transport/2" width="300" height="200"></p>
+      <p><img data-src="http://lorempixel.com/300/200/transport/3" width="300" height="200"></p>
+      <p><img data-src="http://lorempixel.com/300/200/transport/4" width="300" height="200"></p>
+      <p><img data-src="http://lorempixel.com/300/200/transport/5" width="300" height="200"></p>
+      <p><img data-src="http://lorempixel.com/300/200/transport/6" width="300" height="200"></p>
+      <p><img data-src="http://lorempixel.com/300/200/transport/7" width="300" height="200"></p>
+      <p><img data-src="http://lorempixel.com/300/200/transport/8" width="300" height="200"></p>
+      <p><img data-src="http://lorempixel.com/300/200/transport/9" width="300" height="200"></p>
+      <p><img data-src="http://lorempixel.com/300/200/transport/10" width="300" height="200"></p>
+  </div>
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Lazy Loading of Widgets</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="../libs/jquery/jquery.js"></script>
+    <script src="../libs/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../dist/jquery.lazyloadxt.js"></script>
+    <script src="../dist/jquery.lazyloadxt.widget.js"></script>
+    <style>
+        html, body, .container {
+            height: 100%;
+            min-height: 100%;
+        }
+        .placeholder {
+            height: 90%;
+        }
+        .g-plusone, .g-plus, .g-person {
+            min-width: 100px;
+            min-height: 50px;
+        }
+        .fb-like, .fb-share-button, .fb-post, .fb-comments {
+            min-width: 86px;
+            min-height: 20px;
+        }
+        .fb-post {
+            min-height: 350px;
+        }
+        .fb-comments {
+            min-height: 160px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <nav class="navbar navbar-inverse" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Lazy Load XT</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="../index.htm">Home</a></li>
+                <li class="active"><a href="index.htm">Demos</a></li>
+                <li><a href="https://github.com/ressio/lazy-load-xt/">GitHub</a></li>
+                <li><iframe allowtransparency="true" frameborder="0" scrolling="0" width="135" height="30"
+                            src="http://ghbtns.com/github-btn.html?user=ressio&amp;repo=lazy-load-xt&amp;type=watch&amp;count=true&amp;size=large"></iframe>
+                <li><iframe allowtransparency="true" frameborder="0" scrolling="0" width="135" height="30"
+                            src="http://ghbtns.com/github-btn.html?user=ressio&amp;repo=lazy-load-xt&amp;type=fork&amp;count=true&amp;size=large"></iframe>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="http://ress.io/">RESS.io</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="page-header">
+        <h1>Lazy Loading of JavaScript Widgets</h1>
+        <p class="lead">Lazy loading of Facebook, Twitter, and other widgets.</p>
+    </div>
+
+    <p>Note: some widgets don't work with file:// protocol.</p>
+    <div class="placeholder">Scroll down to widgets...</div>
+
+    <h3>Embedded Tweet</h3>
+    <div>
+        <blockquote data-lazy-widget="twitter_1" class="twitter-tweet" lang="en"><p>Lazy Load XT: jQuery mobile plugin for lazy loading of images/videos and other content <a href="http://t.co/xtvV4FSGJy">http://t.co/xtvV4FSGJy</a></p>&mdash; Miikka Kukkosuo (@miikka_k) <a href="https://twitter.com/miikka_k/statuses/409051409506897921">December 6, 2013</a></blockquote>
+        <div id="twitter_1"><!--
+        <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+        --></div>
+    </div>
+
+    <h3>Twitter Share Button</h3>
+    <div>
+        <a data-lazy-widget="twitter_2" href="https://twitter.com/share" class="twitter-share-button" data-size="large">Tweet</a>
+        <div id="twitter_2"><!--
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+        --></div>
+    </div>
+
+    <h3>Google+1 Button</h3>
+    <div>
+        <div data-lazy-widget="gp_1" class="g-plusone" data-annotation="inline" data-width="300"></div>
+        <div id="gp_1"><!--
+        <script type="text/javascript">
+            (function() {
+                var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                po.src = 'https://apis.google.com/js/platform.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+            })();
+        </script>
+        --></div>
+    </div>
+
+    <h3>Google+ Share Button</h3>
+    <div>
+        <div data-lazy-widget="gp_2" class="g-plus" data-action="share" data-height="24"></div>
+        <div id="gp_2"><!--
+        <script type="text/javascript">
+            (function() {
+                var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                po.src = 'https://apis.google.com/js/platform.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+            })();
+        </script>
+        --></div>
+    </div>
+
+    <h3>Google+ Badge</h3>
+    <div>
+        <div data-lazy-widget="gp_3" class="g-person" data-href="https://plus.google.com/108551811075711499995" data-rel="author"></div>
+        <div id="gp_3"><!--
+        <script type="text/javascript">
+            (function() {
+                var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                po.src = 'https://apis.google.com/js/platform.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+            })();
+        </script>
+        --></div>
+    </div>
+
+    <h3>Facebook Recommend Button</h3>
+    <div>
+        <div id="fb-root"></div>
+        <div data-lazy-widget="fb_1" class="fb-like" data-href="http://ressio.github.io/lazy-load-xt" data-layout="button_count" data-action="recommend" data-show-faces="true" data-share="true"></div>
+        <div id="fb_1"><!--
+        <script>(function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
+        --></div>
+    </div>
+
+    <h3>Facebook Share Button</h3>
+    <div>
+        <div data-lazy-widget="fb_2" class="fb-share-button" data-href="http://ressio.github.io/lazy-load-xt" data-type="button_count"></div>
+        <div id="fb_2"><!--
+        <script>(function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
+        --></div>
+    </div>
+
+    <h3>Facebook Post</h3>
+    <div>
+        <div data-lazy-widget="fb_3" class="fb-post" data-href="https://www.facebook.com/jqueryscript/posts/589072127814625" data-width="500"></div>
+        <div id="fb_3"><!--
+        <script>(function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
+        --></div>
+    </div>
+
+    <h3>Facebook Comments</h3>
+    <div>
+        <div data-lazy-widget="fb_4" class="fb-comments" data-href="http://ressio.github.io/lazy-load-xt" data-numposts="5" data-colorscheme="light"></div>
+        <div id="fb_4"><!--
+        <script>(function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
+        --></div>
+    </div>
+
+</div>
+<script type="text/javascript">var _gaq=_gaq||[];_gaq.push(["_setAccount","UA-46297160-1"]);_gaq.push(["_trackPageview"]);(function(){var a=document.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"==document.location.protocol?"https://ssl":"http://www")+".google-analytics.com/ga.js";var b=document.getElementsByTagName("script")[0];b.parentNode.insertBefore(a,b)})();</script>
+</body>
+</html>

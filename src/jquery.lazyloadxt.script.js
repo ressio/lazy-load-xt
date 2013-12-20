@@ -3,6 +3,8 @@
 /*jshint -W060:false */ /* we use document.write */
 
 (function ($, window, document) {
+    'use strict';
+
     var dataLazyTag = $.lazyLoadXT.dataLazyTag || 'data-lazy-tag';
 
     window.L = function (tag) {

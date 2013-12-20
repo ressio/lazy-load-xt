@@ -124,6 +124,7 @@
 
     /**
      * Trigger onload/onerror handler
+     * @param {Event} e
      */
     function triggerLoadOrError(e) {
         triggerEvent(e.type, $(this).off('load error', triggerLoadOrError));

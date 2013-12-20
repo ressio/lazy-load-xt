@@ -5,10 +5,10 @@
     'use strict';
 
     var options = $.lazyLoadXT,
-        reUrl = /^\s*([^\s]*)/,
-        reWidth = /[^\s]\s+(\d+)w/,
-        reHeight = /[^\s]\s+(\d+)h/,
-        reDpr = /[^\s]\s+([\d\.]+)x/,
+        reUrl = /^\s*(\S*)/,
+        reWidth = /\S\s+(\d+)w/,
+        reHeight = /\S\s+(\d+)h/,
+        reDpr = /\S\s+([\d\.]+)x/,
         infty = [0, Infinity],
         one = [0, 1];
 

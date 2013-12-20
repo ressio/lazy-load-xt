@@ -27,6 +27,7 @@
             visibleOnly: true
         },
         $window = $(window),
+        dataLazied = 'lazied',
         elements = [],
         viewportTop,
         viewportBottom,
@@ -61,12 +62,12 @@
                     prop;
 
                 // prevent duplicates
-                if ($el.data('lazied')) {
+                if ($el.data(dataLazied)) {
                     return;
                 }
 
                 $el
-                    .data('lazied', 1)
+                    .data(dataLazied, 1)
                     .removeClass(classNojs);
 
                 if (blankImage && $el[0].tagName === 'IMG' && !$el.attr('src')) {

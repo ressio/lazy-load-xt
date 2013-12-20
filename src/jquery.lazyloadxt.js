@@ -27,7 +27,6 @@
             visibleOnly: true
         },
         $window = $(window),
-        docRoot = document.documentElement || document.body,
         dataLazied = 'lazied',
         elements = [],
         viewportTop,
@@ -157,7 +156,7 @@
                 el = $el[0];
 
             // remove items that are not in DOM
-            if (!$.contains(docRoot, el)) {
+            if (!$.contains(document.documentElement, el)) {
                 elements.splice(i, 1);
             } else if (force || !objData.visibleOnly || el.offsetWidth > 0 || el.offsetHeight > 0) {
                 var offset = $el.offset(),

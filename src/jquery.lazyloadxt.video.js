@@ -11,7 +11,7 @@
 
     $(document).on('lazyshow', 'video', function () {
         var $this = $(this),
-            srcAttr = options.srcAttr,
+            srcAttr = $this.lazyLoadXT.srcAttr,
             isFuncSrcAttr = $.isFunction(srcAttr);
 
         $this

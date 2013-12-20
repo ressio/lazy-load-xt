@@ -58,7 +58,6 @@
                 $(options.selector).lazyLoadXT();
             } else {
                 var $el = $(this),
-                    objData,
                     prop;
 
                 // prevent duplicates
@@ -74,13 +73,14 @@
                     $el.attr('src', blankImage);
                 }
 
+                $el.lazyLoadXT = {};
+                for (prop in elementOptions) {
+                    $el.lazyLoadXT[prop] = overrides[prop] || options[prop];
+                }
+
                 triggerEvent('init', $el);
 
-                objData = {o: $el};
-                for (prop in elementOptions) {
-                    objData[prop] = overrides[prop] || options[prop];
-                }
-                elements.unshift(objData); // push it in the first position as we iterate elements in reverse order
+                elements.unshift($el); // push it in the first position as we iterate elements in reverse order
             }
         });
     };
@@ -144,9 +144,9 @@
         calcViewport();
 
         for (var i = elements.length - 1; i >= 0; i--) {
-            var objData = elements[i],
-                $el = objData.o,
-                el = $el[0];
+            var $el = elements[i],
+                el = $el[0],
+                objData = $el.lazyLoadXT;
 
             // remove items that are not in DOM
             if (!$.contains(document.documentElement, el)) {

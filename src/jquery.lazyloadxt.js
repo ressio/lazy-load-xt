@@ -123,18 +123,10 @@
 
 
     /**
-     * Trigger onload handler
+     * Trigger onload/onerror handler
      */
-    function triggerLoad() {
-        triggerEvent('load', $(this));
-    }
-
-
-    /**
-     * Trigger onerror handler
-     */
-    function triggerError() {
-        triggerEvent('error', $(this));
+    function triggerLoadOrError(e) {
+        triggerEvent(e.type, $(this).off('load error', triggerLoadOrError));
     }
 
 
@@ -176,8 +168,7 @@
                         src = $.isFunction(srcAttr) ? srcAttr($el) : $el.attr(srcAttr);
                     if (src) {
                         $el
-                            .on('load', triggerLoad)
-                            .on('error', triggerError)
+                            .on('load error', triggerLoadOrError)
                             .attr('src', src);
                     }
 

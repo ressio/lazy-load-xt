@@ -230,7 +230,7 @@
      * Initialize list of hidden elements
      */
     function initLazyElements() {
-        $(window).lazyLoadXT();
+        $window.lazyLoadXT();
         queueCheckLazyElements();
     }
 

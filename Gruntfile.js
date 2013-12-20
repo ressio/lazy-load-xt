@@ -26,7 +26,7 @@ module.exports = function (grunt) {
                     // remove jslint/jshint options and 'use strict' declaration
                     return src
                         .replace(/\/\*js[hl]int.*?\*\/\n/g, '')
-                        .replace(/(^|\n)[ \t]*(['"])use strict\2;\s*/g, '$1');
+                        .replace(/(^|\n)[ \t]*(['"])use strict\2;[ \t]*\n*/g, '$1');
                 }
             },
             base: {

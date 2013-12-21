@@ -104,7 +104,7 @@
      * @param {jQuery} $el
      */
     function triggerEvent(event, $el) {
-        $el.trigger('lazy' + event);
+        $el.trigger('lazy' + event, [$el]);
 
         var handler = options['on' + event];
         if (handler) {

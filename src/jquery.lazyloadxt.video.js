@@ -9,13 +9,12 @@
     options.selector += ',video,iframe[data-src]';
     options.videoPoster = 'data-poster';
 
-    $(document).on('lazyshow', 'video', function () {
-        var $this = $(this),
-            srcAttr = $this.lazyLoadXT.srcAttr,
+    $(document).on('lazyshow', 'video', function (e, $el) {
+        var srcAttr = $el.srcAttr,
             isFuncSrcAttr = $.isFunction(srcAttr);
 
-        $this
-            .attr('poster', $this.attr(options.videoPoster))
+        $el
+            .attr('poster', $el.attr(options.videoPoster))
             .children()
             .each(function () {
                 if (/source|track/i.test(this.tagName)) {

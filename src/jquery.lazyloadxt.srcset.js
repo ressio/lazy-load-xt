@@ -5,6 +5,9 @@
     'use strict';
 
     var options = $.lazyLoadXT,
+        srcsetSupport = (function () {
+            return 'srcset' in (new Image());
+        })(),
         reUrl = /^\s*(\S*)/,
         reWidth = /\S\s+(\d+)w/,
         reHeight = /\S\s+(\d+)h/,
@@ -12,7 +15,9 @@
         infty = [0, Infinity],
         one = [0, 1];
 
+    options.selector += ',picture';
     options.srcsetAttr = 'data-srcset';
+    options.srcsetExtended = true;
     options.srcsetBaseAttr = 'data-srcset-base';
     options.srcsetExtAttr = 'data-srcset-ext';
 
@@ -28,64 +33,95 @@
         }));
     }
 
-    // based on http://www.whatwg.org/specs/web-apps/current-work/multipage/embedded-content-1.html#processing-the-image-candidates
-    $(document).on('lazyshow', function (e) {
-        var $this = $(e.target),
-            srcset = $this.attr(options.srcsetAttr);
+    /**
+     * Parse and process srcset attribute
+     * based on http://www.whatwg.org/specs/web-apps/current-work/multipage/embedded-content-1.html#processing-the-image-candidates
+     * @param {jQuery} $el
+     */
+    function srcsetPolyfill($el) {
+        var srcset = $el.attr(options.srcsetAttr);
 
-        if (!srcset) {
-            return;
+        if (srcset) {
+            if (!options.srcsetExtended && srcsetSupport) {
+                $el.attr('srcset', srcset);
+            } else {
+                var list = srcset.split(',').map(function (item) {
+                    return {
+                        url: reUrl.exec(item)[1],
+                        width: (reWidth.exec(item) || infty)[1],
+                        height: (reHeight.exec(item) || infty)[1],
+                        dpr: (reDpr.exec(item) || one)[1]
+                    };
+                });
+
+                if (list.length) {
+                    var viewport = {
+                            width: window.innerWidth || document.documentElement.clientWidth,
+                            height: window.innerHeight || document.documentElement.clientHeight,
+                            dpr: window.devicePixelRatio || 1
+                        },
+                        limit,
+                        src;
+
+                    limit = max(list, 'width');
+                    list = $.grep(list, function (item) {
+                        return item.width >= viewport.width || item.width === limit;
+                    });
+                    limit = max(list, 'height');
+                    list = $.grep(list, function (item) {
+                        return item.height >= viewport.height || item.height === limit;
+                    });
+                    limit = max(list, 'dpr');
+                    list = $.grep(list, function (item) {
+                        return item.dpr >= viewport.dpr || item.dpr === limit;
+                    });
+
+                    limit = min(list, 'width');
+                    list = $.grep(list, function (item) {
+                        return item.width === limit;
+                    });
+                    limit = min(list, 'height');
+                    list = $.grep(list, function (item) {
+                        return item.height === limit;
+                    });
+                    limit = min(list, 'dpr');
+                    list = $.grep(list, function (item) {
+                        return item.dpr === limit;
+                    });
+
+                    src = list[0].url;
+
+                    if (options.srcsetExtended) {
+                        src = ($el.attr(options.srcsetBaseAttr) || '') + src + ($el.attr(options.srcsetExtAttr) || '');
+                    }
+
+                    $el.attr('src', src);
+                }
+            }
         }
+    }
 
-        var list = srcset.split(',').map(function (item) {
-            return {
-                url: reUrl.exec(item)[1],
-                width: (reWidth.exec(item) || infty)[1],
-                height: (reHeight.exec(item) || infty)[1],
-                dpr: (reDpr.exec(item) || one)[1]
-            };
-        });
+    $(document).on('lazyshow', 'img', function (e, $el) {
+        srcsetPolyfill($el);
+    });
 
-        if (!list.length) {
-            return;
-        }
+    $(document).on('lazyshow', 'picture', function (e, $el) {
+        var srcAttr = $el.lazyLoadXT.srcAttr,
+            isFuncSrcAttr = $.isFunction(srcAttr);
 
-        var srcsetBase = $this.attr(options.srcsetBaseAttr) || '',
-            srcsetExt = $this.attr(options.srcsetExtAttr) || '',
-            viewport = {
-                width: window.innerWidth || document.documentElement.clientWidth,
-                height: window.innerHeight || document.documentElement.clientHeight,
-                dpr: window.devicePixelRatio || 1
-            },
-            limit;
-
-        limit = max(list, 'width');
-        list = $.grep(list, function (item) {
-            return item.width >= viewport.width || item.width === limit;
-        });
-        limit = max(list, 'height');
-        list = $.grep(list, function (item) {
-            return item.height >= viewport.height || item.height === limit;
-        });
-        limit = max(list, 'dpr');
-        list = $.grep(list, function (item) {
-            return item.dpr >= viewport.dpr || item.dpr === limit;
-        });
-
-        limit = min(list, 'width');
-        list = $.grep(list, function (item) {
-            return item.width === limit;
-        });
-        limit = min(list, 'height');
-        list = $.grep(list, function (item) {
-            return item.height === limit;
-        });
-        limit = min(list, 'dpr');
-        list = $.grep(list, function (item) {
-            return item.dpr === limit;
-        });
-
-        $this.attr('src', srcsetBase + list[0].url + srcsetExt);
+        $el
+            .children()
+            .each(function () {
+                if (/img|source/i.test(this.tagName)) {
+                    var $child = $(this),
+                        src = isFuncSrcAttr ? srcAttr($child) : $child.attr(srcAttr);
+                    if (src) {
+                        $child.attr('src', src);
+                    } else {
+                        srcsetPolyfill($child);
+                    }
+                }
+            });
     });
 
 })(window.jQuery || window.Zepto, window, document);

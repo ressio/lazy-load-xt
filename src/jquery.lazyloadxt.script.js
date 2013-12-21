@@ -5,7 +5,8 @@
 (function ($, window, document) {
     'use strict';
 
-    var dataLazyTag = $.lazyLoadXT.dataLazyTag || 'data-lazy-tag';
+    var options = $.lazyLoadXT,
+        dataLazyTag = options.dataLazyTag || 'data-lazy-tag';
 
     window.L = function (tag) {
         document.write('<br ' + dataLazyTag + '="' + (tag || 'img') + '" ');
@@ -20,7 +21,10 @@
     };
 
     $(document).ready(function () {
-        var srcAttr = $.lazyLoadXT.srcAttr;
+        var srcAttr = options.srcAttr;
+        if ($.isFunction(srcAttr)) {
+            srcAttr = 'data-src';
+        }
 
         $('br[' + dataLazyTag + '],span[' + dataLazyTag + ']').each(function () {
             var attrs = this.attributes,

@@ -51,6 +51,10 @@ module.exports = function (grunt) {
                 src: ['src/jquery.<%= pkg.name %>.bg.js'],
                 dest: 'dist/jquery.<%= pkg.name %>.bg.js'
             },
+            picture: {
+                src: ['src/jquery.<%= pkg.name %>.picture.js'],
+                dest: 'dist/jquery.<%= pkg.name %>.picture.js'
+            },
             print: {
                 src: ['src/jquery.<%= pkg.name %>.print.js'],
                 dest: 'dist/jquery.<%= pkg.name %>.print.js'
@@ -98,6 +102,10 @@ module.exports = function (grunt) {
             bg: {
                 src: '<%= concat.bg.dest %>',
                 dest: 'dist/jquery.<%= pkg.name %>.bg.min.js'
+            },
+            picture: {
+                src: '<%= concat.picture.dest %>',
+                dest: 'dist/jquery.<%= pkg.name %>.picture.min.js'
             },
             print: {
                 src: '<%= concat.print.dest %>',

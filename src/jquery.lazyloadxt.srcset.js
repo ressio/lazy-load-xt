@@ -13,13 +13,18 @@
         reHeight = /\S\s+(\d+)h/,
         reDpr = /\S\s+([\d\.]+)x/,
         infty = [0, Infinity],
-        one = [0, 1];
+        one = [0, 1],
+        srcsetOptions = {
+            srcsetAttr: 'data-srcset',
+            srcsetExtended: true,
+            srcsetBaseAttr: 'data-srcset-base',
+            srcsetExtAttr: 'data-srcset-ext'
+        },
+        prop;
 
-    options.selector += ',picture';
-    options.srcsetAttr = 'data-srcset';
-    options.srcsetExtended = true;
-    options.srcsetBaseAttr = 'data-srcset-base';
-    options.srcsetExtAttr = 'data-srcset-ext';
+    for (prop in srcsetOptions) {
+        options[prop] = options[prop] || srcsetOptions[prop];
+    }
 
     function max(array, property) {
         return Math.max.apply(null, $.map(array, function (item) {
@@ -33,12 +38,7 @@
         }));
     }
 
-    /**
-     * Parse and process srcset attribute
-     * based on http://www.whatwg.org/specs/web-apps/current-work/multipage/embedded-content-1.html#processing-the-image-candidates
-     * @param {jQuery} $el
-     */
-    function srcsetPolyfill($el) {
+    $(document).on('lazyshow', 'img', function (e, $el) {
         var srcset = $el.attr(options.srcsetAttr);
 
         if (srcset) {
@@ -99,29 +99,6 @@
                 }
             }
         }
-    }
-
-    $(document).on('lazyshow', 'img', function (e, $el) {
-        srcsetPolyfill($el);
-    });
-
-    $(document).on('lazyshow', 'picture', function (e, $el) {
-        var srcAttr = $el.lazyLoadXT.srcAttr,
-            isFuncSrcAttr = $.isFunction(srcAttr);
-
-        $el
-            .children()
-            .each(function () {
-                if (/img|source/i.test(this.tagName)) {
-                    var $child = $(this),
-                        src = isFuncSrcAttr ? srcAttr($child) : $child.attr(srcAttr);
-                    if (src) {
-                        $child.attr('src', src);
-                    } else {
-                        srcsetPolyfill($child);
-                    }
-                }
-            });
     });
 
 })(window.jQuery || window.Zepto, window, document);

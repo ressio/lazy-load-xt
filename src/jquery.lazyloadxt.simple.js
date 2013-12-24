@@ -98,7 +98,7 @@
                 el = $el[0];
 
             // remove items that are not in DOM
-            if (!$.contains(document.body, el)) {
+            if (!$.contains(document.documentElement, el)) {
                 elements.splice(i, 1);
             } else if (!options.visibleOnly || el.offsetWidth > 0 || el.offsetHeight > 0) {
                 var offset = $el.offset(),

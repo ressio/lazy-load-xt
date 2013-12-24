@@ -15,12 +15,10 @@
 
         $el
             .attr('poster', $el.attr(options.videoPoster))
-            .children()
+            .children('source,track')
             .each(function () {
-                if (/source|track/i.test(this.tagName)) {
-                    var $child = $(this);
-                    $child.attr('src', isFuncSrcAttr ? srcAttr($child) : $child.attr(srcAttr));
-                }
+                var $child = $(this);
+                $child.attr('src', isFuncSrcAttr ? srcAttr($child) : $child.attr(srcAttr));
             });
 
         // reload video

@@ -1,7 +1,7 @@
 /*jslint browser:true, plusplus:true, vars:true, regexp:false */
 /*jshint browser:true, jquery:true */
 
-(function ($, window, document) {
+(function ($, window, document, undefined) {
     'use strict';
 
     var options = $.lazyLoadXT,
@@ -20,22 +20,32 @@
             srcsetBaseAttr: 'data-srcset-base',
             srcsetExtAttr: 'data-srcset-ext'
         },
-        prop;
+        viewport = {
+            w: 0,
+            h: 0,
+            x: 0
+        },
+        property,
+        limit;
 
-    for (prop in srcsetOptions) {
-        options[prop] = options[prop] || srcsetOptions[prop];
+    for (property in srcsetOptions) {
+        if (options[property] === undefined) {
+            options[property] = srcsetOptions[property];
+        }
     }
 
-    function max(array, property) {
-        return Math.max.apply(null, $.map(array, function (item) {
+    function mathFilter(array, action) {
+        return Math[action].apply(null, $.map(array, function (item) {
             return item[property];
         }));
     }
 
-    function min(array, property) {
-        return Math.min.apply(null, $.map(array, function (item) {
-            return item[property];
-        }));
+    function compareMax(item) {
+        return item[property] >= viewport[property] || item[property] === limit;
+    }
+
+    function compareMin(item) {
+        return item[property] === limit;
     }
 
     $(document).on('lazyshow', 'img', function (e, $el) {
@@ -48,46 +58,34 @@
                 var list = srcset.split(',').map(function (item) {
                     return {
                         url: reUrl.exec(item)[1],
-                        width: (reWidth.exec(item) || infty)[1],
-                        height: (reHeight.exec(item) || infty)[1],
-                        dpr: (reDpr.exec(item) || one)[1]
+                        w: (reWidth.exec(item) || infty)[1],
+                        h: (reHeight.exec(item) || infty)[1],
+                        x: (reDpr.exec(item) || one)[1]
                     };
                 });
 
                 if (list.length) {
-                    var viewport = {
-                            width: window.innerWidth || document.documentElement.clientWidth,
-                            height: window.innerHeight || document.documentElement.clientHeight,
-                            dpr: window.devicePixelRatio || 1
-                        },
-                        limit,
+                    var documentElement = document.documentElement,
+                        whx,
                         src;
 
-                    limit = max(list, 'width');
-                    list = $.grep(list, function (item) {
-                        return item.width >= viewport.width || item.width === limit;
-                    });
-                    limit = max(list, 'height');
-                    list = $.grep(list, function (item) {
-                        return item.height >= viewport.height || item.height === limit;
-                    });
-                    limit = max(list, 'dpr');
-                    list = $.grep(list, function (item) {
-                        return item.dpr >= viewport.dpr || item.dpr === limit;
-                    });
+                    viewport = {
+                        w: window.innerWidth || documentElement.clientWidth,
+                        h: window.innerHeight || documentElement.clientHeight,
+                        x: window.devicePixelRatio || 1
+                    };
 
-                    limit = min(list, 'width');
-                    list = $.grep(list, function (item) {
-                        return item.width === limit;
-                    });
-                    limit = min(list, 'height');
-                    list = $.grep(list, function (item) {
-                        return item.height === limit;
-                    });
-                    limit = min(list, 'dpr');
-                    list = $.grep(list, function (item) {
-                        return item.dpr === limit;
-                    });
+                    for (whx in viewport) {
+                        property = whx;
+                        limit = mathFilter(list, 'max');
+                        list = $.grep(list, compareMax);
+                    }
+
+                    for (whx in viewport) {
+                        property = whx;
+                        limit = mathFilter(list, 'min');
+                        list = $.grep(list, compareMin);
+                    }
 
                     src = list[0].url;
 

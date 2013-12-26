@@ -1,13 +1,13 @@
-/*! Lazy Load XT v0.8.6 2013-12-18
+/*! Lazy Load XT v0.8.7 2013-12-26
  * http://ressio.github.io/lazy-load-xt
  * (C) 2013 RESS.io
  * Licensed under MIT */
 
 (function ($) {
-var options = $.lazyLoadXT;
+    var options = $.lazyLoadXT;
 
     options.forceEvent += ' lazyloadall';
-    options.autoLoad = 50;
+    options.autoLoad = options.autoLoad || 50;
 
     $(document).ready(function () {
         setTimeout(function () {

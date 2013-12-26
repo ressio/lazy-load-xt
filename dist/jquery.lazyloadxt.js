@@ -1,10 +1,10 @@
-/*! Lazy Load XT v0.8.6 2013-12-18
+/*! Lazy Load XT v0.8.7 2013-12-26
  * http://ressio.github.io/lazy-load-xt
  * (C) 2013 RESS.io
  * Licensed under MIT */
 
-(function ($, window, document) {
-// options
+(function ($, window, document, undefined) {
+    // options
     var options = {
             autoInit: true,
             selector: 'img',
@@ -26,6 +26,7 @@
             visibleOnly: true
         },
         $window = $(window),
+        dataLazied = 'lazied',
         elements = [],
         viewportTop,
         viewportBottom,
@@ -48,37 +49,39 @@
     $.fn.lazyLoadXT = function (overrides) {
         overrides = overrides || {};
 
-        var blankImage = overrides.blankImage || options.blankImage,
-            classNojs = overrides.classNojs || options.classNojs;
+        var elementOptionsOverrides = {},
+            blankImage = overrides.blankImage || options.blankImage,
+            classNojs = overrides.classNojs || options.classNojs,
+            prop;
+
+        for (prop in elementOptions) {
+            elementOptionsOverrides[prop] = (overrides[prop] === undefined) ? options[prop] : overrides[prop];
+        }
 
         return this.each(function () {
             if (this === window) {
                 $(options.selector).lazyLoadXT();
             } else {
-                var $el = $(this),
-                    objData,
-                    prop;
+                var $el = $(this);
 
                 // prevent duplicates
-                if ($el.data('lazied')) {
+                if ($el.data(dataLazied)) {
                     return;
                 }
 
                 $el
-                    .data('lazied', 1)
+                    .data(dataLazied, 1)
                     .removeClass(classNojs);
 
                 if (blankImage && $el[0].tagName === 'IMG' && !$el.attr('src')) {
                     $el.attr('src', blankImage);
                 }
 
+                $el.lazyLoadXT = elementOptionsOverrides;
+
                 triggerEvent('init', $el);
 
-                objData = {o: $el};
-                for (prop in elementOptions) {
-                    objData[prop] = overrides[prop] || options[prop];
-                }
-                elements.unshift(objData); // push it in the first position as we iterate elements in reverse order
+                elements.unshift($el); // push it in the first position as we iterate elements in reverse order
             }
         });
     };
@@ -102,7 +105,7 @@
      * @param {jQuery} $el
      */
     function triggerEvent(event, $el) {
-        $el.trigger('lazy' + event);
+        $el.trigger('lazy' + event, [$el]);
 
         var handler = options['on' + event];
         if (handler) {
@@ -121,18 +124,11 @@
 
 
     /**
-     * Trigger onload handler
+     * Trigger onload/onerror handler
+     * @param {Event} e
      */
-    function triggerLoad() {
-        triggerEvent('load', $(this));
-    }
-
-
-    /**
-     * Trigger onerror handler
-     */
-    function triggerError() {
-        triggerEvent('error', $(this));
+    function triggerLoadOrError(e) {
+        triggerEvent(e.type, $(this).off('load error', triggerLoadOrError));
     }
 
 
@@ -149,12 +145,12 @@
         calcViewport();
 
         for (var i = elements.length - 1; i >= 0; i--) {
-            var objData = elements[i],
-                $el = objData.o,
-                el = $el[0];
+            var $el = elements[i],
+                el = $el[0],
+                objData = $el.lazyLoadXT;
 
             // remove items that are not in DOM
-            if (!$.contains(document.body, el)) {
+            if (!$.contains(document.documentElement, el)) {
                 elements.splice(i, 1);
             } else if (force || !objData.visibleOnly || el.offsetWidth > 0 || el.offsetHeight > 0) {
                 var offset = $el.offset(),
@@ -165,8 +161,8 @@
                     topEdge = elTop - edgeY;
 
                 if (force ||
-                    ((topEdge < viewportBottom) && (elTop + $el.height() > viewportTop - edgeY) &&
-                        (elLeft < viewportRight + edgeX) && (elLeft + $el.width() > viewportLeft - edgeX))) {
+                    ((topEdge <= viewportBottom) && (elTop + $el.height() > viewportTop - edgeY) &&
+                        (elLeft <= viewportRight + edgeX) && (elLeft + $el.width() > viewportLeft - edgeX))) {
 
                     triggerEvent('show', $el);
 
@@ -174,8 +170,7 @@
                         src = $.isFunction(srcAttr) ? srcAttr($el) : $el.attr(srcAttr);
                     if (src) {
                         $el
-                            .on('load', triggerLoad)
-                            .on('error', triggerError)
+                            .on('load error', triggerLoadOrError)
                             .attr('src', src);
                     }
 
@@ -237,7 +232,7 @@
      * Initialize list of hidden elements
      */
     function initLazyElements() {
-        $(window).lazyLoadXT();
+        $window.lazyLoadXT();
         queueCheckLazyElements();
     }
 

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Responsive images with picture addon</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="../libs/jquery/jquery.js"></script>
+    <script src="../dist/jquery.lazyloadxt.js"></script>
+    <script src="../dist/jquery.lazyloadxt.picture.js"></script>
+    <style>
+        picture {
+            display: block;
+        }
+        picture > br {
+            display: none;
+        }
+        img {
+            max-width: 100%;
+            height: auto !important;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="page-header">
+        <h1>Responsive images with picture addon</h1>
+        <p class="lead">Lazy loading of responsive images.</p>
+    </div>
+    <script>
+        var category = 'city', count = 10;
+        for (var i = 1; i <= count; i++) {
+            document.write('<picture width="600" height="400">' +
+                    '<br data-src="http://lorempixel.com/320/213/' + category + '/' + i + '">' +
+                    '<br media="(min-width: 320px)" data-src="http://lorempixel.com/480/320/' + category + '/' + i + '">' +
+                    '<br media="(min-width: 480px)" data-src="http://lorempixel.com/600/400/' + category + '/' + i + '">' +
+                    '<img data-src="http://lorempixel.com/600/400/' + category + '/' + i + '">' +
+                    '<p>Image #' + i + '</p>' +
+                    '</picture>');
+        }
+    </script>
+</div>
+</body>
+</html>

@@ -438,25 +438,86 @@ Note: this addon append `iframe[data-src]` to `$.lazyLoadXT.selector`, so if you
 
 ### Responsive images
 
-This addon allows to combine lazy loading and responsive images. Format of responsive images description is based
-on [srcset attribute](http://www.w3.org/html/wg/drafts/srcset/w3c-srcset/) draft of HTML extension for adaptive images:
+There are two addons for responsive images:
 
-    ```html
-    <script src="jquery.lazyloadxt.js">
-    <script src="jquery.lazyloadxt.srcset.js">
-    ```
+1. `srcset` for lazy loading of images with polyfill for `srcset` attribute.
+2. `picture` for lazy loading of images with polyfill for `<picture>` tag.
 
-    ```html
-    <img data-srcset="image-hd.jpg 2x, image-phone.jpg 360w, image-phone-hd.jpg 360w 2x">
+`srcset` addon allows to combine lazy loading and responsive images description in `data-srcset` attribute of `<img>`
+tag. Format of responsive images description is based on
+[srcset attribute](http://www.w3.org/html/wg/drafts/srcset/w3c-srcset/) draft of HTML extension for adaptive images:
 
-    <img data-srcset-base="image" data-srcset-ext=".jpg" data-srcset="-hd 2x, -phone 360w, -phone-hd 360w 2x">
-    ```
+```html
+<script src="jquery.lazyloadxt.js">
+<script src="jquery.lazyloadxt.srcset.js">
+```
+
+```html
+<img data-srcset="image-hd.jpg 2x, image-phone.jpg 360w, image-phone-hd.jpg 360w 2x">
+```
+
+It's possible to simplify images description using `data-srcset-base` and `data-srcset-ext` attributes, so that actual
+images URI is concatenation of `data-srcset-base`, chosen part of `data-src` description, and `data-srcset-ext`:
+
+```html
+<img data-srcset-base="image" data-srcset-ext=".jpg" data-srcset="-hd 2x, -phone 360w, -phone-hd 360w 2x">
+```
 
 If you like to have fallback image name to be `data-srcset-base`+`data-srcset-ext` (`image.jpg` in above example),
-just put comma at the end of `data-srcset` tag: `data-srcset="-hd 2x, -phone 360w, -phone-hd 360w 2x,"`. Note that
-this addon doesn't require browser to support `srcset` attribute draft.
+just put comma at the end of `data-srcset` description: `data-srcset="-hd 2x, -phone 360w, -phone-hd 360w 2x,"`. Note
+that this addon doesn't require browser to support `srcset` attribute.
+
+Options
+
+**$.lazyLoadXT.srcsetAttr** name of attribute with `srcset`-based description (by default `'data-srcset'`).
+
+**$.lazyLoadXT.srcsetExtended** enable support of `srcsetBaseAttr` and `srcsetExtAttr` options (by default `true`).
+
+**$.lazyLoadXT.srcsetBaseAttr** name of attribute with prefix for image URI (by default `'data-srcset-base'`).
+
+**$.lazyLoadXT.srcsetExtAttr** name of attribute with suffix for image URI (by default `'data-srcset-ext'`).
 
 Demo: http://ressio.github.io/lazy-load-xt/demo/srcset.htm
+
+
+`picture` addon is based on [`<picture>` tag](http://www.w3.org/TR/html-picture-element/) draft of HTML extension for
+adaptive images. Just rename `<source>` tags to `<br>`, `src` attribute to `data-src`, and add few CSS rules to make
+`<picture>` block element in browsers that don't support it:
+
+```css
+/* CSS */
+picture {
+  display: block;
+}
+picture > br {
+  display: none;
+}
+img {
+  max-width: 100%;
+  height: auto !important;
+}
+```
+
+```html
+<script src="../dist/jquery.lazyloadxt.js"></script>
+<script src="../dist/jquery.lazyloadxt.picture.js"></script>
+```
+
+```html
+<picture width="640" height="480">
+  <br data-src="small320.jpg">
+  <br media="(min-width: 321px)" data-src="medium480.jpg">
+  <br media="(min-width: 481px)" data-src="large640.jpg">
+  <img data-src="large640.jpg">
+  <p>Image caption</p>
+</picture>
+```
+
+Note: currently `data-srcset` attribute is not supported by this addon, but most likely further both `srcset` and
+`picture` addons will be merged into single one, so that `srcset` format for responsive images will be supported by
+`<img>` and `<picture>` tags.
+
+Demo: http://ressio.github.io/lazy-load-xt/demo/picture.htm
 
 
 ### Widgets

@@ -61,7 +61,7 @@
 
         return this.each(function () {
             if (this === window) {
-                $(options.selector).lazyLoadXT();
+                $(options.selector).lazyLoadXT(overrides);
             } else {
                 var $el = $(this);
 

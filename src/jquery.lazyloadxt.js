@@ -78,7 +78,8 @@
                     $el.attr('src', blankImage);
                 }
 
-                $el.lazyLoadXT = elementOptionsOverrides;
+                // clone elementOptionsOverrides object
+                $el.lazyLoadXT = $.extend({}, elementOptionsOverrides);
 
                 triggerEvent('init', $el);
 

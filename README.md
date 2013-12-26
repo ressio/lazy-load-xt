@@ -18,6 +18,8 @@
 - [Extendability](#extendability)
     - [Spinner](#spinner)
     - [Fade-in animation](#fade-in-animation)
+    - [Horizontal scroll](#horizontal-scroll)
+    - [Infinite scroll](#infinite-scroll)
     - [Hi-DPI (Retina) images](#hi-dpi-retina-images)
     - [AJAX](#ajax)
     - [Support of IE6/7](#support-of-ie6-7)
@@ -352,6 +354,76 @@ $.extend($.lazyLoadXT, {
 ```
 
 Demo: http://ressio.github.io/lazy-load-xt/demo/fadein.htm
+
+
+### Horizontal scroll
+
+Lazy Load XT checks that an image is in viewport in both vertical and horizontal dimensions, so that it is easy to
+make lazy loading of images in horizontal scroller. Let's assume that your html markup of scroller is something like
+```html
+<div class="wrapper">
+    <img data-src="/path/to/image/1" width="600" height="300">
+    <img data-src="/path/to/image/2" width="600" height="300">
+    <img data-src="/path/to/image/3" width="600" height="300">
+    <img data-src="/path/to/image/4" width="600" height="300">
+</div>
+```
+with following CSS rules to make `.wrapper` scrollable in horizontal direction and images to be alined:
+```css
+.wrapper {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+}
+.wrapper > img {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+}
+```
+
+Then all that you need is to proxy `scroll` event from `.wrapper` element to `window` because of `scroll` event [is not
+bubbled automatically](http://www.w3.org/TR/2009/WD-DOM-Level-3-Events-20090908/#event-type-scroll):
+```javascript
+$(document).ready(function () {
+    $('.wrapper').on('scroll', function () {
+        $(window).trigger('scroll');
+    });
+});
+```
+
+Demo: http://ressio.github.io/lazy-load-xt/demo/horizontal.htm
+
+
+### Infinite scroll
+
+Using Lazy Load XT it is easily to get "infinite scroll" effect. Just put a marker element at the end of list
+```html
+<div id="marker"></div>
+```
+and load next part of elements in `lazyshow` handler, e.g.:
+```javascript
+```
+```javascript
+$(document).ready(function () {
+```
+```javascript
+    $('#marker').on('lazyshow', function () {
+        $.ajax({...}).done(function (responseText) {
+            // add new elements:
+            // ...
+            // process new elements:
+            $(window).lazyLoadXT();
+            // clear "lazied" status and add marker to the "lazy" list:
+            $('#marker')
+                .data('lazied', 0)
+                .lazyLoadXT({visibleOnly: false});
+        });
+    }).lazyLoadXT({visibleOnly: false});
+});
+```
+
+Demo: http://ressio.github.io/lazy-load-xt/demo/infinite.htm
 
 
 ### Hi-DPI (Retina) images

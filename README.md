@@ -789,9 +789,12 @@ function addLazyLoading($html) {
 
 ## Version History
 
-- [**0.8.7**](https://github.com/ressio/lazy-load-xt/tree/0.8.7) (25.12.2013): New "picture" addon, feature to pass
+- [**0.8.8**](https://github.com/ressio/lazy-load-xt/tree/0.8.8) (26.12.2013): Fix sharing $el.lazyLoadXT object,
+  support $(window).lazyLoadXT({...}) call with overrides parameter
+- [**0.8.7**](https://github.com/ressio/lazy-load-xt/tree/0.8.7) (26.12.2013): New "picture" addon, feature to pass
   original jQuery element object (with `.lazyLoadXT.srcAttr` property) to `init` and `show` callbacks/event handlers,
-  support empty value for `data-lazy-widget` attribute in `widget` addon, minor fixes/improvements
+  support empty value for `data-lazy-widget` attribute in `widget` addon, minor fixes/improvements, horizontal scroll
+  demo, infinite scroll demo
 - [**0.8.6**](https://github.com/ressio/lazy-load-xt/tree/0.8.6) (18.12.2013): New "widget" addon, support of per
   element options
 - [**0.8.5**](https://github.com/ressio/lazy-load-xt/tree/0.8.5) (15.12.2013): New addons, "simple" version,

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Horizontal scroll</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="../libs/jquery/jquery.js"></script>
+    <script src="../dist/jquery.lazyloadxt.js"></script>
+    <style>
+        .wrapper {
+            overflow-x: scroll;
+            overflow-y: hidden;
+            white-space: nowrap;
+        }
+        .wrapper > img {
+            display: inline-block;
+            *display: inline;
+            *zoom: 1;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $('.wrapper').on('scroll', function () {
+                $(window).trigger('scroll');
+            });
+        });
+    </script>
+</head>
+<body>
+<div class="container">
+    <div class="page-header">
+        <h1>Horizontal scroll</h1>
+        <p class="lead">Lazy loading for horizontal scroll.</p>
+    </div>
+    <div class="wrapper">
+        <script>
+            var category = 'food', count = 10;
+            for (var i = 1; i <= count; i++) {
+                document.write('<img data-src="http://lorempixel.com/300/200/' + category + '/' + i + '" width="300" height="200">');
+            }
+        </script>
+    </div>
+</div>
+</body>
+</html>

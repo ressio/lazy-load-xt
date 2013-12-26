@@ -1,12 +1,10 @@
-/*! Lazy Load XT v0.8.6 2013-12-18
+/*! Lazy Load XT v0.8.7 2013-12-26
  * http://ressio.github.io/lazy-load-xt
  * (C) 2013 RESS.io
  * Licensed under MIT */
-/*jslint browser:true, plusplus:true, vars:true */
-/*jshint browser:true, jquery:true */
 
 (function ($, window, document) {
-// options
+    // options
     var options = {
             selector: 'img',
             srcAttr: 'data-src',
@@ -100,7 +98,7 @@
                 el = $el[0];
 
             // remove items that are not in DOM
-            if (!$.contains(document.body, el)) {
+            if (!$.contains(document.documentElement, el)) {
                 elements.splice(i, 1);
             } else if (!options.visibleOnly || el.offsetWidth > 0 || el.offsetHeight > 0) {
                 var offset = $el.offset(),

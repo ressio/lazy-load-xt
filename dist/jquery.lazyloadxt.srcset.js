@@ -1,91 +1,102 @@
-/*! Lazy Load XT v0.8.6 2013-12-18
+/*! Lazy Load XT v0.8.7 2013-12-26
  * http://ressio.github.io/lazy-load-xt
  * (C) 2013 RESS.io
  * Licensed under MIT */
 
-(function ($, window, document) {
-var options = $.lazyLoadXT,
-        reUrl = /^\s*([^\s]*)/,
-        reWidth = /[^\s]\s+(\d+)w/,
-        reHeight = /[^\s]\s+(\d+)h/,
-        reDpr = /[^\s]\s+([\d\.]+)x/,
+(function ($, window, document, undefined) {
+    var options = $.lazyLoadXT,
+        srcsetSupport = (function () {
+            return 'srcset' in (new Image());
+        })(),
+        reUrl = /^\s*(\S*)/,
+        reWidth = /\S\s+(\d+)w/,
+        reHeight = /\S\s+(\d+)h/,
+        reDpr = /\S\s+([\d\.]+)x/,
         infty = [0, Infinity],
-        one = [0, 1];
+        one = [0, 1],
+        srcsetOptions = {
+            srcsetAttr: 'data-srcset',
+            srcsetExtended: true,
+            srcsetBaseAttr: 'data-srcset-base',
+            srcsetExtAttr: 'data-srcset-ext'
+        },
+        viewport = {
+            w: 0,
+            h: 0,
+            x: 0
+        },
+        property,
+        limit;
 
-    options.srcsetAttr = 'data-srcset';
-    options.srcsetBaseAttr = 'data-srcset-base';
-    options.srcsetExtAttr = 'data-srcset-ext';
+    for (property in srcsetOptions) {
+        if (options[property] === undefined) {
+            options[property] = srcsetOptions[property];
+        }
+    }
 
-    function max(array, property) {
-        return Math.max.apply(null, $.map(array, function (item) {
+    function mathFilter(array, action) {
+        return Math[action].apply(null, $.map(array, function (item) {
             return item[property];
         }));
     }
 
-    function min(array, property) {
-        return Math.min.apply(null, $.map(array, function (item) {
-            return item[property];
-        }));
+    function compareMax(item) {
+        return item[property] >= viewport[property] || item[property] === limit;
     }
 
-    // based on http://www.whatwg.org/specs/web-apps/current-work/multipage/embedded-content-1.html#processing-the-image-candidates
-    $(document).on('lazyshow', function (e) {
-        var $this = $(e.target),
-            srcset = $this.attr(options.srcsetAttr);
+    function compareMin(item) {
+        return item[property] === limit;
+    }
 
-        if (!srcset) {
-            return;
+    $(document).on('lazyshow', 'img', function (e, $el) {
+        var srcset = $el.attr(options.srcsetAttr);
+
+        if (srcset) {
+            if (!options.srcsetExtended && srcsetSupport) {
+                $el.attr('srcset', srcset);
+            } else {
+                var list = srcset.split(',').map(function (item) {
+                    return {
+                        url: reUrl.exec(item)[1],
+                        w: (reWidth.exec(item) || infty)[1],
+                        h: (reHeight.exec(item) || infty)[1],
+                        x: (reDpr.exec(item) || one)[1]
+                    };
+                });
+
+                if (list.length) {
+                    var documentElement = document.documentElement,
+                        whx,
+                        src;
+
+                    viewport = {
+                        w: window.innerWidth || documentElement.clientWidth,
+                        h: window.innerHeight || documentElement.clientHeight,
+                        x: window.devicePixelRatio || 1
+                    };
+
+                    for (whx in viewport) {
+                        property = whx;
+                        limit = mathFilter(list, 'max');
+                        list = $.grep(list, compareMax);
+                    }
+
+                    for (whx in viewport) {
+                        property = whx;
+                        limit = mathFilter(list, 'min');
+                        list = $.grep(list, compareMin);
+                    }
+
+                    src = list[0].url;
+
+                    if (options.srcsetExtended) {
+                        src = ($el.attr(options.srcsetBaseAttr) || '') + src + ($el.attr(options.srcsetExtAttr) || '');
+                    }
+
+                    $el.attr('src', src);
+                }
+            }
         }
-
-        var list = srcset.split(',').map(function (item) {
-            return {
-                url: reUrl.exec(item)[1],
-                width: (reWidth.exec(item) || infty)[1],
-                height: (reHeight.exec(item) || infty)[1],
-                dpr: (reDpr.exec(item) || one)[1]
-            };
-        });
-
-        if (!list.length) {
-            return;
-        }
-
-        var srcsetBase = $this.attr(options.srcsetBaseAttr) || '',
-            srcsetExt = $this.attr(options.srcsetExtAttr) || '',
-            viewport = {
-                width: window.innerWidth || document.documentElement.clientWidth,
-                height: window.innerHeight || document.documentElement.clientHeight,
-                dpr: window.devicePixelRatio || 1
-            },
-            limit;
-
-        limit = max(list, 'width');
-        list = $.grep(list, function (item) {
-            return item.width >= viewport.width || item.width === limit;
-        });
-        limit = max(list, 'height');
-        list = $.grep(list, function (item) {
-            return item.height >= viewport.height || item.height === limit;
-        });
-        limit = max(list, 'dpr');
-        list = $.grep(list, function (item) {
-            return item.dpr >= viewport.dpr || item.dpr === limit;
-        });
-
-        limit = min(list, 'width');
-        list = $.grep(list, function (item) {
-            return item.width === limit;
-        });
-        limit = min(list, 'height');
-        list = $.grep(list, function (item) {
-            return item.height === limit;
-        });
-        limit = min(list, 'dpr');
-        list = $.grep(list, function (item) {
-            return item.dpr === limit;
-        });
-
-        $this.attr('src', srcsetBase + list[0].url + srcsetExt);
     });
 
 })(window.jQuery || window.Zepto, window, document);

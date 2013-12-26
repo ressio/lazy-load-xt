@@ -1,13 +1,11 @@
-/*! Lazy Load XT v0.8.6 2013-12-18
+/*! Lazy Load XT v0.8.7 2013-12-26
  * http://ressio.github.io/lazy-load-xt
  * (C) 2013 RESS.io
  * Licensed under MIT */
-/*jslint browser:true, plusplus:true, vars:true */
-/*jshint browser:true, jquery:true */
-/*jshint -W060:false */ /* we use document.write */
 
 (function ($, window, document) {
-    var dataLazyTag = $.lazyLoadXT.dataLazyTag || 'data-lazy-tag';
+    var options = $.lazyLoadXT,
+        dataLazyTag = options.dataLazyTag || 'data-lazy-tag';
 
     window.L = function (tag) {
         document.write('<br ' + dataLazyTag + '="' + (tag || 'img') + '" ');
@@ -22,7 +20,10 @@
     };
 
     $(document).ready(function () {
-        var srcAttr = $.lazyLoadXT.srcAttr;
+        var srcAttr = options.srcAttr;
+        if ($.isFunction(srcAttr)) {
+            srcAttr = 'data-src';
+        }
 
         $('br[' + dataLazyTag + '],span[' + dataLazyTag + ']').each(function () {
             var attrs = this.attributes,

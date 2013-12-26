@@ -2,7 +2,7 @@
 /*jshint browser:true, jquery:true */
 /*jshint -W040:false */ /* to don't alert on "this" in triggerLoad and triggerError */
 
-(function ($, window, document) {
+(function ($, window, document, undefined) {
     'use strict';
 
     // options
@@ -50,15 +50,20 @@
     $.fn.lazyLoadXT = function (overrides) {
         overrides = overrides || {};
 
-        var blankImage = overrides.blankImage || options.blankImage,
-            classNojs = overrides.classNojs || options.classNojs;
+        var elementOptionsOverrides = {},
+            blankImage = overrides.blankImage || options.blankImage,
+            classNojs = overrides.classNojs || options.classNojs,
+            prop;
+
+        for (prop in elementOptions) {
+            elementOptionsOverrides[prop] = (overrides[prop] === undefined) ? options[prop] : overrides[prop];
+        }
 
         return this.each(function () {
             if (this === window) {
                 $(options.selector).lazyLoadXT();
             } else {
-                var $el = $(this),
-                    prop;
+                var $el = $(this);
 
                 // prevent duplicates
                 if ($el.data(dataLazied)) {
@@ -73,10 +78,7 @@
                     $el.attr('src', blankImage);
                 }
 
-                $el.lazyLoadXT = {};
-                for (prop in elementOptions) {
-                    $el.lazyLoadXT[prop] = overrides[prop] || options[prop];
-                }
+                $el.lazyLoadXT = elementOptionsOverrides;
 
                 triggerEvent('init', $el);
 

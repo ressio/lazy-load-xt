@@ -125,12 +125,12 @@ To make media elements (`img`, `video`, `source`, `iframe`) to be lazy loaded, r
 It is highly recommended to set `width` and `height` attributes. Optionally you can add a placeholder `src` to bypass
 HTML validators:
 
-    ```html
-    <script src="jquery.js"></script>
-    <script src="jquery.lazyloadxt.js"></script>
+```html
+<script src="jquery.js"></script>
+<script src="jquery.lazyloadxt.js"></script>
 
-    <img data-src="lazy.jpg" width="100" height="100">
-    ```
+<img data-src="lazy.jpg" width="100" height="100">
+```
 
 
 ## Demo
@@ -161,16 +161,16 @@ with Noscript addon), it is usually recommended to add a fallback image in `<nos
 `class="lazy"` attribute and hide it using CSS (otherwise browsers with disabled javascript will display both images).
 Lazy Load XT plugin removes this class (`classNojs` option) at image initialization. So, final code should be like:
 
-    ```css
-    img.lazy {
-      display: none;
-    }
-    ```
+```css
+img.lazy {
+  display: none;
+}
+```
 
-    ```html
-    <img class="lazy" data-src="lazy.jpg" width="100" height="100">
-    <noscript><img src="lazy.jpg" width="100" height="100"></noscript>
-    ```
+```html
+<img class="lazy" data-src="lazy.jpg" width="100" height="100">
+<noscript><img src="lazy.jpg" width="100" height="100"></noscript>
+```
 
 We recommend to keep the order of attributes in both `<img>` tags, because of such a code will be effectively gzipped.
 
@@ -183,12 +183,12 @@ Alternative approach is based on tagging images/videos with `<script>` tag. It i
 
 The plugin is very extensible and supports a lot of options that are stored in $.lazyLoadXT object:
 
-    ```javascript
-    $.extend($.lazyLoadXT, {
-      edgeY:  200,
-      srcAttr: 'data-src'
-    });
-    ```
+```javascript
+$.extend($.lazyLoadXT, {
+  edgeY:  200,
+  srcAttr: 'data-src'
+});
+```
 
 You can either create this object before loading of `jquery.lazyloadxt.js`, or extend it after loading (but before
 jQuery's `ready` event).
@@ -264,13 +264,13 @@ We distribute special "extra" version of the plugin with additional code for laz
 Most of video hostings allow to embed videos as `<iframe>` elements (e.g. Youtube, Vimeo, DailyMotion, and even KickStarter)
 and they may be lazy loaded in the way similar to images (by replacing `src` attribute by `data-src`):
 
-    ```html
-    <script src="jquery.lazyloadxt.extra.js"></script>
-    ```
+```html
+<script src="jquery.lazyloadxt.extra.js"></script>
+```
 
-    ```html
-    <iframe width="420" height="315" data-src="//www.youtube.com/embed/uOzO9O15gwI?rel=0" frameborder="0" allowfullscreen></iframe>
-    ```
+```html
+<iframe width="420" height="315" data-src="//www.youtube.com/embed/uOzO9O15gwI?rel=0" frameborder="0" allowfullscreen></iframe>
+```
 
 Demo: http://ressio.github.io/lazy-load-xt/demo/youtube-iframe.htm
 
@@ -279,18 +279,18 @@ Demo: http://ressio.github.io/lazy-load-xt/demo/youtube-iframe.htm
 
 It is easy too, just replace `src` attribute by `data-src` and `poster` by `data-poster` (if exists).
 
-    ```html
-    <script src="jquery.lazyloadxt.extra.js"></script>
-    ```
+```html
+<script src="jquery.lazyloadxt.extra.js"></script>
+```
 
-    ```html
-    <video data-poster="/path/to/poster.jpg" width="320" height="240" controls>
-      <source data-src="/path/to/video.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
-      <source data-src="/path/to/video.ogv" type='video/ogg; codecs="theora, vorbis"'>
-    </video>
+```html
+<video data-poster="/path/to/poster.jpg" width="320" height="240" controls>
+  <source data-src="/path/to/video.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
+  <source data-src="/path/to/video.ogv" type='video/ogg; codecs="theora, vorbis"'>
+</video>
 
-    <video data-src="/path/to/video2.mp4" width="320" height="240" controls></video>
-    ```
+<video data-src="/path/to/video2.mp4" width="320" height="240" controls></video>
+```
 
 Demo: http://ressio.github.io/lazy-load-xt/demo/video-html5.htm
 
@@ -305,21 +305,21 @@ listed below.
 
 To display animated spinner while image is loading, you can set/reset CSS class in `onshow`/`onload` events:
 
-    ```css
-    /* CSS */
-    .lazy-hidden {
-      background:#eee url('/path/to/loading.gif') no-repeat 50% 50%;
-    }
-    ```
+```css
+/* CSS */
+.lazy-hidden {
+  background:#eee url('/path/to/loading.gif') no-repeat 50% 50%;
+}
+```
 
-    ```javascript
-    /* JS */
-    $.extend($.lazyLoadXT, {
-      onshow:  { addClass:    'lazy-hidden' },
-      onload:  { removeClass: 'lazy-hidden' },
-      onerror: { removeClass: 'lazy-hidden' }
-    });
-    ```
+```javascript
+/* JS */
+$.extend($.lazyLoadXT, {
+  onshow:  { addClass:    'lazy-hidden' },
+  onload:  { removeClass: 'lazy-hidden' },
+  onerror: { removeClass: 'lazy-hidden' }
+});
+```
 
 Demo: http://ressio.github.io/lazy-load-xt/demo/spinner.htm
 
@@ -328,28 +328,28 @@ Demo: http://ressio.github.io/lazy-load-xt/demo/spinner.htm
 
 To add fade-in animation you can use following sample of `onload` event and CSS rules:
 
-    ```css
-    /* CSS */
-    .lazy-hidden {
-      opacity: 0;
-    }
-    .lazy-loaded {
-      -webkit-transition: opacity 0.3s;
-      -moz-transition: opacity 0.3s;
-      -ms-transition: opacity 0.3s;
-      -o-transition: opacity 0.3s;
-      transition: opacity 0.3s;
-      opacity: 1;
-    }
-    ```
+```css
+/* CSS */
+.lazy-hidden {
+  opacity: 0;
+}
+.lazy-loaded {
+  -webkit-transition: opacity 0.3s;
+  -moz-transition: opacity 0.3s;
+  -ms-transition: opacity 0.3s;
+  -o-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+  opacity: 1;
+}
+```
 
-    ```javascript
-    /* JS */
-    $.extend($.lazyLoadXT, {
-      oninit: { addClass: 'lazy-hidden' },
-      onload: { addClass: 'lazy-loaded', removeClass: 'lazy-hidden' }
-    });
-    ```
+```javascript
+/* JS */
+$.extend($.lazyLoadXT, {
+  oninit: { addClass: 'lazy-hidden' },
+  onload: { addClass: 'lazy-loaded', removeClass: 'lazy-hidden' }
+});
+```
 
 Demo: http://ressio.github.io/lazy-load-xt/demo/fadein.htm
 
@@ -359,13 +359,13 @@ Demo: http://ressio.github.io/lazy-load-xt/demo/fadein.htm
 The code below allows you to use `data-src-3x` attribute for screens with 3x density (e.g. Samsung Galaxy S4),
 `data-src-2x` for 2x density (e.g. iPhones 4+), and `data-src-1.5x` for 1.5x density (e.g. HTC Incredible S).
 
-    ```javascript
-    /* JS */
-    (function($, dpr) {
-      if (dpr>1)
-        $.lazyLoadXT.srcAttr = 'data-src-' + (dpr > 2 ? '3x' : (dpr > 1.5 ? '2x' : '1.5x'));
-    })(jQuery, window.devicePixelRatio || 1);
-    ```
+```javascript
+/* JS */
+(function($, dpr) {
+  if (dpr>1)
+    $.lazyLoadXT.srcAttr = 'data-src-' + (dpr > 2 ? '3x' : (dpr > 1.5 ? '2x' : '1.5x'));
+})(jQuery, window.devicePixelRatio || 1);
+```
 
 Demo: http://ressio.github.io/lazy-load-xt/demo/retina.htm
 
@@ -381,14 +381,14 @@ you can apply lazy loading to new loaded content using `ajaxComplete` event. Not
 'pageshow ajaxComplete';` may not work correctly because of content is not added to the page at the time of
 `ajaxComplete` event, that's why it's better to postpone initialization by `setTimeout`:
 
-    ```javascript
-    /* JS */
-    $(window).on('ajaxComplete', function() {
-      setTimeout(function() {
-        $(window).lazyLoadXT();
-      }, 50);
-    });
-    ```
+```javascript
+/* JS */
+$(window).on('ajaxComplete', function() {
+  setTimeout(function() {
+    $(window).lazyLoadXT();
+  }, 50);
+});
+```
 
 Demo: http://ressio.github.io/lazy-load-xt/demo/ajax.htm
 
@@ -399,11 +399,11 @@ Lazy Load XT uses Data-URI-encoded transparent image for images outside of viewp
 during fast page scroll or in print preview).  As IE 6 and 7 don't support Data-URI, you can change image for that
 browsers:
 
-    ```javascript
-    /* JS */
-    if (parseInt(navigator.userAgent.toLowerCase().split('msie')[1] || 8, 10) < 8)
-        $.lazyLoadXT.blankImage = '//upload.wikimedia.org/wikipedia/en/d/d0/Clear.gif';
-    ```
+```javascript
+/* JS */
+if (parseInt(navigator.userAgent.toLowerCase().split('msie')[1] || 8, 10) < 8)
+  $.lazyLoadXT.blankImage = '//upload.wikimedia.org/wikipedia/en/d/d0/Clear.gif';
+```
 
 
 ## Addons
@@ -417,16 +417,16 @@ project and listed below.
 Support of video elements in extra version of Lazy Load XT is just an addon that is combined with base version of
 the script. That is loading of
 
-    ```html
-    <script src="jquery.lazyloadxt.extra.js">
-    ```
+```html
+<script src="jquery.lazyloadxt.extra.js">
+```
 
 is identical to loading of
 
-    ```html
-    <script src="jquery.lazyloadxt.js">
-    <script src="jquery.lazyloadxt.video.js">
-    ```
+```html
+<script src="jquery.lazyloadxt.js">
+<script src="jquery.lazyloadxt.video.js">
+```
 
 Options
 
@@ -465,15 +465,15 @@ Images and videos are not the only heavy parts of the page. Nowadays it's hard t
 widgets for different social medias (like Twitter, Facebook, Google+, etc.). If integration with such resource is done
 using `<iframe>` tag, you can use "extra" version of Lazy Load XT to make it lazy loaded:
 
-    ```html
-    <script src="jquery.lazyloadxt.extra.js">
-    ```
+```html
+<script src="jquery.lazyloadxt.extra.js">
+```
 
-    ```html
-    <!-- Facebook Recommend Widget -->
-    <iframe data-src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fressio.github.io%2Flazy-load-xt&amp;width&amp;layout=button_count&amp;action=recommend&amp;show_faces=true&amp;share=true&amp;height=21"
-            scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:21px;" allowTransparency="true"></iframe>
-    ```
+```html
+<!-- Facebook Recommend Widget -->
+<iframe data-src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fressio.github.io%2Flazy-load-xt&amp;width&amp;layout=button_count&amp;action=recommend&amp;show_faces=true&amp;share=true&amp;height=21"
+        scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:21px;" allowTransparency="true"></iframe>
+```
 
 Demo: http://ressio.github.io/lazy-load-xt/demo/widget-iframe.htm
 
@@ -483,24 +483,32 @@ The code should wrapped in html comment inside a `div` with assigned `id` attrib
 `data-lazy-widget` attribute with value of that `id`:
 
 
-    ```html
-    <script src="jquery.lazyloadxt.js">
-    <script src="jquery.lazyloadxt.widget.js">
-    ```
+```html
+<script src="jquery.lazyloadxt.js">
+<script src="jquery.lazyloadxt.widget.js">
+```
 
-    ```html
-    <!-- Google +1 Button -->
-    <div data-lazy-widget="gplus" class="g-plusone" data-annotation="inline" data-width="300"></div>
-    <div id="gplus"><!--
-    <script type="text/javascript">
-        (function() {
-            var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-            po.src = 'https://apis.google.com/js/platform.js';
-            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-        })();
-    </script>
-    --></div>
-    ```
+```html
+<!-- Google +1 Button -->
+<div data-lazy-widget="gplus" class="g-plusone" data-annotation="inline" data-width="300"></div>
+<div id="gplus"><!--
+  <script type="text/javascript">
+    (function() {
+      var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+      po.src = 'https://apis.google.com/js/platform.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+    })();
+  </script>
+--></div>
+```
+
+If `data-lazy-widget` attribute has empty value, the element itself is used as wrapper:
+
+```html
+<div data-lazy-widget><!--
+  <img src="image.jpg">
+--></div>
+```
 
 Options:
 
@@ -520,10 +528,10 @@ change print options (printer, page orientation, margins, etc.). In Firefox and 
 Print Preview before actual print (as they don't wait until images will be loaded). In Opera it works starting from
 15.0 release (Presto didn't support both `beforeprint` event and matchMedia listeners).
 
-    ```html
-    <script src="jquery.lazyloadxt.js">
-    <script src="jquery.lazyloadxt.print.js">
-    ```
+```html
+<script src="jquery.lazyloadxt.js">
+<script src="jquery.lazyloadxt.print.js">
+```
 
 Demo: http://ressio.github.io/lazy-load-xt/demo/print.htm
 
@@ -532,14 +540,14 @@ Demo: http://ressio.github.io/lazy-load-xt/demo/print.htm
 
 This addon allows you to use lazy-loading technique for background images of any tag.
 
-    ```html
-    <script src="jquery.lazyloadxt.js">
-    <script src="jquery.lazyloadxt.bg.js">
-    ```
+```html
+<script src="jquery.lazyloadxt.js">
+<script src="jquery.lazyloadxt.bg.js">
+```
 
-    ```html
-    <div data-bg="/path/to/image.png">...</div>
-    ```
+```html
+<div data-bg="/path/to/image.png">...</div>
+```
 
 Above code set `background-image` CSS property to `/path/to/image.png` as soon `div` element becomes visible in
 viewport area.
@@ -558,24 +566,24 @@ The main problem of lazy loading is necessity to duplicate `<img>` tag in `<nosc
 disabled JavaScript. As an alternative way, `jquery.lazyloadxt.script.js` addon allows to prepend tag `<img>` tag by
 `<script>` in the following form (without duplicating and renaming `src` to `data-src`):
 
-    ```html
-    <script src="jquery.lazyloadxt.js">
-    <script src="jquery.lazyloadxt.script.js">
-    ```
+```html
+<script src="jquery.lazyloadxt.js">
+<script src="jquery.lazyloadxt.script.js">
+```
 
-    ```html
-    <script>L()</script><img src="/path/to/image.jpg">
+```html
+<script>L()</script><img src="/path/to/image.jpg">
 
-    <script>Lb()</script>
-    <video>
-      <source src="/path/to/video.mp4">
-    </video>
-    <script>Le()</script>
+<script>Lb()</script>
+<video>
+  <source src="/path/to/video.mp4">
+</video>
+<script>Le()</script>
 
-    <script>Lb('iframe')</script>
-    <iframe src="/path/to/iframe.htm"></iframe>
-    <script>Le()</script>
-    ````
+<script>Lb('iframe')</script>
+<iframe src="/path/to/iframe.htm"></iframe>
+<script>Le()</script>
+````
 
 Here `L()` is function that should be called before self-closed tag like `<img>` and `<input>` (optional argument is
 the tag name of lazy loaded element, by default `'img'`), `Lb()` should be called before other tags like `<video>`
@@ -597,10 +605,10 @@ Demo: http://ressio.github.io/lazy-load-xt/demo/script-tag.htm
 This is very simple addon (just few lines of code) that loads all images after specified time after page loading. That is loading of images
 doesn't affect loading of CSSes and JavaScripts, and time to initial website rendering will be decreased.
 
-    ```html
-    <script src="jquery.lazyloadxt.js">
-    <script src="jquery.lazyloadxt.autoload.js">
-    ```
+```html
+<script src="jquery.lazyloadxt.js">
+<script src="jquery.lazyloadxt.autoload.js">
+```
 
 Options:
 
@@ -615,36 +623,36 @@ Instead of manipulating `<img>` tags directly (that is to replace `src` by `data
 add `<noscript>` fallback image, etc.), it's possible to do html page postprocessing using [your favorite] language.
 Here is example of how to do it using PHP:
 
-    ```php
-    /* PHP */
-    function addLazyLoading($html) {
-        $dom = new DOMDocument();
-        if(!@$dom->loadHTML('<?xml encoding="UTF-8">' . $html)) // trick to set charset
-	        return $html;
-	    foreach($dom->childNodes as $item)
-		    if($item->nodeType === XML_PI_NODE) {
-			    $dom->removeChild($item);
-			    break;
-		    }
-	    $dom->encoding = 'UTF-8';
-	    $images = $dom->getElementsByTagName('img');
-	    $blankImage = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
-	    for($i = $images->length - 1; $i >= 0; $i--) {
-		    $node     = $images->item($i);
-		    $clone    = $node->cloneNode();
-		    $noscript = $dom->createElement('noscript');
-		    $noscript->appendChild($clone);
-		    $node->parentNode->insertBefore($noscript, $node);
-		    $node->setAttribute('data-src', $node->getAttribute('src'));
-		    $node->setAttribute('src',      $blankImage);
-		    $node->setAttribute('class',    trim($node->getAttribute('class') . ' lazy'));
-	    }
-	    $newHtml = $dom->saveHTML();
-	    if(!$newHtml)
-		    return $html;
-        return $newHtml;
+```php
+/* PHP */
+function addLazyLoading($html) {
+  $dom = new DOMDocument();
+  if (!@$dom->loadHTML('<?xml encoding="UTF-8">' . $html)) // trick to set charset
+    return $html;
+  foreach ($dom->childNodes as $item)
+    if ($item->nodeType === XML_PI_NODE) {
+      $dom->removeChild($item);
+      break;
     }
-    ```
+  $dom->encoding = 'UTF-8';
+  $images = $dom->getElementsByTagName('img');
+  $blankImage = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+  for ($i = $images->length - 1; $i >= 0; $i--) {
+    $node     = $images->item($i);
+    $clone    = $node->cloneNode();
+    $noscript = $dom->createElement('noscript');
+    $noscript->appendChild($clone);
+    $node->parentNode->insertBefore($noscript, $node);
+    $node->setAttribute('data-src', $node->getAttribute('src'));
+    $node->setAttribute('src',      $blankImage);
+    $node->setAttribute('class',    trim($node->getAttribute('class') . ' lazy'));
+  }
+  $newHtml = $dom->saveHTML();
+  if (!$newHtml)
+    return $html;
+  return $newHtml;
+}
+```
 
 ## Version History
 

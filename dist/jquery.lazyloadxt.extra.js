@@ -1,4 +1,4 @@
-/*! Lazy Load XT v0.8.7 2013-12-26
+/*! Lazy Load XT v0.8.8 2013-12-26
  * http://ressio.github.io/lazy-load-xt
  * (C) 2013 RESS.io
  * Licensed under MIT */
@@ -60,7 +60,7 @@
 
         return this.each(function () {
             if (this === window) {
-                $(options.selector).lazyLoadXT();
+                $(options.selector).lazyLoadXT(overrides);
             } else {
                 var $el = $(this);
 
@@ -77,7 +77,8 @@
                     $el.attr('src', blankImage);
                 }
 
-                $el.lazyLoadXT = elementOptionsOverrides;
+                // clone elementOptionsOverrides object
+                $el.lazyLoadXT = $.extend({}, elementOptionsOverrides);
 
                 triggerEvent('init', $el);
 

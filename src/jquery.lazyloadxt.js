@@ -162,8 +162,8 @@
                     topEdge = elTop - edgeY;
 
                 if (force ||
-                    ((topEdge < viewportBottom) && (elTop + $el.height() > viewportTop - edgeY) &&
-                        (elLeft < viewportRight + edgeX) && (elLeft + $el.width() > viewportLeft - edgeX))) {
+                    ((topEdge <= viewportBottom) && (elTop + $el.height() > viewportTop - edgeY) &&
+                        (elLeft <= viewportRight + edgeX) && (elLeft + $el.width() > viewportLeft - edgeX))) {
 
                     triggerEvent('show', $el);
 

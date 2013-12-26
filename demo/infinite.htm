@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Infinite scroll</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="../libs/jquery/jquery.js"></script>
+    <script src="../dist/jquery.lazyloadxt.js"></script>
+    <style>
+        #marker-end {
+            height: 32px;
+            background: url(css/loading.gif) no-repeat 50% 50%;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $('#marker-end')
+                .on('lazyshow', function () {
+                    $.ajax({
+                            url: 'infinite.htm',
+                            dataType: "html"
+                        })
+                        .done(function (responseText) {
+                            // add new elements
+                            $('#infinite').append(
+                                $('<div>')
+                                    .append($.parseHTML(responseText))
+                                    .find('#infinite')
+                                    .children()
+                            );
+                            // process added elements
+                            $(window).lazyLoadXT();
+                            // clear "lazied" status and add marker to the list
+                            $('#marker-end')
+                                .data('lazied', 0)
+                                .lazyLoadXT({visibleOnly: false});
+                        });
+                })
+                .lazyLoadXT({visibleOnly: false});
+        });
+    </script>
+</head>
+<body>
+<div class="container">
+    <div class="page-header">
+        <h1>Infinite scroll</h1>
+        <p class="lead">Infinite scroll with lazy loading.</p>
+    </div>
+    <div id="infinite">
+        <p><img data-src="http://lorempixel.com/300/200/abstract" width="300" height="200"></p>
+        <p><img data-src="http://lorempixel.com/300/200/abstract" width="300" height="200"></p>
+        <p><img data-src="http://lorempixel.com/300/200/abstract" width="300" height="200"></p>
+        <p><img data-src="http://lorempixel.com/300/200/abstract" width="300" height="200"></p>
+        <p><img data-src="http://lorempixel.com/300/200/abstract" width="300" height="200"></p>
+        <p><img data-src="http://lorempixel.com/300/200/abstract" width="300" height="200"></p>
+        <p><img data-src="http://lorempixel.com/300/200/abstract" width="300" height="200"></p>
+        <p><img data-src="http://lorempixel.com/300/200/abstract" width="300" height="200"></p>
+        <p><img data-src="http://lorempixel.com/300/200/abstract" width="300" height="200"></p>
+        <p><img data-src="http://lorempixel.com/300/200/abstract" width="300" height="200"></p>
+    </div>
+    <div id="marker-end"></div>
+</div>
+</body>
+</html>

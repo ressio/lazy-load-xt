@@ -58,9 +58,9 @@
                 var list = srcset.split(',').map(function (item) {
                     return {
                         url: reUrl.exec(item)[1],
-                        w: (reWidth.exec(item) || infty)[1],
-                        h: (reHeight.exec(item) || infty)[1],
-                        x: (reDpr.exec(item) || one)[1]
+                        w: parseFloat((reWidth.exec(item) || infty)[1]),
+                        h: parseFloat((reHeight.exec(item) || infty)[1]),
+                        x: parseFloat((reDpr.exec(item) || one)[1])
                     };
                 });
 

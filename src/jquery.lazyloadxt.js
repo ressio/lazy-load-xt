@@ -33,6 +33,9 @@
         viewportBottom,
         viewportLeft,
         viewportRight,
+        $data = $.data || function (el, name) {
+            return $(el).data(name);
+        },
         topLazy = 0,
     /*
      waitingMode=0 : no setTimeout
@@ -66,20 +69,12 @@
             if (this === window) {
                 $(options.selector).lazyLoadXT(overrides);
             } else {
-                var $el = $(this);
-
                 // prevent duplicates
-                if (checkDuplicates) {
-                    if ($.data) { // jQuery
-                        if ($.data(this, dataLazied)) {
-                            return;
-                        }
-                    } else { // Zepto
-                        if ($el.data(dataLazied)) {
-                            return;
-                        }
-                    }
+                if (checkDuplicates && $data(this, dataLazied)) {
+                    return;
                 }
+
+                var $el = $(this);
 
                 $el
                     .data(dataLazied, 1)

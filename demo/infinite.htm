@@ -32,10 +32,7 @@
                             );
                             // process added elements
                             $(window).lazyLoadXT();
-                            // clear "lazied" status and add marker to the list
-                            $('#marker-end')
-                                .data('lazied', 0)
-                                .lazyLoadXT({visibleOnly: false});
+                            $('#marker-end').lazyLoadXT({visibleOnly: false, checkDuplicates: false});
                         });
                 })
                 .lazyLoadXT({visibleOnly: false});

@@ -1,6 +1,6 @@
-/*! Lazy Load XT v0.8.8 2013-12-26
+/*! Lazy Load XT v0.8.9 2014-01-06
  * http://ressio.github.io/lazy-load-xt
- * (C) 2013 RESS.io
+ * (C) 2014 RESS.io
  * Licensed under MIT */
 
 (function ($, window, document, undefined) {
@@ -32,6 +32,9 @@
         viewportBottom,
         viewportLeft,
         viewportRight,
+        $data = $.data || function (el, name) {
+            return $(el).data(name);
+        },
         topLazy = 0,
     /*
      waitingMode=0 : no setTimeout
@@ -45,6 +48,8 @@
     /**
      * Add new elements to lazy-load list:
      * $(elements).lazyLoadXT() or $(window).lazyLoadXT()
+     *
+     * @param {object} [overrides] loading of all elements
      */
     $.fn.lazyLoadXT = function (overrides) {
         overrides = overrides || {};
@@ -52,6 +57,7 @@
         var elementOptionsOverrides = {},
             blankImage = overrides.blankImage || options.blankImage,
             classNojs = overrides.classNojs || options.classNojs,
+            checkDuplicates = overrides.checkDuplicates || true,
             prop;
 
         for (prop in elementOptions) {
@@ -62,12 +68,12 @@
             if (this === window) {
                 $(options.selector).lazyLoadXT(overrides);
             } else {
-                var $el = $(this);
-
                 // prevent duplicates
-                if ($el.data(dataLazied)) {
+                if (checkDuplicates && $data(this, dataLazied)) {
                     return;
                 }
+
+                var $el = $(this);
 
                 $el
                     .data(dataLazied, 1)

@@ -211,9 +211,9 @@ jQuery's `ready` event).
 * **edgeX**: expand visible page area in horizontal direction by specified amount of pixels (default `0`)
 * **throttle**: time interval (in ms) to check for visible elements, the plugin uses it to speed up page work in the
   case of flow of page change events (default `99`)
-* **visibleOnly**: added for compatibility with original
-  [Lazy Load Plugin](https://github.com/tuupola/jquery_lazyload) by Mika Tuupola, being disabled this option forces
-  the plugin to check element position only, but not to check that it is actually visible (default `true`)
+* **visibleOnly**: being disabled this option forces the plugin to check element position only, but not to check that
+  it is actually visible (default `true`)
+* **checkDuplicates** (used in direct initialization `$(elements).lazyLoadXT()` only): allows re-add elements
 * **loadEvent**: space-separated list of events when the plugin starts to found new elements matching `selector`
   (default `'pageshow'` to check AJAX-loaded content in jQueryMobile and to support backward navigation in iPhone)
 * **updateEvent**: space-separated list of events when the plugin starts to check what elements are visible in
@@ -414,10 +414,7 @@ $(document).ready(function () {
             // ...
             // process new elements:
             $(window).lazyLoadXT();
-            // clear "lazied" status and add marker to the "lazy" list:
-            $('#marker')
-                .data('lazied', 0)
-                .lazyLoadXT({visibleOnly: false});
+            $('#marker').lazyLoadXT({visibleOnly: false, checkDuplicates: false});
         });
     }).lazyLoadXT({visibleOnly: false});
 });

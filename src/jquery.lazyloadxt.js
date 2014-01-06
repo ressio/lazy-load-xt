@@ -46,6 +46,8 @@
     /**
      * Add new elements to lazy-load list:
      * $(elements).lazyLoadXT() or $(window).lazyLoadXT()
+     *
+     * @param {object} [overrides] loading of all elements
      */
     $.fn.lazyLoadXT = function (overrides) {
         overrides = overrides || {};
@@ -53,6 +55,7 @@
         var elementOptionsOverrides = {},
             blankImage = overrides.blankImage || options.blankImage,
             classNojs = overrides.classNojs || options.classNojs,
+            checkDuplicates = overrides.checkDuplicates || true,
             prop;
 
         for (prop in elementOptions) {
@@ -66,8 +69,16 @@
                 var $el = $(this);
 
                 // prevent duplicates
-                if ($el.data(dataLazied)) {
-                    return;
+                if (checkDuplicates) {
+                    if ($.data) { // jQuery
+                        if ($.data(this, dataLazied)) {
+                            return;
+                        }
+                    } else { // Zepto
+                        if ($el.data(dataLazied)) {
+                            return;
+                        }
+                    }
                 }
 
                 $el

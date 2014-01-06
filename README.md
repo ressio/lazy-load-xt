@@ -32,6 +32,7 @@
     - [`<script>`-based tagging](#script-based-tagging)
     - [Deferred autoload](#deferred-autoload)
 - [Example of page preparation in PHP](#example-of-page-preparation-in-php)
+- [CDN](#cdn)
 - [Version History](#version-history)
 - [License](#license)
 
@@ -783,6 +784,21 @@ function addLazyLoading($html) {
   return $newHtml;
 }
 ```
+
+
+## CDN
+
+Lazy Load XT may be loaded from [jsDelivr CDN](http://www.jsdelivr.com/#!jquery.lazyloadxt)
+```html
+<script src="//cdn.jsdelivr.net/jquery.lazyloadxt/0.8.9/jquery.lazyloadxt.min.js">
+```
+or [CDNJS CDN](http://cdnjs.com/libraries/jquery.lazyloadxt/)
+```html
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazyloadxt/0.8.9/jquery.lazyloadxt.min.js">
+```
+
+Note that any of Lazy Load XT `dist` files may be loaded from CDN, not only `jquery.lazyloadxt.min.js`.
+
 
 ## Version History
 

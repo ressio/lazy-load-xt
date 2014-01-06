@@ -786,6 +786,8 @@ function addLazyLoading($html) {
 
 ## Version History
 
+- [**0.8.9**](https://github.com/ressio/lazy-load-xt/tree/0.8.9) (06.01.2014): `checkDuplicates` option, fix srcset
+  addon, speed up work with jQuery
 - [**0.8.8**](https://github.com/ressio/lazy-load-xt/tree/0.8.8) (26.12.2013): Fix sharing $el.lazyLoadXT object,
   support $(window).lazyLoadXT({...}) call with overrides parameter
 - [**0.8.7**](https://github.com/ressio/lazy-load-xt/tree/0.8.7) (26.12.2013): New "picture" addon, feature to pass

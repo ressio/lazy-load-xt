@@ -10,7 +10,7 @@
     options.videoPoster = 'data-poster';
 
     $(document).on('lazyshow', 'video', function (e, $el) {
-        var srcAttr = $el.srcAttr,
+        var srcAttr = $el.lazyLoadXT.srcAttr,
             isFuncSrcAttr = $.isFunction(srcAttr);
 
         $el

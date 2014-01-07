@@ -802,6 +802,8 @@ Note that any of Lazy Load XT `dist` files may be loaded from CDN, not only `jqu
 
 ## Version History
 
+- [**0.8.10**](https://github.com/ressio/lazy-load-xt/tree/0.8.10) (07.01.2014): bugfix "video" addon, remove loading of
+  `bootstrap.js` in `zepto.htm` demo.
 - [**0.8.9**](https://github.com/ressio/lazy-load-xt/tree/0.8.9) (06.01.2014): `checkDuplicates` option, fix srcset
   addon, speed up work with jQuery
 - [**0.8.8**](https://github.com/ressio/lazy-load-xt/tree/0.8.8) (26.12.2013): Fix sharing $el.lazyLoadXT object,

@@ -1,4 +1,4 @@
-/*! Lazy Load XT v0.8.9 2014-01-06
+/*! Lazy Load XT v0.8.10 2014-01-07
  * http://ressio.github.io/lazy-load-xt
  * (C) 2014 RESS.io
  * Licensed under MIT */
@@ -276,7 +276,7 @@
     options.videoPoster = 'data-poster';
 
     $(document).on('lazyshow', 'video', function (e, $el) {
-        var srcAttr = $el.srcAttr,
+        var srcAttr = $el.lazyLoadXT.srcAttr,
             isFuncSrcAttr = $.isFunction(srcAttr);
 
         $el

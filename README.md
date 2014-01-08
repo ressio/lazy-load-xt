@@ -790,11 +790,11 @@ function addLazyLoading($html) {
 
 Lazy Load XT may be loaded from [jsDelivr CDN](http://www.jsdelivr.com/#!jquery.lazyloadxt)
 ```html
-<script src="//cdn.jsdelivr.net/jquery.lazyloadxt/0.8.9/jquery.lazyloadxt.min.js">
+<script src="//cdn.jsdelivr.net/jquery.lazyloadxt/0.8.10/jquery.lazyloadxt.min.js">
 ```
 or [CDNJS CDN](http://cdnjs.com/libraries/jquery.lazyloadxt/)
 ```html
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazyloadxt/0.8.9/jquery.lazyloadxt.min.js">
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazyloadxt/0.8.10/jquery.lazyloadxt.min.js">
 ```
 
 Note that any of Lazy Load XT `dist` files may be loaded from CDN, not only `jquery.lazyloadxt.min.js`.

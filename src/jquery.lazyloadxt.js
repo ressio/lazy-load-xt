@@ -36,6 +36,7 @@
         $data = $.data || function (el, name) {
             return $(el).data(name);
         },
+        isOperaMini = !!window.operamini,
         topLazy = 0,
     /*
      waitingMode=0 : no setTimeout
@@ -149,6 +150,7 @@
             return;
         }
 
+        force = force || isOperaMini;
         topLazy = Infinity;
         calcViewport();
 

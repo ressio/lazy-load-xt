@@ -1,4 +1,4 @@
-/*! Lazy Load XT v0.8.10 2014-01-07
+/*! Lazy Load XT v0.8.11 2014-01-09
  * http://ressio.github.io/lazy-load-xt
  * (C) 2014 RESS.io
  * Licensed under MIT */
@@ -35,6 +35,7 @@
         $data = $.data || function (el, name) {
             return $(el).data(name);
         },
+        isOperaMini = !!window.operamini,
         topLazy = 0,
     /*
      waitingMode=0 : no setTimeout
@@ -148,6 +149,7 @@
             return;
         }
 
+        force = force || isOperaMini;
         topLazy = Infinity;
         calcViewport();
 

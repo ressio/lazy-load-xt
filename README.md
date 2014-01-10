@@ -43,7 +43,7 @@ Mobile-oriented, fast and extensible jQuery plugin for lazy loading of images/vi
 jQueryMobile framework.
 
 Currently tested in IE 6-11, Chrome 1-31, Firefox 1.5-27.0, Safari 3-7, Opera 10.6-18.0, iOS 5-7, Android 2.3-4.4,
-Amazon Kindle Fire 2 and HD 8.9.
+Amazon Kindle Fire 2 and HD 8.9, Opera Mini 7.
 
 **Required jQuery 1.7+ or Zepto 1.0+.**
 
@@ -802,6 +802,8 @@ Note that any of Lazy Load XT `dist` files may be loaded from CDN, not only `jqu
 
 ## Version History
 
+- [**0.8.11**](https://github.com/ressio/lazy-load-xt/tree/0.8.11) (10.01.2014): fix to work in browsers without
+  `scroll` event (e.g. Opera Mini), handle `touchmove` event for better response on mobile devices.
 - [**0.8.10**](https://github.com/ressio/lazy-load-xt/tree/0.8.10) (07.01.2014): bugfix "video" addon, remove loading of
   `bootstrap.js` in `zepto.htm` demo.
 - [**0.8.9**](https://github.com/ressio/lazy-load-xt/tree/0.8.9) (06.01.2014): `checkDuplicates` option, fix srcset

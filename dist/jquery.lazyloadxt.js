@@ -1,4 +1,4 @@
-/*! Lazy Load XT v0.8.10 2014-01-07
+/*! Lazy Load XT v0.8.11 2014-01-10
  * http://ressio.github.io/lazy-load-xt
  * (C) 2014 RESS.io
  * Licensed under MIT */
@@ -12,7 +12,7 @@
             blankImage: 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
             throttle: 99,
             loadEvent: 'pageshow', // check AJAX-loaded content in jQueryMobile
-            updateEvent: 'load orientationchange resize scroll', // page-modified events
+            updateEvent: 'load orientationchange resize scroll touchmove', // page-modified events
             forceEvent: '', // force loading of all elements
             oninit: null, // init handler
             onshow: null, // start loading handler
@@ -25,6 +25,8 @@
             edgeY: 0,
             visibleOnly: true
         },
+    //  autoload all images in Opera Mini and some mobile browsers without scroll event
+        autoLoad = (window.onscroll === undefined || !!window.operamini),
         $window = $(window),
         dataLazied = 'lazied',
         elements = [],
@@ -147,6 +149,8 @@
         if (!elements.length) {
             return;
         }
+
+        force = force || autoLoad;
 
         topLazy = Infinity;
         calcViewport();

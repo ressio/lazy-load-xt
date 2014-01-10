@@ -26,6 +26,8 @@
             edgeY: 0,
             visibleOnly: true
         },
+    //  autoload all images in Opera Mini and some mobile browsers without scroll event
+        autoLoad = (window.onscroll === undefined || !!window.operamini),
         $window = $(window),
         dataLazied = 'lazied',
         elements = [],
@@ -149,8 +151,7 @@
             return;
         }
 
-        // autoload all images in Opera Mini and some mobile browsers without scroll event
-        force = force || (window.onscroll === undefined || !!window.operamini);
+        force = force || autoLoad;
 
         topLazy = Infinity;
         calcViewport();

@@ -13,7 +13,7 @@
             blankImage: 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
             throttle: 99,
             loadEvent: 'pageshow', // check AJAX-loaded content in jQueryMobile
-            updateEvent: 'load orientationchange resize scroll', // page-modified events
+            updateEvent: 'load orientationchange resize scroll touchmove', // page-modified events
             forceEvent: '', // force loading of all elements
             oninit: null, // init handler
             onshow: null, // start loading handler

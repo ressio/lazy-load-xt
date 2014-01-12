@@ -91,8 +91,8 @@
                     .data(dataLazied, 1)
                     .removeClass(classNojs);
 
-                if (blankImage && $el[0].tagName === 'IMG' && !this.getAttribute('src')) {
-                    this.setAttribute('src', blankImage);
+                if (blankImage && $el[0].tagName === 'IMG' && !this.src) {
+                    this.src = blankImage;
                 }
 
                 // clone elementOptionsOverrides object
@@ -180,7 +180,7 @@
                         src = $isFunction(srcAttr) ? srcAttr($el) : el.getAttribute(srcAttr);
                     if (src) {
                         $el.on('load error', triggerLoadOrError);
-                        el.setAttribute('src', src);
+                        el.src = src;
                     }
 
                     elements.splice(i, 1);

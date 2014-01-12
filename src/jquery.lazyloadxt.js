@@ -154,9 +154,10 @@
 
         var viewportTop    = $window.scrollTop(),
             viewportHeight = window.innerHeight || $window.height(),
-            viewportWidth  = window.innerWidth  || $window.width();
+            viewportWidth  = window.innerWidth  || $window.width(),
+            i;
 
-        for (var i = elements.length - 1; i >= 0; i--) {
+        for (i = elements.length - 1; i >= 0; i--) {
             var $el = elements[i],
                 el = $el[0],
                 objData = $el.lazyLoadXT;

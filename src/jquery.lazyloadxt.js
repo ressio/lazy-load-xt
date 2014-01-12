@@ -152,9 +152,9 @@
 
         topLazy = Infinity;
 
-        var viewportTop    = $window.scrollTop(),
+        var viewportTop = $window.scrollTop(),
             viewportHeight = window.innerHeight || $window.height(),
-            viewportWidth  = window.innerWidth  || $window.width(),
+            viewportWidth = window.innerWidth || $window.width(),
             i;
 
         for (i = elements.length - 1; i >= 0; i--) {
@@ -171,9 +171,8 @@
                     edgeY = objData.edgeY,
                     topEdge = (elPos.top + viewportTop - edgeY) - viewportHeight;
 
-                if (force ||
-                    ((topEdge <= viewportTop) && (elPos.bottom > -edgeY) &&
-                        (elPos.left <= viewportWidth + edgeX) && (elPos.right > -edgeX))) {
+                if (force || (topEdge <= viewportTop && elPos.bottom > -edgeY &&
+                        elPos.left <= viewportWidth + edgeX && elPos.right > -edgeX)) {
 
                     triggerEvent('show', $el);
 

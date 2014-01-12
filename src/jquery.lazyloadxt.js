@@ -27,15 +27,12 @@
             visibleOnly: true
         },
         $window = $(window),
+        $isFunction = $.isFunction,
         docElement = document.documentElement,
     //  autoload all images in Opera Mini and some mobile browsers without scroll event or getBoundingClientRect()
         autoLoad = (window.onscroll === undefined || !!window.operamini || !docElement.getBoundingClientRect),
         dataLazied = 'lazied',
         elements = [],
-        viewportTop,
-        viewportBottom,
-        viewportLeft,
-        viewportRight,
         $data = $.data || function (el, name) {
             return $(el).data(name);
         },
@@ -94,8 +91,8 @@
                     .data(dataLazied, 1)
                     .removeClass(classNojs);
 
-                if (blankImage && $el[0].tagName === 'IMG' && !$el.attr('src')) {
-                    $el.attr('src', blankImage);
+                if (blankImage && $el[0].tagName === 'IMG' && !this.getAttribute('src')) {
+                    this.setAttribute('src', blankImage);
                 }
 
                 // clone elementOptionsOverrides object
@@ -110,18 +107,6 @@
 
 
     /**
-     * Save visible viewport boundary to viewportXXX variables
-     */
-    function calcViewport() {
-        viewportTop = $window.scrollTop();
-        viewportBottom = viewportTop + (window.innerHeight || $window.height());
-
-        viewportLeft = window.pageXOffset || 0;
-        viewportRight = viewportLeft + (window.innerWidth || $window.width());
-    }
-
-
-    /**
      * Process function/object event handler
      * @param {string} event suffix
      * @param {jQuery} $el
@@ -131,7 +116,7 @@
 
         var handler = options['on' + event];
         if (handler) {
-            if ($.isFunction(handler)) {
+            if ($isFunction(handler)) {
                 handler.call($el[0]);
             } else {
                 $el
@@ -166,7 +151,10 @@
         force = force || autoLoad;
 
         topLazy = Infinity;
-        calcViewport();
+
+        var viewportTop    = $window.scrollTop(),
+            viewportHeight = window.innerHeight || $window.height(),
+            viewportWidth  = window.innerWidth  || $window.width();
 
         for (var i = elements.length - 1; i >= 0; i--) {
             var $el = elements[i],
@@ -174,28 +162,25 @@
                 objData = $el.lazyLoadXT;
 
             // remove items that are not in DOM
-            if (!$.contains(document.documentElement, el)) {
+            if (!$.contains(docElement, el)) {
                 elements.splice(i, 1);
             } else if (force || !objData.visibleOnly || el.offsetWidth > 0 || el.offsetHeight > 0) {
-                var offset = $el.offset(),
-                    elTop = offset.top,
-                    elLeft = offset.left,
+                var elPos = el.getBoundingClientRect(),
                     edgeX = objData.edgeX,
                     edgeY = objData.edgeY,
-                    topEdge = elTop - edgeY;
+                    topEdge = (elPos.top + viewportTop - edgeY) - viewportHeight;
 
                 if (force ||
-                    ((topEdge <= viewportBottom) && (elTop + $el.height() > viewportTop - edgeY) &&
-                        (elLeft <= viewportRight + edgeX) && (elLeft + $el.width() > viewportLeft - edgeX))) {
+                    ((topEdge <= viewportTop) && (elPos.bottom > -edgeY) &&
+                        (elPos.left <= viewportWidth + edgeX) && (elPos.right > -edgeX))) {
 
                     triggerEvent('show', $el);
 
                     var srcAttr = objData.srcAttr,
-                        src = $.isFunction(srcAttr) ? srcAttr($el) : $el.attr(srcAttr);
+                        src = $isFunction(srcAttr) ? srcAttr($el) : el.getAttribute(srcAttr);
                     if (src) {
-                        $el
-                            .on('load error', triggerLoadOrError)
-                            .attr('src', src);
+                        $el.on('load error', triggerLoadOrError);
+                        el.setAttribute('src', src);
                     }
 
                     elements.splice(i, 1);
@@ -238,8 +223,7 @@
 
         // fast check for scroll event without new visible elements
         if (e && e.type === 'scroll') {
-            calcViewport();
-            if (topLazy >= viewportBottom) {
+            if (topLazy >= $window.scrollTop()) {
                 return;
             }
         }

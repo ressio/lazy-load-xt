@@ -32,6 +32,7 @@
     //  autoload all images in Opera Mini and some mobile browsers without scroll event or getBoundingClientRect()
         autoLoad = (window.onscroll === undefined || !!window.operamini || !docElement.getBoundingClientRect),
         dataLazied = 'lazied',
+        load_error = 'load error',
         elements = [],
         $data = $.data || function (el, name) {
             return $(el).data(name);
@@ -135,7 +136,7 @@
      * @param {Event} e
      */
     function triggerLoadOrError(e) {
-        triggerEvent(e.type, $(this).off('load error', triggerLoadOrError));
+        triggerEvent(e.type, $(this).off(load_error, triggerLoadOrError));
     }
 
 
@@ -179,7 +180,7 @@
                     var srcAttr = objData.srcAttr,
                         src = $isFunction(srcAttr) ? srcAttr($el) : el.getAttribute(srcAttr);
                     if (src) {
-                        $el.on('load error', triggerLoadOrError);
+                        $el.on(load_error, triggerLoadOrError);
                         el.src = src;
                     }
 

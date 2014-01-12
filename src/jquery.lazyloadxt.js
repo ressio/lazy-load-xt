@@ -167,13 +167,21 @@
             if (!$.contains(docElement, el)) {
                 elements.splice(i, 1);
             } else if (force || !objData.visibleOnly || el.offsetWidth > 0 || el.offsetHeight > 0) {
-                var elPos = el.getBoundingClientRect(),
-                    edgeX = objData.edgeX,
-                    edgeY = objData.edgeY,
-                    topEdge = (elPos.top + viewportTop - edgeY) - viewportHeight;
 
-                if (force || (topEdge <= viewportTop && elPos.bottom > -edgeY &&
-                        elPos.left <= viewportWidth + edgeX && elPos.right > -edgeX)) {
+                var visible = force,
+                    topEdge;
+
+                if (!visible) {
+                    var elPos = el.getBoundingClientRect(),
+                        edgeX = objData.edgeX,
+                        edgeY = objData.edgeY;
+
+                    topEdge = (elPos.top + viewportTop - edgeY) - viewportHeight;
+                    visible = (topEdge <= viewportTop && elPos.bottom > -edgeY &&
+                               elPos.left <= viewportWidth + edgeX && elPos.right > -edgeX);
+                }
+
+                if (visible) {
 
                     triggerEvent('show', $el);
 

@@ -802,6 +802,8 @@ Note that any of Lazy Load XT `dist` files may be loaded from CDN, not only `jqu
 
 ## Version History
 
+- [**0.8.12**](https://github.com/ressio/lazy-load-xt/tree/0.8.11) (12.01.2014): significant performance improvement,
+  fix work in BlackBerry 5, fix `checkDuplicates` options
 - [**0.8.11**](https://github.com/ressio/lazy-load-xt/tree/0.8.11) (10.01.2014): fix to work in browsers without
   `scroll` event (e.g. Opera Mini), handle `touchmove` event for better response on mobile devices.
 - [**0.8.10**](https://github.com/ressio/lazy-load-xt/tree/0.8.10) (07.01.2014): bugfix "video" addon, remove loading of

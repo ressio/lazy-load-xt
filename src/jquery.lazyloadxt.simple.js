@@ -110,7 +110,7 @@
 
                     var src = $el.attr(srcAttr);
                     if (src) {
-                        $el.attr('src', src);
+                        el.src = src;
                     }
 
                     elements.splice(i, 1);

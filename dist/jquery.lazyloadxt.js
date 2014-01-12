@@ -1,4 +1,4 @@
-/*! Lazy Load XT v0.8.11 2014-01-10
+/*! Lazy Load XT v0.8.12 2014-01-12
  * http://ressio.github.io/lazy-load-xt
  * (C) 2014 RESS.io
  * Licensed under MIT */
@@ -25,15 +25,14 @@
             edgeY: 0,
             visibleOnly: true
         },
-    //  autoload all images in Opera Mini and some mobile browsers without scroll event
-        autoLoad = (window.onscroll === undefined || !!window.operamini),
         $window = $(window),
+        $isFunction = $.isFunction,
+        docElement = document.documentElement,
+    //  autoload all images in Opera Mini and some mobile browsers without scroll event or getBoundingClientRect()
+        autoLoad = (window.onscroll === undefined || !!window.operamini || !docElement.getBoundingClientRect),
         dataLazied = 'lazied',
+        load_error = 'load error',
         elements = [],
-        viewportTop,
-        viewportBottom,
-        viewportLeft,
-        viewportRight,
         $data = $.data || function (el, name) {
             return $(el).data(name);
         },
@@ -48,6 +47,17 @@
     $.lazyLoadXT = $.extend(options, elementOptions, $.lazyLoadXT);
 
     /**
+     * Return def if value is undefined, otherwise return value
+     * @param {*} value
+     * @param {*} def
+     * @returns *
+     */
+    function getOrDef(value, def) {
+        return value === undefined ? def : value;
+    }
+
+
+    /**
      * Add new elements to lazy-load list:
      * $(elements).lazyLoadXT() or $(window).lazyLoadXT()
      *
@@ -57,13 +67,13 @@
         overrides = overrides || {};
 
         var elementOptionsOverrides = {},
-            blankImage = overrides.blankImage || options.blankImage,
-            classNojs = overrides.classNojs || options.classNojs,
-            checkDuplicates = overrides.checkDuplicates || true,
+            blankImage = getOrDef(overrides.blankImage, options.blankImage),
+            classNojs = getOrDef(overrides.classNojs, options.classNojs),
+            checkDuplicates = getOrDef(overrides.checkDuplicates, true),
             prop;
 
         for (prop in elementOptions) {
-            elementOptionsOverrides[prop] = (overrides[prop] === undefined) ? options[prop] : overrides[prop];
+            elementOptionsOverrides[prop] = getOrDef(overrides[prop], options[prop]);
         }
 
         return this.each(function () {
@@ -81,8 +91,8 @@
                     .data(dataLazied, 1)
                     .removeClass(classNojs);
 
-                if (blankImage && $el[0].tagName === 'IMG' && !$el.attr('src')) {
-                    $el.attr('src', blankImage);
+                if (blankImage && $el[0].tagName === 'IMG' && !this.src) {
+                    this.src = blankImage;
                 }
 
                 // clone elementOptionsOverrides object
@@ -97,18 +107,6 @@
 
 
     /**
-     * Save visible viewport boundary to viewportXXX variables
-     */
-    function calcViewport() {
-        viewportTop = $window.scrollTop();
-        viewportBottom = viewportTop + (window.innerHeight || $window.height());
-
-        viewportLeft = window.pageXOffset || 0;
-        viewportRight = viewportLeft + (window.innerWidth || $window.width());
-    }
-
-
-    /**
      * Process function/object event handler
      * @param {string} event suffix
      * @param {jQuery} $el
@@ -118,7 +116,7 @@
 
         var handler = options['on' + event];
         if (handler) {
-            if ($.isFunction(handler)) {
+            if ($isFunction(handler)) {
                 handler.call($el[0]);
             } else {
                 $el
@@ -137,7 +135,7 @@
      * @param {Event} e
      */
     function triggerLoadOrError(e) {
-        triggerEvent(e.type, $(this).off('load error', triggerLoadOrError));
+        triggerEvent(e.type, $(this).off(load_error, triggerLoadOrError));
     }
 
 
@@ -153,36 +151,36 @@
         force = force || autoLoad;
 
         topLazy = Infinity;
-        calcViewport();
 
-        for (var i = elements.length - 1; i >= 0; i--) {
+        var viewportTop = $window.scrollTop(),
+            viewportHeight = window.innerHeight || $window.height(),
+            viewportWidth = window.innerWidth || $window.width(),
+            i;
+
+        for (i = elements.length - 1; i >= 0; i--) {
             var $el = elements[i],
                 el = $el[0],
                 objData = $el.lazyLoadXT;
 
             // remove items that are not in DOM
-            if (!$.contains(document.documentElement, el)) {
+            if (!$.contains(docElement, el)) {
                 elements.splice(i, 1);
             } else if (force || !objData.visibleOnly || el.offsetWidth > 0 || el.offsetHeight > 0) {
-                var offset = $el.offset(),
-                    elTop = offset.top,
-                    elLeft = offset.left,
+                var elPos = el.getBoundingClientRect(),
                     edgeX = objData.edgeX,
                     edgeY = objData.edgeY,
-                    topEdge = elTop - edgeY;
+                    topEdge = (elPos.top + viewportTop - edgeY) - viewportHeight;
 
-                if (force ||
-                    ((topEdge <= viewportBottom) && (elTop + $el.height() > viewportTop - edgeY) &&
-                        (elLeft <= viewportRight + edgeX) && (elLeft + $el.width() > viewportLeft - edgeX))) {
+                if (force || (topEdge <= viewportTop && elPos.bottom > -edgeY &&
+                        elPos.left <= viewportWidth + edgeX && elPos.right > -edgeX)) {
 
                     triggerEvent('show', $el);
 
                     var srcAttr = objData.srcAttr,
-                        src = $.isFunction(srcAttr) ? srcAttr($el) : $el.attr(srcAttr);
+                        src = $isFunction(srcAttr) ? srcAttr($el) : el.getAttribute(srcAttr);
                     if (src) {
-                        $el
-                            .on('load error', triggerLoadOrError)
-                            .attr('src', src);
+                        $el.on(load_error, triggerLoadOrError);
+                        el.src = src;
                     }
 
                     elements.splice(i, 1);
@@ -225,8 +223,7 @@
 
         // fast check for scroll event without new visible elements
         if (e && e.type === 'scroll') {
-            calcViewport();
-            if (topLazy >= viewportBottom) {
+            if (topLazy >= $window.scrollTop()) {
                 return;
             }
         }

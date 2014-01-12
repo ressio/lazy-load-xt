@@ -26,9 +26,10 @@
             edgeY: 0,
             visibleOnly: true
         },
-    //  autoload all images in Opera Mini and some mobile browsers without scroll event
-        autoLoad = (window.onscroll === undefined || !!window.operamini),
         $window = $(window),
+        docElement = document.documentElement,
+    //  autoload all images in Opera Mini and some mobile browsers without scroll event or getBoundingClientRect()
+        autoLoad = (window.onscroll === undefined || !!window.operamini || !docElement.getBoundingClientRect),
         dataLazied = 'lazied',
         elements = [],
         viewportTop,

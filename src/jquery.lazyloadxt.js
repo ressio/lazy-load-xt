@@ -53,7 +53,7 @@
      * @returns *
      */
     function getOrDef(value, def) {
-        return value !== undefined ? value : def;
+        return value === undefined ? def : value;
     }
 
 

@@ -48,9 +48,9 @@
 
     /**
      * Return def if value is undefined, otherwise return value
-     * @param value
-     * @param def
-     * @returns mixed
+     * @param {*} value
+     * @param {*} def
+     * @returns *
      */
     function getOrDef(value, def) {
         return value !== undefined ? value : def;

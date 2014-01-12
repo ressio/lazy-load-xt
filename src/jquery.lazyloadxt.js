@@ -50,6 +50,17 @@
     $.lazyLoadXT = $.extend(options, elementOptions, $.lazyLoadXT);
 
     /**
+     * Return def if value is undefined, otherwise return value
+     * @param value
+     * @param def
+     * @returns mixed
+     */
+    function getOrDef(value, def) {
+        return value !== undefined ? value : def;
+    }
+
+
+    /**
      * Add new elements to lazy-load list:
      * $(elements).lazyLoadXT() or $(window).lazyLoadXT()
      *
@@ -59,13 +70,13 @@
         overrides = overrides || {};
 
         var elementOptionsOverrides = {},
-            blankImage = overrides.blankImage || options.blankImage,
-            classNojs = overrides.classNojs || options.classNojs,
-            checkDuplicates = overrides.checkDuplicates || true,
+            blankImage = getOrDef(overrides.blankImage, options.blankImage),
+            classNojs = getOrDef(overrides.classNojs, options.classNojs),
+            checkDuplicates = getOrDef(overrides.checkDuplicates, true),
             prop;
 
         for (prop in elementOptions) {
-            elementOptionsOverrides[prop] = (overrides[prop] === undefined) ? options[prop] : overrides[prop];
+            elementOptionsOverrides[prop] = getOrDef(overrides[prop], options[prop]);
         }
 
         return this.each(function () {

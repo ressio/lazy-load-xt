@@ -239,7 +239,7 @@
         }
 
         // fast check for scroll event without new visible elements
-        if (e && e.type === 'scroll') {
+        if (e && e.type === 'scroll' && e.currentTarget === window) {
             if (topLazy >= $window.scrollTop()) {
                 return;
             }

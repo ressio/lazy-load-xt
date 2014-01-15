@@ -6,12 +6,12 @@
 
     var options = $.lazyLoadXT;
 
-    options.forceEvent += ' lazyloadall';
+    options.forceEvent += ' lazycomplete';
     options.autoLoad = options.autoLoad || 50;
 
     $(document).ready(function () {
         setTimeout(function () {
-            $(window).trigger('lazyloadall');
+            $(window).trigger('lazycomplete');
         }, options.autoLoad);
     });
 

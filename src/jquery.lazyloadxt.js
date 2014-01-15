@@ -1,6 +1,6 @@
 /*jslint browser:true, plusplus:true, vars:true */
 /*jshint browser:true, jquery:true */
-/*jshint -W040:false */ /* to don't alert on "this" in triggerLoad and triggerError */
+/*jshint -W040:false */ /* to don't alert on "this" in triggerLoadOrError */
 
 (function ($, window, document, undefined) {
     'use strict';
@@ -11,19 +11,24 @@
         load_error = 'load error',
         classLazyHidden = 'lazy-hidden',
         options = {
-            autoInit: true,
-            selector: 'img[data-src]',
+            autoInit: true, // auto initialize in $.ready
+            selector: 'img[data-src]', // selector for lazyloading elements
             blankImage: 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
-            throttle: 99,
+            throttle: 99, // interval (ms) for changes check
             forceLoad: false, // force auto load all images
+
             loadEvent: 'pageshow', // check AJAX-loaded content in jQueryMobile
             updateEvent: 'load orientationchange resize scroll touchmove', // page-modified events
             forceEvent: '', // force loading of all elements
+
             oninit: {removeClass: 'lazy'}, // init handler
             onshow: {addClass: classLazyHidden}, // start loading handler
             onload: {removeClass: classLazyHidden, addClass: 'lazy-loaded'}, // load success handler
             onerror: {removeClass: classLazyHidden}, // error handler
             oncomplete: null // complete handler
+
+            // checkDuplicates,
+            // scrollContainer
         },
         elementOptions = {
             srcAttr: 'data-src',
@@ -248,7 +253,6 @@
         if (!waitingMode) {
             setTimeout(timeoutLazyElements, 0);
         }
-
         waitingMode = 2;
     }
 

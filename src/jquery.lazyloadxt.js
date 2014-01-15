@@ -25,10 +25,10 @@
             onshow: {addClass: classLazyHidden}, // start loading handler
             onload: {removeClass: classLazyHidden, addClass: 'lazy-loaded'}, // load success handler
             onerror: {removeClass: classLazyHidden}, // error handler
-            oncomplete: null // complete handler
+            oncomplete: null, // complete handler
 
-            // checkDuplicates,
-            // scrollContainer
+            //scrollContainer: undefined,
+            checkDuplicates: true
         },
         elementOptions = {
             srcAttr: 'data-src',
@@ -57,13 +57,13 @@
     $[lazyLoadXT] = $extend(options, elementOptions, $[lazyLoadXT]);
 
     /**
-     * Return def if value is undefined, otherwise return value
-     * @param {*} value
-     * @param {*} def
+     * Return options.prop if obj.prop is undefined, otherwise return obj.prop
+     * @param {*} obj
+     * @param {*} prop
      * @returns *
      */
-    function getOrDef(value, def) {
-        return value === undefined ? def : value;
+    function getOrDef(obj, prop) {
+        return obj[prop] === undefined ? options[prop] : obj[prop];
     }
 
 
@@ -76,16 +76,17 @@
     $.fn[lazyLoadXT] = function (overrides) {
         overrides = overrides || {};
 
-        var blankImage = getOrDef(overrides.blankImage, options.blankImage),
-            checkDuplicates = getOrDef(overrides.checkDuplicates, true),
+        var blankImage = getOrDef(overrides, 'blankImage'),
+            checkDuplicates = getOrDef(overrides, 'checkDuplicates'),
+            scrollContainer = getOrDef(overrides, 'scrollContainer'),
             elementOptionsOverrides = {},
             prop;
 
         // empty overrides.scrollContainer is supported by both jQuery and Zepto
-        $(overrides.scrollContainer).on('scroll', queueCheckLazyElements);
+        $(scrollContainer).on('scroll', queueCheckLazyElements);
 
         for (prop in elementOptions) {
-            elementOptionsOverrides[prop] = getOrDef(overrides[prop], options[prop]);
+            elementOptionsOverrides[prop] = getOrDef(overrides, prop);
         }
 
         return this.each(function () {

@@ -124,8 +124,8 @@
                 handler.call($el[0]);
             } else {
                 $el
-                    .addClass(handler.addClass)
-                    .removeClass(handler.removeClass);
+                    .addClass(handler.addClass || '')
+                    .removeClass(handler.removeClass || '');
             }
         }
 

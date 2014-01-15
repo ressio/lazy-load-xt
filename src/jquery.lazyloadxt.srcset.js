@@ -33,6 +33,7 @@
             options[property] = srcsetOptions[property];
         }
     }
+    options.selector += ',img[' + options.srcsetAttr + ']';
 
     function mathFilter(array, action) {
         return Math[action].apply(null, $.map(array, function (item) {

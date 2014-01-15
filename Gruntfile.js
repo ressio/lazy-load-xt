@@ -19,6 +19,12 @@ module.exports = function (grunt) {
         clean: {
             files: ['dist']
         },
+        copy: {
+            loadinggif: {
+                src: 'src/loading.gif',
+                dest: 'dist/loading.gif'
+            }
+        },
         concat: {
             options: {
                 banner: '<%= banner.full %>',
@@ -33,6 +39,15 @@ module.exports = function (grunt) {
                 src: ['src/jquery.<%= pkg.name %>.js'],
                 dest: 'dist/jquery.<%= pkg.name %>.js'
             },
+            spinner: {
+                src: ['src/jquery.<%= pkg.name %>.spinner.css'],
+                dest: 'dist/jquery.<%= pkg.name %>.spinner.css'
+            },
+            fadein: {
+                src: ['src/jquery.<%= pkg.name %>.fadein.css'],
+                dest: 'dist/jquery.<%= pkg.name %>.fadein.css'
+            },
+
             extra: {
                 src: ['src/jquery.<%= pkg.name %>.js', 'src/jquery.<%= pkg.name %>.video.js'],
                 dest: 'dist/jquery.<%= pkg.name %>.extra.js'
@@ -170,12 +185,13 @@ module.exports = function (grunt) {
     // These plugins provide necessary tasks.
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-qunit');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
     // Default task.
-    grunt.registerTask('default', ['jshint', 'clean', 'concat', 'uglify', 'qunit']);
+    grunt.registerTask('default', ['jshint', 'clean', 'copy', 'concat', 'uglify', 'qunit']);
 
 };

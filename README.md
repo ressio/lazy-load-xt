@@ -151,7 +151,7 @@ There are two ways to initialize elements if auto initialization doesn't suit yo
 For example, `$(container).find(selector).lazyLoadXT();` initializes elements matching `selector` inside `container`.
 
 You can pass optional argument to override default `$.lazyLoadXT` options. The following options only may be overridden:
-`srcAttr`, `edgeX`, `edgeY`, `visibleOnly`, `blankImage`, `classNojs`.
+`srcAttr`, `edgeX`, `edgeY`, `visibleOnly`, `blankImage`.
 
 Note: don’t forget to disable auto initialization with `$.lazyLoadXT.autoInit=false;` if you like to use manual
 initialization of all elements.
@@ -162,7 +162,8 @@ initialization of all elements.
 As JavaScript may be disabled in the browser (e.g. it may be a feature phone with limited javascript support or browser
 with Noscript addon), it is usually recommended to add a fallback image in `<noscript>` tag, mark initial image with
 `class="lazy"` attribute and hide it using CSS (otherwise browsers with disabled javascript will display both images).
-Lazy Load XT plugin removes this class (`classNojs` option) at image initialization. So, final code should be like:
+Lazy Load XT plugin removes this class (`oninit.removeClass` option) at image initialization. So, final code should be
+like:
 
 ```css
 img.lazy {
@@ -202,8 +203,6 @@ jQuery's `ready` event).
 * **selector**: selector for elements that should be lazy-loaded (default `'img'`)
 * **srcAttr**: attribute containing actual `src` path, see example below in [Hi-DPI (Retina) images]
   (#hi-dpi-retina-images) section (default `'data-src'`)
-* **classNojs**: class name used to hide duplicated element (outside of `<noscript>` tag) in the case of disabled
-  JavaScript in browser, the plugin removes this class to make images visible (default `'lazy'`)
 * **blankImage**: blank image for used until actual image is not loaded (default is transparent 1x1 gif image in
   data-uri format `'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'`)
 * **edgeY**: expand visible page area (viewport) in vertical direction by specified amount of pixels,
@@ -214,7 +213,9 @@ jQuery's `ready` event).
   case of flow of page change events (default `99`)
 * **visibleOnly**: being disabled this option forces the plugin to check element position only, but not to check that
   it is actually visible (default `true`)
-* **checkDuplicates** (used in direct initialization `$(elements).lazyLoadXT()` only): allows re-add elements
+* **checkDuplicates**: prevent re-add lazy-loaded elements (default `true`)
+* **scrollContainer**: set scroll container (`overflow: scroll`) for adding elements (default `null`),
+* **forceLoad**: load all elements without checking for visibility (default `false`)
 * **loadEvent**: space-separated list of events when the plugin starts to found new elements matching `selector`
   (default `'pageshow'` to check AJAX-loaded content in jQueryMobile and to support backward navigation in iPhone)
 * **updateEvent**: space-separated list of events when the plugin starts to check what elements are visible in
@@ -225,25 +226,26 @@ jQuery's `ready` event).
   it may be either a function (DOM element is accessible using `this` object) or an object with `addClass` and/or
   `removeClass` properties (`addClass` is a space-separated list of class names that should be added to the elements,
   and `removeClass` contains class names that should be removed, `removeClass` has higher priority in the case of
-  identical class names) (default `null`)
+  identical class names) (default `{removeClass: 'lazy'}`)
 * **onshow**: handler called when an element appears in viewport area, it may be either a function or an object by
-  analogy to `oninit` handler, see example below in [Spinner](#spinner) section (default `null`)
+  analogy to `oninit` handler, see example below in [Spinner](#spinner) section (default `{addClass: 'lazy-hidden'}`)
 * **onload**: handler called when element is successfully loaded, it may be either a function or an object by analogy
-  to `oninit` handler (default `null`)
+  to `oninit` handler (default `{removeClass: 'lazy-hidden', addClass: 'lazy-loaded'}`)
 * **onerror**: handler called when browser cannot load the element, it may be either a function or an object by analogy
-  to `oninit` handler (default `null`)
+  to `oninit` handler (default `{removeClass: 'lazy-hidden'}`)
+* **oncomplete**: handler called when all lazy-loaded elements are loaded (default `null`)
 
 
 ## Events
 
-Lazy Load XT plugin triggers following events for loading elements (just before call to corresponding handler in
+Lazy Load XT plugin triggers following events for loading elements (after call to corresponding handler in
 `$.lazyLoadXT` options):
 
 * `lazyinit`, the plugin push elements into internal list of "lazy" elements
 * `lazyshow`, element appears in viewport area
 * `lazyload`, element is successfully loaded
 * `lazyerror`, browser cannot load the element
-* `lazyloadall` (triggered on `window` element), internal list of lazy-loaded elements is empty, that is all elements
+* `lazycomplete` (triggered on `<html>` element), internal list of lazy-loaded elements is empty, that is all elements
   are loaded or loading.
 
 Unlike global handlers `$.lazyLoadXT`, using these events it's possible to assign individual handlers for media
@@ -306,22 +308,11 @@ listed below.
 
 ### Spinner
 
-To display animated spinner while image is loading, you can set/reset CSS class in `onshow`/`onload` events:
+Some effects may be easily added by using `lazy-hidden` and `lazy-loaded` css classes. For example, to display animated
+spinner while image is loading, just load `jquery.lazyloadxt.spinner.css` css file:
 
-```css
-/* CSS */
-.lazy-hidden {
-  background:#eee url('/path/to/loading.gif') no-repeat 50% 50%;
-}
-```
-
-```javascript
-/* JS */
-$.extend($.lazyLoadXT, {
-  onshow:  { addClass:    'lazy-hidden' },
-  onload:  { removeClass: 'lazy-hidden' },
-  onerror: { removeClass: 'lazy-hidden' }
-});
+```html
+<link rel="stylesheet" href="jquery.lazyloadxt.spinner.css">
 ```
 
 Demo: http://ressio.github.io/lazy-load-xt/demo/spinner.htm
@@ -329,32 +320,30 @@ Demo: http://ressio.github.io/lazy-load-xt/demo/spinner.htm
 
 ### Fade-in animation
 
-To add fade-in animation you can use following sample of `onload` event and CSS rules:
+To add fade-in animation just load `jquery.lazyloadxt.fadein.css` CSS file:
 
-```css
-/* CSS */
-.lazy-hidden {
-  opacity: 0;
-}
-.lazy-loaded {
-  -webkit-transition: opacity 0.3s;
-  -moz-transition: opacity 0.3s;
-  -ms-transition: opacity 0.3s;
-  -o-transition: opacity 0.3s;
-  transition: opacity 0.3s;
-  opacity: 1;
-}
+```html
+<link rel="stylesheet" href="jquery.lazyloadxt.fadein.css">
+```
+
+Demo: http://ressio.github.io/lazy-load-xt/demo/fadein.htm
+
+
+### Animate.css
+
+It's possible to use a lot of animation effects (like bounce, flip, rotate, etc.) from
+[animate.css project](https://github.com/daneden/animate.css) by altering `$.lazyLoadXT.onload.addClass` option:
+
+```html
+<link rel="stylesheet" href="animate.min.css">
 ```
 
 ```javascript
 /* JS */
-$.extend($.lazyLoadXT, {
-  oninit: { addClass: 'lazy-hidden' },
-  onload: { addClass: 'lazy-loaded', removeClass: 'lazy-hidden' }
-});
+$.lazyLoadXT.onload.addClass = 'animated bounceOutLeft');
 ```
 
-Demo: http://ressio.github.io/lazy-load-xt/demo/fadein.htm
+Demo: http://ressio.github.io/lazy-load-xt/demo/animatecss.htm
 
 
 ### Horizontal scroll
@@ -384,13 +373,10 @@ with following CSS rules to make `.wrapper` scrollable in horizontal direction a
 ```
 
 Then all that you need is to proxy `scroll` event from `.wrapper` element to `window` because of `scroll` event [is not
-bubbled automatically](http://www.w3.org/TR/2009/WD-DOM-Level-3-Events-20090908/#event-type-scroll):
+bubbled automatically](http://www.w3.org/TR/2009/WD-DOM-Level-3-Events-20090908/#event-type-scroll). It may be easily
+done using `scrollContainer` option:
 ```javascript
-$(document).ready(function () {
-    $('.wrapper').on('scroll', function () {
-        $(window).trigger('scroll');
-    });
-});
+$.lazyLoadXT.scrollContainer = '.wrapper';
 ```
 
 Demo: http://ressio.github.io/lazy-load-xt/demo/horizontal.htm
@@ -578,7 +564,7 @@ img {
   <br data-src="small320.jpg">
   <br media="(min-width: 321px)" data-src="medium480.jpg">
   <br media="(min-width: 481px)" data-src="large640.jpg">
-  <img data-src="large640.jpg">
+  <noscript><img data-src="large640.jpg"></noscript>
   <p>Image caption</p>
 </picture>
 ```

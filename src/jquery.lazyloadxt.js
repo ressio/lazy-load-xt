@@ -7,6 +7,8 @@
 
     // options
     var lazyLoadXT = 'lazyLoadXT',
+        dataLazied = 'lazied',
+        load_error = 'load error',
         classLazyHidden = 'lazy-hidden',
         options = {
             autoInit: true,
@@ -35,8 +37,6 @@
         docElement = document.documentElement || document.body,
     //  autoload all images in Opera Mini and some mobile browsers without scroll event or getBoundingClientRect()
         autoLoad = (window.onscroll === undefined || !!window.operamini || !docElement.getBoundingClientRect),
-        dataLazied = 'lazied',
-        load_error = 'load error',
         elements = [],
         $data = $.data || function (el, name) {
             return $(el).data(name);

@@ -9,6 +9,7 @@
     var lazyLoadXT = 'lazyLoadXT',
         options = {
             autoInit: true,
+            autoLoad: false,
             selector: 'img',
             classNojs: 'lazy',
             blankImage: 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
@@ -151,7 +152,7 @@
             return;
         }
 
-        force = force || autoLoad;
+        force = force || autoLoad || options.autoLoad;
 
         topLazy = Infinity;
 

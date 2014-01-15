@@ -103,7 +103,7 @@
 
                 triggerEvent('init', $el);
 
-                elements.unshift($el); // push it in the first position as we iterate elements in reverse order
+                elements.push($el);
             }
         });
     };
@@ -158,20 +158,21 @@
         var viewportTop = $window.scrollTop(),
             viewportHeight = window.innerHeight || $window.height(),
             viewportWidth = window.innerWidth || $window.width(),
-            i;
+            i,
+            length;
 
-        for (i = elements.length - 1; i >= 0; i--) {
+        for (i = 0, length = elements.length; i < length; i++) {
             var $el = elements[i],
                 el = $el[0],
                 objData = $el[lazyLoadXT],
+                removeNode = false,
+                visible = force,
+                topEdge;
 
             // remove items that are not in DOM
             if (!$.contains(docElement, el)) {
-                elements.splice(i, 1);
-            } else if (force || !objData.visibleOnly || el.offsetWidth > 0 || el.offsetHeight > 0) {
-
-                var visible = force,
-                    topEdge;
+                removeNode = true;
+            } else if (force || !objData.visibleOnly || el.offsetWidth || el.offsetHeight) {
 
                 if (!visible) {
                     var elPos = el.getBoundingClientRect(),
@@ -179,12 +180,12 @@
                         edgeY = objData.edgeY;
 
                     topEdge = (elPos.top + viewportTop - edgeY) - viewportHeight;
+
                     visible = (topEdge <= viewportTop && elPos.bottom > -edgeY &&
-                               elPos.left <= viewportWidth + edgeX && elPos.right > -edgeX);
+                        elPos.left <= viewportWidth + edgeX && elPos.right > -edgeX);
                 }
 
                 if (visible) {
-
                     triggerEvent('show', $el);
 
                     var srcAttr = objData.srcAttr,
@@ -194,12 +195,17 @@
                         el.src = src;
                     }
 
-                    elements.splice(i, 1);
+                    removeNode = true;
                 } else {
                     if (topEdge < topLazy) {
                         topLazy = topEdge;
                     }
                 }
+            }
+
+            if (removeNode) {
+                elements.splice(i--, 1);
+                length--;
             }
         }
 

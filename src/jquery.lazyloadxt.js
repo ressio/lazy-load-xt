@@ -113,8 +113,6 @@
      * @param {jQuery} $el
      */
     function triggerEvent(event, $el) {
-        $el.trigger('lazy' + event, [$el]);
-
         var handler = options['on' + event];
         if (handler) {
             if ($isFunction(handler)) {
@@ -125,6 +123,8 @@
                     .removeClass(handler.removeClass || '');
             }
         }
+
+        $el.trigger('lazy' + event, [$el]);
 
         // queue next check as images may be resized after loading of actual file
         queueCheckLazyElements();

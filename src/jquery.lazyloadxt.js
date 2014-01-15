@@ -71,10 +71,9 @@
     $.fn[lazyLoadXT] = function (overrides) {
         overrides = overrides || {};
 
-        var elementOptionsOverrides = {},
-            blankImage = getOrDef(overrides.blankImage, options.blankImage),
-            classNojs = getOrDef(overrides.classNojs, options.classNojs),
+        var blankImage = getOrDef(overrides.blankImage, options.blankImage),
             checkDuplicates = getOrDef(overrides.checkDuplicates, true),
+            elementOptionsOverrides = {},
             prop;
 
         // empty overrides.scrollContainer is supported by both jQuery and Zepto

@@ -6,7 +6,8 @@
     'use strict';
 
     // options
-    var options = {
+    var lazyLoadXT = 'lazyLoadXT',
+        options = {
             autoInit: true,
             selector: 'img',
             classNojs: 'lazy',
@@ -28,7 +29,8 @@
         },
         $window = $(window),
         $isFunction = $.isFunction,
-        docElement = document.documentElement,
+        $extend = $.extend,
+        docElement = document.documentElement || document.body,
     //  autoload all images in Opera Mini and some mobile browsers without scroll event or getBoundingClientRect()
         autoLoad = (window.onscroll === undefined || !!window.operamini || !docElement.getBoundingClientRect),
         dataLazied = 'lazied',
@@ -45,7 +47,7 @@
      */
         waitingMode = 0;
 
-    $.lazyLoadXT = $.extend(options, elementOptions, $.lazyLoadXT);
+    $[lazyLoadXT] = $extend(options, elementOptions, $[lazyLoadXT]);
 
     /**
      * Return def if value is undefined, otherwise return value
@@ -64,7 +66,7 @@
      *
      * @param {object} [overrides] loading of all elements
      */
-    $.fn.lazyLoadXT = function (overrides) {
+    $.fn[lazyLoadXT] = function (overrides) {
         overrides = overrides || {};
 
         var elementOptionsOverrides = {},
@@ -97,7 +99,7 @@
                 }
 
                 // clone elementOptionsOverrides object
-                $el.lazyLoadXT = $.extend({}, elementOptionsOverrides);
+                $el[lazyLoadXT] = $extend({}, elementOptionsOverrides);
 
                 triggerEvent('init', $el);
 
@@ -161,7 +163,7 @@
         for (i = elements.length - 1; i >= 0; i--) {
             var $el = elements[i],
                 el = $el[0],
-                objData = $el.lazyLoadXT;
+                objData = $el[lazyLoadXT],
 
             // remove items that are not in DOM
             if (!$.contains(docElement, el)) {

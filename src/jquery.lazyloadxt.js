@@ -12,10 +12,10 @@
         classLazyHidden = 'lazy-hidden',
         options = {
             autoInit: true,
-            autoLoad: false,
             selector: 'img[data-src]',
             blankImage: 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
             throttle: 99,
+            forceLoad: false, // force auto load all images
             loadEvent: 'pageshow', // check AJAX-loaded content in jQueryMobile
             updateEvent: 'load orientationchange resize scroll touchmove', // page-modified events
             forceEvent: '', // force loading of all elements
@@ -35,8 +35,8 @@
         $isFunction = $.isFunction,
         $extend = $.extend,
         docElement = document.documentElement || document.body,
-    //  autoload all images in Opera Mini and some mobile browsers without scroll event or getBoundingClientRect()
-        autoLoad = (window.onscroll === undefined || !!window.operamini || !docElement.getBoundingClientRect),
+    //  force load all images in Opera Mini and some mobile browsers without scroll event or getBoundingClientRect()
+        forceLoad = (window.onscroll === undefined || !!window.operamini || !docElement.getBoundingClientRect),
         elements = [],
         $data = $.data || function (el, name) {
             return $(el).data(name);
@@ -151,7 +151,7 @@
             return;
         }
 
-        force = force || autoLoad || options.autoLoad;
+        force = force || forceLoad || options.forceLoad;
 
         topLazy = Infinity;
 

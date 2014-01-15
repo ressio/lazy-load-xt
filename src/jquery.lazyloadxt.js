@@ -7,20 +7,20 @@
 
     // options
     var lazyLoadXT = 'lazyLoadXT',
+        classLazyHidden = 'lazy-hidden',
         options = {
             autoInit: true,
             autoLoad: false,
             selector: 'img[data-src]',
-            classNojs: 'lazy',
             blankImage: 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
             throttle: 99,
             loadEvent: 'pageshow', // check AJAX-loaded content in jQueryMobile
             updateEvent: 'load orientationchange resize scroll touchmove', // page-modified events
             forceEvent: '', // force loading of all elements
-            oninit: null, // init handler
-            onshow: null, // start loading handler
-            onload: null, // load success handler
-            onerror: null // error handler
+            oninit: {removeClass: 'lazy'}, // init handler
+            onshow: {addClass: classLazyHidden}, // start loading handler
+            onload: {removeClass: classLazyHidden, addClass: 'lazy-loaded'}, // load success handler
+            onerror: {removeClass: classLazyHidden}, // error handler
         },
         elementOptions = {
             srcAttr: 'data-src',
@@ -89,11 +89,7 @@
                     return;
                 }
 
-                var $el = $(this);
-
-                $el
-                    .data(dataLazied, 1)
-                    .removeClass(classNojs);
+                var $el = $(this).data(dataLazied, 1);
 
                 if (blankImage && $el[0].tagName === 'IMG' && !this.src) {
                     this.src = blankImage;

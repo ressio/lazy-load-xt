@@ -77,6 +77,9 @@
             checkDuplicates = getOrDef(overrides.checkDuplicates, true),
             prop;
 
+        // empty overrides.scrollContainer is supported by both jQuery and Zepto
+        $(overrides.scrollContainer).on('scroll', queueCheckLazyElements);
+
         for (prop in elementOptions) {
             elementOptionsOverrides[prop] = getOrDef(overrides[prop], options[prop]);
         }

@@ -10,7 +10,7 @@
         options = {
             autoInit: true,
             autoLoad: false,
-            selector: 'img',
+            selector: 'img[data-src]',
             classNojs: 'lazy',
             blankImage: 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
             throttle: 99,

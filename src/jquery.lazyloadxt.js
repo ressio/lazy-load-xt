@@ -66,7 +66,7 @@
      * Add new elements to lazy-load list:
      * $(elements).lazyLoadXT() or $(window).lazyLoadXT()
      *
-     * @param {object} [overrides] loading of all elements
+     * @param {object} [overrides] override global options
      */
     $.fn[lazyLoadXT] = function (overrides) {
         overrides = overrides || {};

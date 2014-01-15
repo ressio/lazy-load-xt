@@ -21,6 +21,7 @@
             onshow: {addClass: classLazyHidden}, // start loading handler
             onload: {removeClass: classLazyHidden, addClass: 'lazy-loaded'}, // load success handler
             onerror: {removeClass: classLazyHidden}, // error handler
+            oncomplete: null // complete handler
         },
         elementOptions = {
             srcAttr: 'data-src',
@@ -200,8 +201,8 @@
             }
         }
 
-        if (!elements.length) {
-            $(document).trigger('lazyloadall');
+        if (!length) {
+            triggerEvent('complete', $(docElement));
         }
     }
 

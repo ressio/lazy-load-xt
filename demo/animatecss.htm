@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Animate.css effects</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../libs/animatecss/animate.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="../libs/jquery/jquery.js"></script>
+    <script src="../dist/jquery.lazyloadxt.js"></script>
+    <style>
+        /* to prevent flickering */
+        .lazy-hidden {
+            opacity: 0;
+        }
+    </style>
+    <script>
+        $.lazyLoadXT.onload = function() {
+            var $el = $(this);
+            $el
+                .removeClass('lazy-hidden')
+                .addClass('animated ' + $el.attr('data-effect'));
+        };
+    </script>
+</head>
+<body>
+<div class="container">
+    <div class="page-header">
+        <h1>Animate.css effects</h1>
+        <p class="lead">Use effects from <a href="http://daneden.me/animate">animate.css</a> project for loaded images.</p>
+    </div>
+    <script>
+        var category = 'animals',
+            effects = ['tada', 'pulse', 'flipInX', 'flipInY', 'fadeIn', 'fadeInUp', 'fadeInRight', 'fadeInUpBig',
+                'fadeInRightBig', 'slideInRight', 'bounceIn', 'bounceInUp', 'bounceInRight', 'rotateIn',
+                'rotateInUpLeft', 'rotateInUpRight', 'lightSpeedIn'];
+        for(var i=0; i<effects.length; i++) {
+            document.write('<p>' + effects[i] + ':<br><img data-src="http://lorempixel.com/300/200/'
+                    + category + '/' + (1+(i%10)) + '" data-effect="' + effects[i]
+                    + '" width="300" height="200"></p>');
+        }
+    </script>
+</div>
+</body>
+</html>

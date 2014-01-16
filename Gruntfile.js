@@ -28,7 +28,7 @@ module.exports = function (grunt) {
         concat: {
             options: {
                 banner: '<%= banner.full %>',
-                process: function(src) {
+                process: function (src) {
                     // remove jslint/jshint options and 'use strict' declaration
                     return src
                         .replace(/\/\*js[hl]int.*?\*\/\n/g, '')
@@ -51,11 +51,6 @@ module.exports = function (grunt) {
             extra: {
                 src: ['src/jquery.<%= pkg.name %>.js', 'src/jquery.<%= pkg.name %>.video.js'],
                 dest: 'dist/jquery.<%= pkg.name %>.extra.js'
-            },
-
-            simple: {
-                src: ['src/jquery.<%= pkg.name %>.simple.js'],
-                dest: 'dist/jquery.<%= pkg.name %>.simple.js'
             },
 
             autoload: {
@@ -105,11 +100,6 @@ module.exports = function (grunt) {
                 dest: 'dist/jquery.<%= pkg.name %>.extra.min.js'
             },
 
-            simple: {
-                src: '<%= concat.simple.dest %>',
-                dest: 'dist/jquery.<%= pkg.name %>.simple.min.js'
-            },
-
             autoload: {
                 src: '<%= concat.autoload.dest %>',
                 dest: 'dist/jquery.<%= pkg.name %>.autoload.min.js'
@@ -141,6 +131,18 @@ module.exports = function (grunt) {
             widget: {
                 src: '<%= concat.widget.dest %>',
                 dest: 'dist/jquery.<%= pkg.name %>.widget.min.js'
+            }
+        },
+        cssmin: {
+            minify: {
+                options: {
+                    banner: '<%= banner.short %>',
+                    report: 'gzip'
+                },
+                files: [
+                    {src: 'src/jquery.<%= pkg.name %>.spinner.css', dest: 'dist/jquery.<%= pkg.name %>.spinner.min.css'},
+                    {src: 'src/jquery.<%= pkg.name %>.fadein.css', dest: 'dist/jquery.<%= pkg.name %>.fadein.min.css'}
+                ]
             }
         },
         qunit: {
@@ -188,10 +190,11 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-qunit');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
     // Default task.
-    grunt.registerTask('default', ['jshint', 'clean', 'copy', 'concat', 'uglify', 'qunit']);
+    grunt.registerTask('default', ['jshint', 'clean', 'copy', 'concat', 'uglify', 'cssmin', 'qunit']);
 
 };

@@ -356,7 +356,7 @@ It's possible to use a lot of animation effects (like bounce, flip, rotate, etc.
 
 ```javascript
 /* JS */
-$.lazyLoadXT.onload.addClass = 'animated bounceOutLeft');
+$.lazyLoadXT.onload.addClass = 'animated bounceOutLeft';
 ```
 
 Demo: http://ressio.github.io/lazy-load-xt/demo/animatecss.htm
@@ -376,6 +376,7 @@ make lazy loading of images in horizontal scroller. Let's assume that your html 
 ```
 with following CSS rules to make `.wrapper` scrollable in horizontal direction and images to be alined:
 ```css
+/* CSS */
 .wrapper {
     overflow-x: scroll;
     overflow-y: hidden;
@@ -392,6 +393,7 @@ Then all that you need is to proxy `scroll` event from `.wrapper` element to `wi
 bubbled automatically](http://www.w3.org/TR/2009/WD-DOM-Level-3-Events-20090908/#event-type-scroll). It may be easily
 done using `scrollContainer` option:
 ```javascript
+/* JS */
 $.lazyLoadXT.scrollContainer = '.wrapper';
 ```
 
@@ -406,11 +408,8 @@ Using Lazy Load XT it is easily to get "infinite scroll" effect. Just put a mark
 ```
 and load next part of elements in `lazyshow` handler, e.g.:
 ```javascript
-```
-```javascript
+/* JS */
 $(document).ready(function () {
-```
-```javascript
     $('#marker').on('lazyshow', function () {
         $.ajax({...}).done(function (responseText) {
             // add new elements:
@@ -490,14 +489,14 @@ Support of video elements in extra version of Lazy Load XT is just an addon that
 the script. That is loading of
 
 ```html
-<script src="jquery.lazyloadxt.extra.js">
+<script src="jquery.lazyloadxt.extra.js"></script>
 ```
 
 is identical to loading of
 
 ```html
-<script src="jquery.lazyloadxt.js">
-<script src="jquery.lazyloadxt.video.js">
+<script src="jquery.lazyloadxt.js"></script>
+<script src="jquery.lazyloadxt.video.js"></script>
 ```
 
 Options
@@ -520,8 +519,8 @@ tag. Format of responsive images description is based on
 [srcset attribute](http://www.w3.org/html/wg/drafts/srcset/w3c-srcset/) draft of HTML extension for adaptive images:
 
 ```html
-<script src="jquery.lazyloadxt.js">
-<script src="jquery.lazyloadxt.srcset.js">
+<script src="jquery.lazyloadxt.js"></script>
+<script src="jquery.lazyloadxt.srcset.js"></script>
 ```
 
 ```html
@@ -599,7 +598,7 @@ widgets for different social medias (like Twitter, Facebook, Google+, etc.). If 
 using `<iframe>` tag, you can use "extra" version of Lazy Load XT to make it lazy loaded:
 
 ```html
-<script src="jquery.lazyloadxt.extra.js">
+<script src="jquery.lazyloadxt.extra.js"></script>
 ```
 
 ```html
@@ -617,8 +616,8 @@ The code should wrapped in html comment inside a `div` with assigned `id` attrib
 
 
 ```html
-<script src="jquery.lazyloadxt.js">
-<script src="jquery.lazyloadxt.widget.js">
+<script src="jquery.lazyloadxt.js"></script>
+<script src="jquery.lazyloadxt.widget.js"></script>
 ```
 
 ```html
@@ -662,8 +661,8 @@ Print Preview before actual print (as they don't wait until images will be loade
 15.0 release (Presto didn't support both `beforeprint` event and matchMedia listeners).
 
 ```html
-<script src="jquery.lazyloadxt.js">
-<script src="jquery.lazyloadxt.print.js">
+<script src="jquery.lazyloadxt.js"></script>
+<script src="jquery.lazyloadxt.print.js"></script>
 ```
 
 Demo: http://ressio.github.io/lazy-load-xt/demo/print.htm
@@ -674,8 +673,8 @@ Demo: http://ressio.github.io/lazy-load-xt/demo/print.htm
 This addon allows you to use lazy-loading technique for background images of any tag.
 
 ```html
-<script src="jquery.lazyloadxt.js">
-<script src="jquery.lazyloadxt.bg.js">
+<script src="jquery.lazyloadxt.js"></script>
+<script src="jquery.lazyloadxt.bg.js"></script>
 ```
 
 ```html
@@ -700,8 +699,8 @@ disabled JavaScript. As an alternative way, `jquery.lazyloadxt.script.js` addon 
 `<script>` in the following form (without duplicating and renaming `src` to `data-src`):
 
 ```html
-<script src="jquery.lazyloadxt.js">
-<script src="jquery.lazyloadxt.script.js">
+<script src="jquery.lazyloadxt.js"></script>
+<script src="jquery.lazyloadxt.script.js"></script>
 ```
 
 ```html
@@ -739,8 +738,8 @@ This is very simple addon (just few lines of code) that loads all images after s
 doesn't affect loading of CSSes and JavaScripts, and time to initial website rendering will be decreased.
 
 ```html
-<script src="jquery.lazyloadxt.js">
-<script src="jquery.lazyloadxt.autoload.js">
+<script src="jquery.lazyloadxt.js"></script>
+<script src="jquery.lazyloadxt.autoload.js"></script>
 ```
 
 Options:
@@ -792,11 +791,11 @@ function addLazyLoading($html) {
 
 Lazy Load XT may be loaded from [jsDelivr CDN](http://www.jsdelivr.com/#!jquery.lazyloadxt)
 ```html
-<script src="//cdn.jsdelivr.net/jquery.lazyloadxt/1.0.0/jquery.lazyloadxt.min.js">
+<script src="//cdn.jsdelivr.net/jquery.lazyloadxt/1.0.0/jquery.lazyloadxt.min.js"></script>
 ```
 or [CDNJS CDN](http://cdnjs.com/libraries/jquery.lazyloadxt/)
 ```html
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazyloadxt/1.0.0/jquery.lazyloadxt.min.js">
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazyloadxt/1.0.0/jquery.lazyloadxt.min.js"></script>
 ```
 
 Note that any of Lazy Load XT `dist` files may be loaded from CDN, not only `jquery.lazyloadxt.min.js`.

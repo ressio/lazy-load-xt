@@ -5,30 +5,12 @@
     <title>Fade-in</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../dist/jquery.lazyloadxt.fadein.css">
     <link rel="stylesheet" href="css/style.css">
     <script src="../libs/error.js"></script>
     <script src="../libs/jquery/jquery.js"></script>
     <script src="../libs/bootstrap/js/bootstrap.min.js"></script>
     <script src="../dist/jquery.lazyloadxt.js"></script>
-    <style>
-        .lazy-hidden {
-            opacity: 0;
-        }
-        .lazy-loaded {
-            -webkit-transition: opacity 0.3s;
-            -moz-transition: opacity 0.3s;
-            -ms-transition: opacity 0.3s;
-            -o-transition: opacity 0.3s;
-            transition: opacity 0.3s;
-            opacity: 1;
-        }
-    </style>
-    <script>
-        $.extend($.lazyLoadXT, {
-            oninit: { addClass: 'lazy-hidden' },
-            onload: { addClass: 'lazy-loaded', removeClass: 'lazy-hidden' }
-        });
-    </script>
 </head>
 <body>
     <div class="container">

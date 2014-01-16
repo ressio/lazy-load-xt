@@ -5,23 +5,12 @@
     <title>Spinner</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../dist/jquery.lazyloadxt.spinner.css">
     <link rel="stylesheet" href="css/style.css">
     <script src="../libs/error.js"></script>
     <script src="../libs/jquery/jquery.js"></script>
     <script src="../libs/bootstrap/js/bootstrap.min.js"></script>
     <script src="../dist/jquery.lazyloadxt.js"></script>
-    <style>
-        .lazy-hidden {
-            background:#eee url('css/loading.gif') no-repeat 50% 50%;
-        }
-    </style>
-    <script>
-    $.extend($.lazyLoadXT, {
-        onshow:  { addClass: 'lazy-hidden' },
-        onload:  { removeClass: 'lazy-hidden' },
-        onerror: { removeClass: 'lazy-hidden' }
-    });
-    </script>
 </head>
 <body>
     <div class="container">

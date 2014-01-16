@@ -24,6 +24,7 @@
             updateEvent: 'load orientationchange resize scroll touchmove', // page-modified events
             forceEvent: '', // force loading of all elements
 
+            //onstart: null,
             oninit: {removeClass: 'lazy'}, // init handler
             onshow: {addClass: classLazyHidden}, // start loading handler
             onload: {removeClass: classLazyHidden, addClass: 'lazy-loaded'}, // load success handler
@@ -279,6 +280,8 @@
      * Initialization
      */
     $(document).ready(function () {
+        triggerEvent('start', $window);
+
         $window
             .on(options.loadEvent, initLazyElements)
             .on(options.updateEvent, queueCheckLazyElements)

@@ -28,7 +28,7 @@
             onshow: {addClass: classLazyHidden}, // start loading handler
             onload: {removeClass: classLazyHidden, addClass: 'lazy-loaded'}, // load success handler
             onerror: {removeClass: classLazyHidden}, // error handler
-            oncomplete: null, // complete handler
+            //oncomplete: null, // complete handler
 
             //scrollContainer: undefined,
             checkDuplicates: true

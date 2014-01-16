@@ -56,13 +56,28 @@ Amazon Kindle Fire 2 and HD 8.9, Opera Mini 7.
       <td>Dev version:</td>
       <td><a href="https://raw.github.com/ressio/lazy-load-xt/master/dist/jquery.lazyloadxt.js">jquery.lazyloadxt.js</a></td>
       <td><a href="https://raw.github.com/ressio/lazy-load-xt/master/dist/jquery.lazyloadxt.extra.js">jquery.lazyloadxt.extra.js</a></td>
-      <td><a href="https://raw.github.com/ressio/lazy-load-xt/master/dist/jquery.lazyloadxt.simple.js">jquery.lazyloadxt.simple.js</a></td>
     </tr>
     <tr>
       <td>Minified version:</td>
       <td><a href="https://raw.github.com/ressio/lazy-load-xt/master/dist/jquery.lazyloadxt.min.js">jquery.lazyloadxt.min.js</a></td>
       <td><a href="https://raw.github.com/ressio/lazy-load-xt/master/dist/jquery.lazyloadxt.extra.min.js">jquery.lazyloadxt.extra.min.js</a></td>
-      <td><a href="https://raw.github.com/ressio/lazy-load-xt/master/dist/jquery.lazyloadxt.simple.min.js">jquery.lazyloadxt.simple.min.js</a></td>
+    </tr>
+  </tbody>
+</table>
+
+Effects:
+
+<table>
+  <tbody>
+    <tr>
+      <td>Dev version:</td>
+      <td><a href="https://raw.github.com/ressio/lazy-load-xt/master/dist/jquery.lazyloadxt.fadein.css">jquery.lazyloadxt.fadein.css</a></td>
+      <td><a href="https://raw.github.com/ressio/lazy-load-xt/master/dist/jquery.lazyloadxt.spinner.css">jquery.lazyloadxt.spinner.css</a></td>
+    </tr>
+    <tr>
+      <td>Minified version:</td>
+      <td><a href="https://raw.github.com/ressio/lazy-load-xt/master/dist/jquery.lazyloadxt.fadein.min.css">jquery.lazyloadxt.fadein.min.css</a></td>
+      <td><a href="https://raw.github.com/ressio/lazy-load-xt/master/dist/jquery.lazyloadxt.spinner.min.css">jquery.lazyloadxt.spinner.min.css</a></td>
     </tr>
   </tbody>
 </table>
@@ -115,14 +130,11 @@ If you have any feature to request or bug to report please use
 
 ## Usage
 
-First of all it's necessary to load jQuery and Lazy Load XT script. There are three versions of Lazy Load XT:
+First of all it's necessary to load jQuery and Lazy Load XT script. There are two versions of Lazy Load XT:
 
 1. `jquery.lazyloadxt.js`, standard version for lazy loading of images only.
 
 2. `jquery.lazyloadxt.extra.js`, version with included video addon for lazy loading of both images and videos.
-
-3. `jquery.lazyloadxt.simple.js`, version of minimal size with excluded support of on* handlers, lazy* events,
-    `blankImage` option and addons.
 
 To make media elements (`img`, `video`, `source`, `iframe`) to be lazy loaded, rename `src` attribute to `data-src`.
 It is highly recommended to set `width` and `height` attributes. Optionally you can add a placeholder `src` to bypass
@@ -134,6 +146,9 @@ HTML validators:
 
 <img data-src="lazy.jpg" width="100" height="100">
 ```
+
+PS. In `src` directory you can found `jquery.lazyloadxt.simple.js`, it is initial LazyLoadXT version of minimal size
+with excluded support of on* handlers, lazy* events, `blankImage` option and addons.
 
 
 ## Demo
@@ -151,7 +166,7 @@ There are two ways to initialize elements if auto initialization doesn't suit yo
 For example, `$(container).find(selector).lazyLoadXT();` initializes elements matching `selector` inside `container`.
 
 You can pass optional argument to override default `$.lazyLoadXT` options. The following options only may be overridden:
-`srcAttr`, `edgeX`, `edgeY`, `visibleOnly`, `blankImage`.
+`srcAttr`, `edgeX`, `edgeY`, `visibleOnly`, `blankImage`, `checkDuplicates`, `scrollContainer`.
 
 Note: don’t forget to disable auto initialization with `$.lazyLoadXT.autoInit=false;` if you like to use manual
 initialization of all elements.
@@ -241,7 +256,8 @@ jQuery's `ready` event).
 Lazy Load XT plugin triggers following events for loading elements (after call to corresponding handler in
 `$.lazyLoadXT` options):
 
-* `lazyinit`, the plugin push elements into internal list of "lazy" elements
+* `lazystart`, (triggered on `window`) before plugin's initialization code (binding to events, etc.)
+* `lazyinit`, the plugin push element into internal list of "lazy" elements
 * `lazyshow`, element appears in viewport area
 * `lazyload`, element is successfully loaded
 * `lazyerror`, browser cannot load the element
@@ -729,7 +745,7 @@ doesn't affect loading of CSSes and JavaScripts, and time to initial website ren
 
 Options:
 
-**$.lazyLoadXT.autoLoad** time interval between `load` page event and start of image loading (in ms, default is 50)
+**$.lazyLoadXT.autoLoadTime** time interval between `load` page event and start of image loading (in ms, default is 50)
 
 Demo: http://ressio.github.io/lazy-load-xt/demo/autoload.htm
 
@@ -776,17 +792,23 @@ function addLazyLoading($html) {
 
 Lazy Load XT may be loaded from [jsDelivr CDN](http://www.jsdelivr.com/#!jquery.lazyloadxt)
 ```html
-<script src="//cdn.jsdelivr.net/jquery.lazyloadxt/0.8.11/jquery.lazyloadxt.min.js">
+<script src="//cdn.jsdelivr.net/jquery.lazyloadxt/1.0.0/jquery.lazyloadxt.min.js">
 ```
 or [CDNJS CDN](http://cdnjs.com/libraries/jquery.lazyloadxt/)
 ```html
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazyloadxt/0.8.11/jquery.lazyloadxt.min.js">
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazyloadxt/1.0.0/jquery.lazyloadxt.min.js">
 ```
 
 Note that any of Lazy Load XT `dist` files may be loaded from CDN, not only `jquery.lazyloadxt.min.js`.
 
 
 ## Version History
+
+- [**1.0.0**](https://github.com/ressio/lazy-load-xt/tree/1.0.0) (16.01.2014): new `forceLoad` option, `classNojs`
+  option is removed in flavour of `options.oninit.removeClass`, `lazyloadall` event is renamed to `lazycomplete`,
+  new `oncomplete` option, fix work with Zepto, fix work in some old mobile browsers, default value for `selector`
+  option is set to `img[data-src]`, lazy* events are triggered after corresponding on* handlers, new `lazystart` event,
+  remove "simple" version from build.
 
 - [**0.8.12**](https://github.com/ressio/lazy-load-xt/tree/0.8.12) (12.01.2014): significant performance improvement,
   fix work in BlackBerry 5, fix `checkDuplicates` options

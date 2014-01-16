@@ -16,9 +16,10 @@
     </style>
     <script>
         $(document).ready(function () {
-            $('#marker-end')
-                .on('lazyshow', function () {
-                    $.ajax({
+            if(!$.lazyLoadXT.forceLoad) {
+                $('#marker-end')
+                    .on('lazyshow', function () {
+                        $.ajax({
                             url: 'infinite.htm',
                             dataType: "html"
                         })
@@ -34,8 +35,9 @@
                             $(window).lazyLoadXT();
                             $('#marker-end').lazyLoadXT({visibleOnly: false, checkDuplicates: false});
                         });
-                })
-                .lazyLoadXT({visibleOnly: false});
+                    })
+                    .lazyLoadXT({visibleOnly: false});
+            }
         });
     </script>
 </head>

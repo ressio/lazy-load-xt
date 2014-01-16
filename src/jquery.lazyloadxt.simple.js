@@ -1,6 +1,8 @@
 /*jslint browser:true, plusplus:true, vars:true */
 /*jshint browser:true, jquery:true */
 
+/* SIMPLE VERSION IS NO LONGER SUPPORTED. USE jquery.lazyloadxt.js INSTEAD. */
+
 (function ($, window, document) {
     'use strict';
 

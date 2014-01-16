@@ -10,12 +10,15 @@
         dataLazied = 'lazied',
         load_error = 'load error',
         classLazyHidden = 'lazy-hidden',
+        docElement = document.documentElement || document.body,
+    //  force load all images in Opera Mini and some mobile browsers without scroll event or getBoundingClientRect()
+        forceLoad = (window.onscroll === undefined || !!window.operamini || !docElement.getBoundingClientRect),
         options = {
             autoInit: true, // auto initialize in $.ready
             selector: 'img[data-src]', // selector for lazyloading elements
             blankImage: 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
             throttle: 99, // interval (ms) for changes check
-            forceLoad: false, // force auto load all images
+            forceLoad: forceLoad, // force auto load all images
 
             loadEvent: 'pageshow', // check AJAX-loaded content in jQueryMobile
             updateEvent: 'load orientationchange resize scroll touchmove', // page-modified events
@@ -39,13 +42,10 @@
         $window = $(window),
         $isFunction = $.isFunction,
         $extend = $.extend,
-        docElement = document.documentElement || document.body,
-    //  force load all images in Opera Mini and some mobile browsers without scroll event or getBoundingClientRect()
-        forceLoad = (window.onscroll === undefined || !!window.operamini || !docElement.getBoundingClientRect),
-        elements = [],
         $data = $.data || function (el, name) {
             return $(el).data(name);
         },
+        elements = [],
         topLazy = 0,
     /*
      waitingMode=0 : no setTimeout
@@ -157,7 +157,7 @@
             return;
         }
 
-        force = force || forceLoad || options.forceLoad;
+        force = force || options.forceLoad;
 
         topLazy = Infinity;
 

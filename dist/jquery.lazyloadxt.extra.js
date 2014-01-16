@@ -1,23 +1,37 @@
-/*! Lazy Load XT v0.8.12 2014-01-12
+/*! Lazy Load XT v1.0.0 2014-01-16
  * http://ressio.github.io/lazy-load-xt
  * (C) 2014 RESS.io
  * Licensed under MIT */
 
 (function ($, window, document, undefined) {
     // options
-    var options = {
-            autoInit: true,
-            selector: 'img',
-            classNojs: 'lazy',
+    var lazyLoadXT = 'lazyLoadXT',
+        dataLazied = 'lazied',
+        load_error = 'load error',
+        classLazyHidden = 'lazy-hidden',
+        docElement = document.documentElement || document.body,
+    //  force load all images in Opera Mini and some mobile browsers without scroll event or getBoundingClientRect()
+        forceLoad = (window.onscroll === undefined || !!window.operamini || !docElement.getBoundingClientRect),
+        options = {
+            autoInit: true, // auto initialize in $.ready
+            selector: 'img[data-src]', // selector for lazyloading elements
             blankImage: 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
-            throttle: 99,
+            throttle: 99, // interval (ms) for changes check
+            forceLoad: forceLoad, // force auto load all images
+
             loadEvent: 'pageshow', // check AJAX-loaded content in jQueryMobile
             updateEvent: 'load orientationchange resize scroll touchmove', // page-modified events
             forceEvent: '', // force loading of all elements
-            oninit: null, // init handler
-            onshow: null, // start loading handler
-            onload: null, // load success handler
-            onerror: null // error handler
+
+            //onstart: null,
+            oninit: {removeClass: 'lazy'}, // init handler
+            onshow: {addClass: classLazyHidden}, // start loading handler
+            onload: {removeClass: classLazyHidden, addClass: 'lazy-loaded'}, // load success handler
+            onerror: {removeClass: classLazyHidden}, // error handler
+            //oncomplete: null, // complete handler
+
+            //scrollContainer: undefined,
+            checkDuplicates: true
         },
         elementOptions = {
             srcAttr: 'data-src',
@@ -27,15 +41,11 @@
         },
         $window = $(window),
         $isFunction = $.isFunction,
-        docElement = document.documentElement,
-    //  autoload all images in Opera Mini and some mobile browsers without scroll event or getBoundingClientRect()
-        autoLoad = (window.onscroll === undefined || !!window.operamini || !docElement.getBoundingClientRect),
-        dataLazied = 'lazied',
-        load_error = 'load error',
-        elements = [],
+        $extend = $.extend,
         $data = $.data || function (el, name) {
             return $(el).data(name);
         },
+        elements = [],
         topLazy = 0,
     /*
      waitingMode=0 : no setTimeout
@@ -44,16 +54,16 @@
      */
         waitingMode = 0;
 
-    $.lazyLoadXT = $.extend(options, elementOptions, $.lazyLoadXT);
+    $[lazyLoadXT] = $extend(options, elementOptions, $[lazyLoadXT]);
 
     /**
-     * Return def if value is undefined, otherwise return value
-     * @param {*} value
-     * @param {*} def
+     * Return options.prop if obj.prop is undefined, otherwise return obj.prop
+     * @param {*} obj
+     * @param {*} prop
      * @returns *
      */
-    function getOrDef(value, def) {
-        return value === undefined ? def : value;
+    function getOrDef(obj, prop) {
+        return obj[prop] === undefined ? options[prop] : obj[prop];
     }
 
 
@@ -61,19 +71,22 @@
      * Add new elements to lazy-load list:
      * $(elements).lazyLoadXT() or $(window).lazyLoadXT()
      *
-     * @param {object} [overrides] loading of all elements
+     * @param {object} [overrides] override global options
      */
-    $.fn.lazyLoadXT = function (overrides) {
+    $.fn[lazyLoadXT] = function (overrides) {
         overrides = overrides || {};
 
-        var elementOptionsOverrides = {},
-            blankImage = getOrDef(overrides.blankImage, options.blankImage),
-            classNojs = getOrDef(overrides.classNojs, options.classNojs),
-            checkDuplicates = getOrDef(overrides.checkDuplicates, true),
+        var blankImage = getOrDef(overrides, 'blankImage'),
+            checkDuplicates = getOrDef(overrides, 'checkDuplicates'),
+            scrollContainer = getOrDef(overrides, 'scrollContainer'),
+            elementOptionsOverrides = {},
             prop;
 
+        // empty overrides.scrollContainer is supported by both jQuery and Zepto
+        $(scrollContainer).on('scroll', queueCheckLazyElements);
+
         for (prop in elementOptions) {
-            elementOptionsOverrides[prop] = getOrDef(overrides[prop], options[prop]);
+            elementOptionsOverrides[prop] = getOrDef(overrides, prop);
         }
 
         return this.each(function () {
@@ -85,22 +98,18 @@
                     return;
                 }
 
-                var $el = $(this);
-
-                $el
-                    .data(dataLazied, 1)
-                    .removeClass(classNojs);
+                var $el = $(this).data(dataLazied, 1);
 
                 if (blankImage && $el[0].tagName === 'IMG' && !this.src) {
                     this.src = blankImage;
                 }
 
                 // clone elementOptionsOverrides object
-                $el.lazyLoadXT = $.extend({}, elementOptionsOverrides);
+                $el[lazyLoadXT] = $extend({}, elementOptionsOverrides);
 
                 triggerEvent('init', $el);
 
-                elements.unshift($el); // push it in the first position as we iterate elements in reverse order
+                elements.push($el);
             }
         });
     };
@@ -112,18 +121,18 @@
      * @param {jQuery} $el
      */
     function triggerEvent(event, $el) {
-        $el.trigger('lazy' + event, [$el]);
-
         var handler = options['on' + event];
         if (handler) {
             if ($isFunction(handler)) {
                 handler.call($el[0]);
             } else {
                 $el
-                    .addClass(handler.addClass)
-                    .removeClass(handler.removeClass);
+                    .addClass(handler.addClass || '')
+                    .removeClass(handler.removeClass || '');
             }
         }
+
+        $el.trigger('lazy' + event, [$el]);
 
         // queue next check as images may be resized after loading of actual file
         queueCheckLazyElements();
@@ -148,32 +157,41 @@
             return;
         }
 
-        force = force || autoLoad;
+        force = force || options.forceLoad;
 
         topLazy = Infinity;
 
         var viewportTop = $window.scrollTop(),
             viewportHeight = window.innerHeight || $window.height(),
             viewportWidth = window.innerWidth || $window.width(),
-            i;
+            i,
+            length;
 
-        for (i = elements.length - 1; i >= 0; i--) {
+        for (i = 0, length = elements.length; i < length; i++) {
             var $el = elements[i],
                 el = $el[0],
-                objData = $el.lazyLoadXT;
+                objData = $el[lazyLoadXT],
+                removeNode = false,
+                visible = force,
+                topEdge;
 
             // remove items that are not in DOM
             if (!$.contains(docElement, el)) {
-                elements.splice(i, 1);
-            } else if (force || !objData.visibleOnly || el.offsetWidth > 0 || el.offsetHeight > 0) {
-                var elPos = el.getBoundingClientRect(),
-                    edgeX = objData.edgeX,
-                    edgeY = objData.edgeY,
+                removeNode = true;
+            } else if (force || !objData.visibleOnly || el.offsetWidth || el.offsetHeight) {
+
+                if (!visible) {
+                    var elPos = el.getBoundingClientRect(),
+                        edgeX = objData.edgeX,
+                        edgeY = objData.edgeY;
+
                     topEdge = (elPos.top + viewportTop - edgeY) - viewportHeight;
 
-                if (force || (topEdge <= viewportTop && elPos.bottom > -edgeY &&
-                        elPos.left <= viewportWidth + edgeX && elPos.right > -edgeX)) {
+                    visible = (topEdge <= viewportTop && elPos.bottom > -edgeY &&
+                        elPos.left <= viewportWidth + edgeX && elPos.right > -edgeX);
+                }
 
+                if (visible) {
                     triggerEvent('show', $el);
 
                     var srcAttr = objData.srcAttr,
@@ -183,17 +201,22 @@
                         el.src = src;
                     }
 
-                    elements.splice(i, 1);
+                    removeNode = true;
                 } else {
                     if (topEdge < topLazy) {
                         topLazy = topEdge;
                     }
                 }
             }
+
+            if (removeNode) {
+                elements.splice(i--, 1);
+                length--;
+            }
         }
 
-        if (!elements.length) {
-            $(document).trigger('lazyloadall');
+        if (!length) {
+            triggerEvent('complete', $(docElement));
         }
     }
 
@@ -222,7 +245,7 @@
         }
 
         // fast check for scroll event without new visible elements
-        if (e && e.type === 'scroll') {
+        if (e && e.type === 'scroll' && e.currentTarget === window) {
             if (topLazy >= $window.scrollTop()) {
                 return;
             }
@@ -231,7 +254,6 @@
         if (!waitingMode) {
             setTimeout(timeoutLazyElements, 0);
         }
-
         waitingMode = 2;
     }
 
@@ -257,6 +279,8 @@
      * Initialization
      */
     $(document).ready(function () {
+        triggerEvent('start', $window);
+
         $window
             .on(options.loadEvent, initLazyElements)
             .on(options.updateEvent, queueCheckLazyElements)

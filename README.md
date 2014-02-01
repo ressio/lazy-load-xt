@@ -216,7 +216,7 @@ jQuery's `ready` event).
 * **autoInit**: auto initialization of the plugin, that is processing of all elements matching `selector` selector in
   jQuery's `ready` event, if it is disabled you have to do such initialization manually as explained in [Advanced
   initialization](#advanced-initialization) section (default `true`)
-* **selector**: selector for elements that should be lazy-loaded (default `'img'`)
+* **selector**: selector for elements that should be lazy-loaded (default `'img[data-src]'`)
 * **srcAttr**: attribute containing actual `src` path, see example below in [Hi-DPI (Retina) images]
   (#hi-dpi-retina-images) section (default `'data-src'`)
 * **blankImage**: blank image for used until actual image is not loaded (default is transparent 1x1 gif image in

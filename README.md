@@ -5,7 +5,7 @@
 ## Table of Contents
 
 - [About](#about)
-- [Download / Install](#download-install)
+- [Download / Install](#download--install)
 - [Usage](#usage)
 - [Demo](#demo)
 - [Advanced initialization](#advanced-initialization)
@@ -18,6 +18,7 @@
 - [Extendability](#extendability)
     - [Spinner](#spinner)
     - [Fade-in animation](#fade-in-animation)
+    - [Animate.css](#animatecss)
     - [Horizontal scroll](#horizontal-scroll)
     - [Infinite scroll](#infinite-scroll)
     - [Hi-DPI (Retina) images](#hi-dpi-retina-images)

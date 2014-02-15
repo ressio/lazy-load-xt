@@ -50,9 +50,8 @@
                 $img = $('<img>').appendTo($el);
             }
 
-            $img
-                .attr('width', $el.attr('width'))
-                .attr('height', $el.attr('height'));
+            $img.attr('width', $el.attr('width'));
+            $img.attr('height', $el.attr('height'));
         })
         // show picture
         .on('lazyshow', 'picture', function (e, $el) {

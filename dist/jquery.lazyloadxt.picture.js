@@ -1,4 +1,4 @@
-/*! Lazy Load XT v1.0.0 2014-01-16
+/*! Lazy Load XT v1.0.1 2014-02-17
  * http://ressio.github.io/lazy-load-xt
  * (C) 2014 RESS.io
  * Licensed under MIT */
@@ -8,6 +8,29 @@
         matchMedia = window.matchMedia;
 
     options.selector += ',picture';
+
+    function parsePicture($el) {
+        var srcAttr = $el.lazyLoadXT.srcAttrS,
+            isFuncSrcAttr = $.isFunction(srcAttr),
+            $img = $el.children('img'),
+            src = isFuncSrcAttr ? srcAttr($img) : $img.attr(srcAttr);
+
+        if (matchMedia) {
+            $el
+                .children('br')
+                .each(function () {
+                    var $child = $(this),
+                        source = isFuncSrcAttr ? srcAttr($child) : $child.attr(srcAttr),
+                        media = $child.attr('media');
+
+                    if (source && (!media || matchMedia(media).matches)) {
+                        src = source;
+                    }
+                });
+        }
+
+        return src;
+    }
 
     $(document)
         // remove default behaviour for inner <img> tag
@@ -27,9 +50,8 @@
                 $img = $('<img>').appendTo($el);
             }
 
-            $img
-                .attr('width', $el.attr('width'))
-                .attr('height', $el.attr('height'));
+            $img.attr('width', $el.attr('width'));
+            $img.attr('height', $el.attr('height'));
         })
         // show picture
         .on('lazyshow', 'picture', function (e, $el) {
@@ -37,28 +59,9 @@
                 return;
             }
 
-            var srcAttr = $el.lazyLoadXT.srcAttr,
-                isFuncSrcAttr = $.isFunction(srcAttr),
-                $img = $el.children('img'),
-                src = isFuncSrcAttr ? srcAttr($img) : $img.attr(srcAttr);
-
-            if (src) {
-                $img.attr('src', src);
-            }
-
-            if (matchMedia) {
-                $el
-                    .children('br')
-                    .each(function () {
-                        var $child = $(this),
-                            src = isFuncSrcAttr ? srcAttr($child) : $child.attr(srcAttr),
-                            media = $child.attr('media');
-
-                        if (src && (!media || matchMedia(media).matches)) {
-                            $img.attr('src', src);
-                        }
-                    });
-            }
+            var elOptions = $el.lazyLoadXT;
+            elOptions.srcAttrS = elOptions.srcAttr;
+            elOptions.srcAttr = parsePicture;
         });
 
 })(window.jQuery || window.Zepto, window, document);

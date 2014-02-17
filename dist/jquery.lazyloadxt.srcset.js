@@ -1,4 +1,4 @@
-/*! Lazy Load XT v1.0.0 2014-01-16
+/*! Lazy Load XT v1.0.1 2014-02-17
  * http://ressio.github.io/lazy-load-xt
  * (C) 2014 RESS.io
  * Licensed under MIT */
@@ -49,6 +49,57 @@
         return item[property] === limit;
     }
 
+    function parseSrcset($el) {
+        var srcset = $el.attr(options.srcsetAttr);
+
+        if (!srcset) {
+            return false;
+        }
+
+        var list = srcset.split(',').map(function (item) {
+            return {
+                url: reUrl.exec(item)[1],
+                w: parseFloat((reWidth.exec(item) || infty)[1]),
+                h: parseFloat((reHeight.exec(item) || infty)[1]),
+                x: parseFloat((reDpr.exec(item) || one)[1])
+            };
+        });
+
+        if (!list.length) {
+            return false;
+        }
+
+        var documentElement = document.documentElement,
+            whx,
+            src;
+
+        viewport = {
+            w: window.innerWidth || documentElement.clientWidth,
+            h: window.innerHeight || documentElement.clientHeight,
+            x: window.devicePixelRatio || 1
+        };
+
+        for (whx in viewport) {
+            property = whx;
+            limit = mathFilter(list, 'max');
+            list = $.grep(list, compareMax);
+        }
+
+        for (whx in viewport) {
+            property = whx;
+            limit = mathFilter(list, 'min');
+            list = $.grep(list, compareMin);
+        }
+
+        src = list[0].url;
+
+        if (options.srcsetExtended) {
+            src = ($el.attr(options.srcsetBaseAttr) || '') + src + ($el.attr(options.srcsetExtAttr) || '');
+        }
+
+        return src;
+    }
+
     $(document).on('lazyshow', 'img', function (e, $el) {
         var srcset = $el.attr(options.srcsetAttr);
 
@@ -56,46 +107,7 @@
             if (!options.srcsetExtended && srcsetSupport) {
                 $el.attr('srcset', srcset);
             } else {
-                var list = srcset.split(',').map(function (item) {
-                    return {
-                        url: reUrl.exec(item)[1],
-                        w: parseFloat((reWidth.exec(item) || infty)[1]),
-                        h: parseFloat((reHeight.exec(item) || infty)[1]),
-                        x: parseFloat((reDpr.exec(item) || one)[1])
-                    };
-                });
-
-                if (list.length) {
-                    var documentElement = document.documentElement,
-                        whx,
-                        src;
-
-                    viewport = {
-                        w: window.innerWidth || documentElement.clientWidth,
-                        h: window.innerHeight || documentElement.clientHeight,
-                        x: window.devicePixelRatio || 1
-                    };
-
-                    for (whx in viewport) {
-                        property = whx;
-                        limit = mathFilter(list, 'max');
-                        list = $.grep(list, compareMax);
-                    }
-
-                    for (whx in viewport) {
-                        property = whx;
-                        limit = mathFilter(list, 'min');
-                        list = $.grep(list, compareMin);
-                    }
-
-                    src = list[0].url;
-
-                    if (options.srcsetExtended) {
-                        src = ($el.attr(options.srcsetBaseAttr) || '') + src + ($el.attr(options.srcsetExtAttr) || '');
-                    }
-
-                    $el.attr('src', src);
-                }
+                $el.lazyLoadXT.srcAttr = parseSrcset;
             }
         }
     });

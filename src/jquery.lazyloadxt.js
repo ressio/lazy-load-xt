@@ -41,6 +41,7 @@
             visibleOnly: true
         },
         $window = $(window),
+        $document = $(document),
         $isFunction = $.isFunction,
         $extend = $.extend,
         $data = $.data || function (el, name) {
@@ -279,13 +280,15 @@
     /**
      * Initialization
      */
-    $(document).ready(function () {
+    $document.ready(function () {
         triggerEvent('start', $window);
 
         $window
             .on(options.loadEvent, initLazyElements)
             .on(options.updateEvent, queueCheckLazyElements)
             .on(options.forceEvent, forceLoadAll);
+
+        $document.on(options.updateEvent, queueCheckLazyElements);
 
         if (options.autoInit) {
             initLazyElements(); // standard initialization

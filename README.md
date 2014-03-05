@@ -804,6 +804,7 @@ Note that any of Lazy Load XT `dist` files may be loaded from CDN, not only `jqu
 
 ## Version History
 
+- [**1.0.2**](https://github.com/ressio/lazy-load-xt/tree/1.0.2) (05.03.2014): fix work in jQuery Mobile 1.4
 - [**1.0.1**](https://github.com/ressio/lazy-load-xt/tree/1.0.1) (16.02.2014): fix triggering `lazyload` and `lazyerror`
   events in `scrset` and `picture` addons
 - [**1.0.0**](https://github.com/ressio/lazy-load-xt/tree/1.0.0) (16.01.2014): new `forceLoad` option, `classNojs`

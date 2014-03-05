@@ -1,4 +1,4 @@
-/*! Lazy Load XT v1.0.1 2014-02-17
+/*! Lazy Load XT v1.0.2 2014-03-05
  * http://ressio.github.io/lazy-load-xt
  * (C) 2014 RESS.io
  * Licensed under MIT */
@@ -263,7 +263,6 @@
      */
     function initLazyElements() {
         $window.lazyLoadXT();
-        queueCheckLazyElements();
     }
 
 
@@ -285,6 +284,8 @@
             .on(options.loadEvent, initLazyElements)
             .on(options.updateEvent, queueCheckLazyElements)
             .on(options.forceEvent, forceLoadAll);
+
+        $(document).on(options.updateEvent, queueCheckLazyElements);
 
         if (options.autoInit) {
             initLazyElements(); // standard initialization

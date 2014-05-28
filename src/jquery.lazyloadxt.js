@@ -21,7 +21,7 @@
             forceLoad: forceLoad, // force auto load all images
 
             loadEvent: 'pageshow', // check AJAX-loaded content in jQueryMobile
-            updateEvent: 'load orientationchange resize scroll touchmove', // page-modified events
+            updateEvent: 'load orientationchange resize scroll touchmove focus', // page-modified events
             forceEvent: '', // force loading of all elements
 
             //onstart: null,

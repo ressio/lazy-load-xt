@@ -1,4 +1,4 @@
-/*! Lazy Load XT v1.0.0 2014-01-16
+/*! Lazy Load XT v1.0.3 2014-05-28
  * http://ressio.github.io/lazy-load-xt
  * (C) 2014 RESS.io
  * Licensed under MIT */
@@ -20,7 +20,7 @@
             forceLoad: forceLoad, // force auto load all images
 
             loadEvent: 'pageshow', // check AJAX-loaded content in jQueryMobile
-            updateEvent: 'load orientationchange resize scroll touchmove', // page-modified events
+            updateEvent: 'load orientationchange resize scroll touchmove focus', // page-modified events
             forceEvent: '', // force loading of all elements
 
             //onstart: null,
@@ -45,6 +45,15 @@
         $data = $.data || function (el, name) {
             return $(el).data(name);
         },
+    // $.contains is not included into DOMtastic, so implement it there
+        $contains = $.contains || function (parent, el) {
+            while (el = el.parentNode) {
+                if (el === parent) {
+                    return true;
+                }
+            }
+            return false;
+        },
         elements = [],
         topLazy = 0,
     /*
@@ -66,6 +75,13 @@
         return obj[prop] === undefined ? options[prop] : obj[prop];
     }
 
+    /**
+     * @returns {number}
+     */
+    function scrollTop() {
+        var scroll = window.pageYOffset;
+        return (scroll === undefined) ? docElement.scrollTop : scroll;
+    }
 
     /**
      * Add new elements to lazy-load list:
@@ -89,19 +105,19 @@
             elementOptionsOverrides[prop] = getOrDef(overrides, prop);
         }
 
-        return this.each(function () {
-            if (this === window) {
+        return this.each(function (el) {
+            if (el === window) {
                 $(options.selector).lazyLoadXT(overrides);
             } else {
                 // prevent duplicates
-                if (checkDuplicates && $data(this, dataLazied)) {
+                if (checkDuplicates && $data(el, dataLazied)) {
                     return;
                 }
 
-                var $el = $(this).data(dataLazied, 1);
+                var $el = $(el).data(dataLazied, 1);
 
-                if (blankImage && $el[0].tagName === 'IMG' && !this.src) {
-                    this.src = blankImage;
+                if (blankImage && el.tagName === 'IMG' && !el.src) {
+                    el.src = blankImage;
                 }
 
                 // clone elementOptionsOverrides object
@@ -126,9 +142,12 @@
             if ($isFunction(handler)) {
                 handler.call($el[0]);
             } else {
-                $el
-                    .addClass(handler.addClass || '')
-                    .removeClass(handler.removeClass || '');
+                if (handler.addClass) {
+                    $el.addClass(handler.addClass);
+                }
+                if (handler.removeClass) {
+                    $el.removeClass(handler.removeClass);
+                }
             }
         }
 
@@ -161,9 +180,9 @@
 
         topLazy = Infinity;
 
-        var viewportTop = $window.scrollTop(),
-            viewportHeight = window.innerHeight || $window.height(),
-            viewportWidth = window.innerWidth || $window.width(),
+        var viewportTop = scrollTop(),
+            viewportHeight = window.innerHeight || docElement.clientHeight,
+            viewportWidth = window.innerWidth || docElement.clientWidth,
             i,
             length;
 
@@ -176,7 +195,7 @@
                 topEdge;
 
             // remove items that are not in DOM
-            if (!$.contains(docElement, el)) {
+            if (!$contains(docElement, el)) {
                 removeNode = true;
             } else if (force || !objData.visibleOnly || el.offsetWidth || el.offsetHeight) {
 
@@ -246,7 +265,7 @@
 
         // fast check for scroll event without new visible elements
         if (e && e.type === 'scroll' && e.currentTarget === window) {
-            if (topLazy >= $window.scrollTop()) {
+            if (topLazy >= scrollTop()) {
                 return;
             }
         }
@@ -263,7 +282,6 @@
      */
     function initLazyElements() {
         $window.lazyLoadXT();
-        queueCheckLazyElements();
     }
 
 
@@ -286,13 +304,14 @@
             .on(options.updateEvent, queueCheckLazyElements)
             .on(options.forceEvent, forceLoadAll);
 
+        $(document).on(options.updateEvent, queueCheckLazyElements);
+
         if (options.autoInit) {
             initLazyElements(); // standard initialization
         }
     });
 
-})(window.jQuery || window.Zepto, window, document);
-
+})(window.jQuery || window.Zepto || window.$, window, document);
 
 (function ($) {
     var options = $.lazyLoadXT;
@@ -307,8 +326,8 @@
         $el
             .attr('poster', $el.attr(options.videoPoster))
             .children('source,track')
-            .each(function () {
-                var $child = $(this);
+            .each(function (el) {
+                var $child = $(el);
                 $child.attr('src', isFuncSrcAttr ? srcAttr($child) : $child.attr(srcAttr));
             });
 
@@ -316,4 +335,4 @@
         this.load();
     });
 
-})(window.jQuery || window.Zepto);
+})(window.jQuery || window.Zepto || window.$);

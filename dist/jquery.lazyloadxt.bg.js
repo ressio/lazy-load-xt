@@ -1,4 +1,4 @@
-/*! Lazy Load XT v1.0.0 2014-01-16
+/*! Lazy Load XT v1.0.3 2014-05-28
  * http://ressio.github.io/lazy-load-xt
  * (C) 2014 RESS.io
  * Licensed under MIT */
@@ -16,4 +16,4 @@
             .removeAttr(bgAttr);
     });
 
-})(window.jQuery || window.Zepto);
+})(window.jQuery || window.Zepto || window.$);

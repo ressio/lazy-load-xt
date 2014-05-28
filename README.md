@@ -46,7 +46,7 @@ jQueryMobile framework.
 Currently tested in IE 6-11, Chrome 1-31, Firefox 1.5-27.0, Safari 3-7, Opera 10.6-18.0, iOS 5-7, Android 2.3-4.4,
 Amazon Kindle Fire 2 and HD 8.9, Opera Mini 7.
 
-**Required jQuery 1.7+ or Zepto 1.0+.**
+**Required jQuery 1.7+, Zepto 1.0+, or DOMtastic 0.7.2+ (note: `attr`, `class`, `data`, `event`, `selector`, and `type` modules are required).**
 
 
 ## Download / Install
@@ -804,6 +804,7 @@ Note that any of Lazy Load XT `dist` files may be loaded from CDN, not only `jqu
 
 ## Version History
 
+- [**1.0.3**](https://github.com/ressio/lazy-load-xt/tree/1.0.3) (28.05.2014): support DOMstatic library (`attr`, `class`, `data`, `event`, `selector`, and `type` modules are required); fix loading of images on browser's tab activation
 - [**1.0.2**](https://github.com/ressio/lazy-load-xt/tree/1.0.2) (05.03.2014): fix work in jQuery Mobile 1.4
 - [**1.0.1**](https://github.com/ressio/lazy-load-xt/tree/1.0.1) (16.02.2014): fix triggering `lazyload` and `lazyerror`
   events in `scrset` and `picture` addons

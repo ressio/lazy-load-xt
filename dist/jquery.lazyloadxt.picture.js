@@ -1,4 +1,4 @@
-/*! Lazy Load XT v1.0.2 2014-03-05
+/*! Lazy Load XT v1.0.3 2014-05-28
  * http://ressio.github.io/lazy-load-xt
  * (C) 2014 RESS.io
  * Licensed under MIT */
@@ -18,8 +18,8 @@
         if (matchMedia) {
             $el
                 .children('br')
-                .each(function () {
-                    var $child = $(this),
+                .each(function (el) {
+                    var $child = $(el),
                         source = isFuncSrcAttr ? srcAttr($child) : $child.attr(srcAttr),
                         media = $child.attr('media');
 
@@ -64,4 +64,4 @@
             elOptions.srcAttr = parsePicture;
         });
 
-})(window.jQuery || window.Zepto, window, document);
+})(window.jQuery || window.Zepto || window.$, window, document);

@@ -15,4 +15,4 @@
         }, options.autoLoadTime);
     });
 
-})(window.jQuery || window.Zepto);
+})(window.jQuery || window.Zepto || window.$);

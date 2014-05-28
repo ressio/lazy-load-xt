@@ -79,6 +79,8 @@
             x: window.devicePixelRatio || 1
         };
 
+        // Notice for DOMtastic users: currently $.grep method is not implemented in DOMtastic
+
         for (whx in viewport) {
             property = whx;
             limit = mathFilter(list, 'max');
@@ -112,4 +114,4 @@
         }
     });
 
-})(window.jQuery || window.Zepto, window, document);
+})(window.jQuery || window.Zepto || window.$, window, document);

@@ -18,8 +18,8 @@
         if (matchMedia) {
             $el
                 .children('br')
-                .each(function () {
-                    var $child = $(this),
+                .each(function (el) {
+                    var $child = $(el),
                         source = isFuncSrcAttr ? srcAttr($child) : $child.attr(srcAttr),
                         media = $child.attr('media');
 
@@ -64,4 +64,4 @@
             elOptions.srcAttr = parsePicture;
         });
 
-})(window.jQuery || window.Zepto, window, document);
+})(window.jQuery || window.Zepto || window.$, window, document);

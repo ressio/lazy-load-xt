@@ -35,4 +35,4 @@
         strictEqual(this.elems.lazyLoadXT(), this.elems, 'should be chainable');
     });
 
-}(window.jQuery || window.Zepto));
+}(window.jQuery || window.Zepto || window.$));

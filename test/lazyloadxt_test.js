@@ -39,11 +39,11 @@
         expect(5);
         setTimeout(function () {
             var $img = $('img'),
-                cntinit = $img.filter(function () {
-                    return $(this).data('lazied');
+                cntinit = $img.filter(function (el) {
+                    return $(el).data('lazied');
                 }).length,
-                cntnow = $img.filter(function () {
-                    return $(this).data('lazied') && ($(this).attr('src') === $(this).attr('data-src'));
+                cntnow = $img.filter(function (el) {
+                    return $(el).data('lazied') && ($(el).attr('src') === $(el).attr('data-src'));
                 }).length;
             ok($img.length > 0, 'images should be presented');
             ok(cntinit > 0, 'images should be initialized');
@@ -53,4 +53,4 @@
             start();
         }, 300);
     });
-}(window.jQuery || window.Zepto));
+}(window.jQuery || window.Zepto || window.$));

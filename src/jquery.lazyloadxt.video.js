@@ -16,8 +16,8 @@
         $el
             .attr('poster', $el.attr(options.videoPoster))
             .children('source,track')
-            .each(function () {
-                var $child = $(this);
+            .each(function (el) {
+                var $child = $(el);
                 $child.attr('src', isFuncSrcAttr ? srcAttr($child) : $child.attr(srcAttr));
             });
 
@@ -25,4 +25,4 @@
         this.load();
     });
 
-})(window.jQuery || window.Zepto);
+})(window.jQuery || window.Zepto || window.$);

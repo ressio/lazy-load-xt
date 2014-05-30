@@ -106,7 +106,7 @@
             elementOptionsOverrides[prop] = getOrDef(overrides, prop);
         }
 
-        return this.each(function (el) {
+        return this.each(function (index, el) {
             if (el === window) {
                 $(options.selector).lazyLoadXT(overrides);
             } else {

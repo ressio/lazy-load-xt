@@ -16,7 +16,7 @@
         $el
             .attr('poster', $el.attr(options.videoPoster))
             .children('source,track')
-            .each(function (el) {
+            .each(function (index, el) {
                 var $child = $(el);
                 $child.attr('src', isFuncSrcAttr ? srcAttr($child) : $child.attr(srcAttr));
             });

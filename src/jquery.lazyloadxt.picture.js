@@ -18,7 +18,7 @@
         if (matchMedia) {
             $el
                 .children('br')
-                .each(function (el) {
+                .each(function (index, el) {
                     var $child = $(el),
                         source = isFuncSrcAttr ? srcAttr($child) : $child.attr(srcAttr),
                         media = $child.attr('media');

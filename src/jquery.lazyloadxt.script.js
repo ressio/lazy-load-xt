@@ -26,7 +26,7 @@
             srcAttr = 'data-src';
         }
 
-        $('br[' + dataLazyTag + '],span[' + dataLazyTag + ']').each(function (origElem) {
+        $('br[' + dataLazyTag + '],span[' + dataLazyTag + ']').each(function (index, origElem) {
             var attrs = origElem.attributes,
                 el = document.createElement($(origElem).attr(dataLazyTag)),
                 i;

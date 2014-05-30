@@ -1,4 +1,4 @@
-/*! Lazy Load XT v1.0.3 2014-05-28
+/*! Lazy Load XT v1.0.4 2014-05-30
  * http://ressio.github.io/lazy-load-xt
  * (C) 2014 RESS.io
  * Licensed under MIT */
@@ -18,7 +18,7 @@
         if (matchMedia) {
             $el
                 .children('br')
-                .each(function (el) {
+                .each(function (index, el) {
                     var $child = $(el),
                         source = isFuncSrcAttr ? srcAttr($child) : $child.attr(srcAttr),
                         media = $child.attr('media');

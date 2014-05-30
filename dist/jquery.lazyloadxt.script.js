@@ -1,4 +1,4 @@
-/*! Lazy Load XT v1.0.3 2014-05-28
+/*! Lazy Load XT v1.0.4 2014-05-30
  * http://ressio.github.io/lazy-load-xt
  * (C) 2014 RESS.io
  * Licensed under MIT */
@@ -25,7 +25,7 @@
             srcAttr = 'data-src';
         }
 
-        $('br[' + dataLazyTag + '],span[' + dataLazyTag + ']').each(function (origElem) {
+        $('br[' + dataLazyTag + '],span[' + dataLazyTag + ']').each(function (index, origElem) {
             var attrs = origElem.attributes,
                 el = document.createElement($(origElem).attr(dataLazyTag)),
                 i;

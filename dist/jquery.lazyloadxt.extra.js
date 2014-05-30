@@ -1,4 +1,4 @@
-/*! Lazy Load XT v1.0.3 2014-05-28
+/*! Lazy Load XT v1.0.4 2014-05-30
  * http://ressio.github.io/lazy-load-xt
  * (C) 2014 RESS.io
  * Licensed under MIT */
@@ -105,7 +105,7 @@
             elementOptionsOverrides[prop] = getOrDef(overrides, prop);
         }
 
-        return this.each(function (el) {
+        return this.each(function (index, el) {
             if (el === window) {
                 $(options.selector).lazyLoadXT(overrides);
             } else {
@@ -326,7 +326,7 @@
         $el
             .attr('poster', $el.attr(options.videoPoster))
             .children('source,track')
-            .each(function (el) {
+            .each(function (index, el) {
                 var $child = $(el);
                 $child.attr('src', isFuncSrcAttr ? srcAttr($child) : $child.attr(srcAttr));
             });

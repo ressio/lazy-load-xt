@@ -1,4 +1,4 @@
-/*! Lazy Load XT v1.0.3 2014-05-28
+/*! Lazy Load XT v1.0.4 2014-05-30
  * http://ressio.github.io/lazy-load-xt
  * (C) 2014 RESS.io
  * Licensed under MIT */

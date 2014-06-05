@@ -29,6 +29,7 @@
                 });
         }
 
+        $img.attr('src', src);
         return src;
     }
 

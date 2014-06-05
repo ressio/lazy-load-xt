@@ -51,7 +51,7 @@
                 el.appendChild(child);
             }
 
-            el.parentNode.replaceChild(el, el);
+            origElem.parentNode.replaceChild(el, origElem);
         });
 
         $(window).lazyLoadXT();

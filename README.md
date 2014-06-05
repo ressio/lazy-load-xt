@@ -804,6 +804,7 @@ Note that any of Lazy Load XT `dist` files may be loaded from CDN, not only `jqu
 
 ## Version History
 
+- [**1.0.5**](https://github.com/ressio/lazy-load-xt/tree/1.0.5) (05.06.2014): fix picture and script addons
 - [**1.0.4**](https://github.com/ressio/lazy-load-xt/tree/1.0.4) (30.05.2014): fix calls to each() method
 - [**1.0.3**](https://github.com/ressio/lazy-load-xt/tree/1.0.3) (28.05.2014): support DOMstatic library (`attr`, `class`, `data`, `event`, `selector`, and `type` modules are required); fix loading of images on browser's tab activation
 - [**1.0.2**](https://github.com/ressio/lazy-load-xt/tree/1.0.2) (05.03.2014): fix work in jQuery Mobile 1.4

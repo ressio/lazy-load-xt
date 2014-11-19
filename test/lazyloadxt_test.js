@@ -39,10 +39,10 @@
         expect(5);
         setTimeout(function () {
             var $img = $('img'),
-                cntinit = $img.filter(function (el) {
+                cntinit = $img.filter(function (index, el) {
                     return $(el).data('lazied');
                 }).length,
-                cntnow = $img.filter(function (el) {
+                cntnow = $img.filter(function (index, el) {
                     return $(el).data('lazied') && ($(el).attr('src') === $(el).attr('data-src'));
                 }).length;
             ok($img.length > 0, 'images should be presented');

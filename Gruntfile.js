@@ -13,7 +13,7 @@ module.exports = function (grunt) {
                 ' * (C) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>\n' +
                 ' * Licensed under <%= _.pluck(pkg.licenses, "type").join(", ") %> */\n',
             short: '/* <%= pkg.title || pkg.name %> <%= pkg.version %>' +
-                ' | <%= _.pluck(pkg.licenses, "type").join(", ") %> License */\n'
+                ' | <%= _.pluck(pkg.licenses, "type").join(", ") %> License */'
         },
         // Task configuration.
         clean: {
@@ -88,7 +88,7 @@ module.exports = function (grunt) {
         },
         uglify: {
             options: {
-                banner: '<%= banner.short %>',
+                banner: '<%= banner.short %>\n',
                 report: 'gzip'
             },
             base: {

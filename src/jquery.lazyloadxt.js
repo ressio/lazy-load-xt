@@ -87,6 +87,7 @@
         var blankImage = getOrDef(overrides, 'blankImage'),
             checkDuplicates = getOrDef(overrides, 'checkDuplicates'),
             scrollContainer = getOrDef(overrides, 'scrollContainer'),
+            forceLoad = getOrDef(overrides, 'show'),
             elementOptionsOverrides = {},
             prop;
 
@@ -101,12 +102,14 @@
             if (el === window) {
                 $(options.selector).lazyLoadXT(overrides);
             } else {
+                var duplicate = checkDuplicates && $data(el, dataLazied),
+                    $el = $(el).data(dataLazied, !forceLoad ? 1 : -1);
+
                 // prevent duplicates
-                if (checkDuplicates && $data(el, dataLazied)) {
+                if (duplicate) {
+                    queueCheckLazyElements();
                     return;
                 }
-
-                var $el = $(el).data(dataLazied, 1);
 
                 if (blankImage && el.tagName === 'IMG' && !el.src) {
                     el.src = blankImage;
@@ -184,7 +187,7 @@
                 el = $el[0],
                 objData = $el[lazyLoadXT],
                 removeNode = false,
-                visible = force,
+                visible = force || $data(el, dataLazied) < 0,
                 topEdge;
 
             // remove items that are not in DOM

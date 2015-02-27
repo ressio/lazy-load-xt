@@ -46,15 +46,6 @@
         $data = $.data || function (el, name) {
             return $(el).data(name);
         },
-    // $.contains is not included into DOMtastic, so implement it there
-        $contains = $.contains || function (parent, el) {
-            while (el = el.parentNode) {
-                if (el === parent) {
-                    return true;
-                }
-            }
-            return false;
-        },
         elements = [],
         topLazy = 0,
     /*
@@ -197,7 +188,7 @@
                 topEdge;
 
             // remove items that are not in DOM
-            if (!$contains(docElement, el)) {
+            if (!$.contains(docElement, el)) {
                 removeNode = true;
             } else if (force || !objData.visibleOnly || el.offsetWidth || el.offsetHeight) {
 

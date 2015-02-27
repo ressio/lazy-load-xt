@@ -127,6 +127,7 @@
                 triggerEvent('init', $el);
 
                 elements.push($el);
+                queueCheckLazyElements();
             }
         });
     };

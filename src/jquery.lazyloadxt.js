@@ -220,6 +220,8 @@
                     if (src) {
                         $el.on(load_error, triggerLoadOrError);
                         el.src = src;
+                    } else {
+                        triggerEvent('load', $el);
                     }
 
                     removeNode = true;

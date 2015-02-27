@@ -10,10 +10,13 @@
     options.selector += ',[' + bgAttr + ']';
 
     $(document).on('lazyshow', function (e) {
-        var $this = $(e.target);
-        $this
-            .css('background-image', "url('" + $this.attr(bgAttr) + "')")
-            .removeAttr(bgAttr);
+        var $this = $(e.target),
+            url = $this.attr(bgAttr);
+        if (!!url) {
+            $this
+                .css('background-image', "url('" + url + "')")
+                .removeAttr(bgAttr);
+        }
     });
 
 })(window.jQuery || window.Zepto || window.$);

@@ -46,7 +46,7 @@ jQueryMobile framework.
 Currently tested in IE 6-11, Chrome 1-31, Firefox 1.5-27.0, Safari 3-7, Opera 10.6-18.0, iOS 5-7, Android 2.3-4.4,
 Amazon Kindle Fire 2 and HD 8.9, Opera Mini 7.
 
-**Required jQuery 1.7+, Zepto 1.0+, or DOMtastic 0.7.2+ (note: `attr`, `class`, `data`, `event`, `selector`, and `type` modules are required).**
+**Required jQuery 1.7+, Zepto 1.0+, or DOMtastic 0.7.3+ (note: `attr`, `class`, `contains`, `data`, `event`, `selector`, and `type` modules are required).**
 
 
 ## Download / Install

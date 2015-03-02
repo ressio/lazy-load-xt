@@ -15,7 +15,8 @@
         if (!!url) {
             $this
                 .css('background-image', "url('" + url + "')")
-                .removeAttr(bgAttr);
+                .removeAttr(bgAttr)
+                .triggerHandler('load');
         }
     });
 

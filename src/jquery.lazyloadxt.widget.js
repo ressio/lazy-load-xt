@@ -12,19 +12,22 @@
 
     $(document).on('lazyshow', '[' + widgetAttr + ']', function () {
         var $this = $(this),
+            $target = $this,
             id = $this.attr(widgetAttr),
             match;
 
         if (id) {
-            $this = $('#' + id);
+            $target = $('#' + id);
         }
 
-        if ($this.length) {
-            match = reComment.exec($this.html());
+        if ($target.length) {
+            match = reComment.exec($target.html());
             if (match) {
-                $this.replaceWith($.trim(match[1]));
+                $target.replaceWith($.trim(match[1]));
             }
         }
+
+        $this.triggerHandler('load');
     });
 
 })(window.jQuery || window.Zepto || window.$);

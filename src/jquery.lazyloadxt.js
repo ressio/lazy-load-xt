@@ -207,15 +207,15 @@
                 }
 
                 if (visible) {
+                    $el.on(load_error, triggerLoadOrError);
+
                     triggerEvent('show', $el);
 
                     var srcAttr = objData.srcAttr,
                         src = $isFunction(srcAttr) ? srcAttr($el) : el.getAttribute(srcAttr);
+
                     if (src) {
-                        $el.on(load_error, triggerLoadOrError);
                         el.src = src;
-                    } else {
-                        triggerEvent('load', $el);
                     }
 
                     removeNode = true;

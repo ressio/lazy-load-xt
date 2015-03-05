@@ -87,7 +87,7 @@
         var blankImage = getOrDef(overrides, 'blankImage'),
             checkDuplicates = getOrDef(overrides, 'checkDuplicates'),
             scrollContainer = getOrDef(overrides, 'scrollContainer'),
-            forceLoad = getOrDef(overrides, 'show'),
+            forceShow = getOrDef(overrides, 'show'),
             elementOptionsOverrides = {},
             prop;
 
@@ -103,7 +103,7 @@
                 $(options.selector).lazyLoadXT(overrides);
             } else {
                 var duplicate = checkDuplicates && $data(el, dataLazied),
-                    $el = $(el).data(dataLazied, !forceLoad ? 1 : -1);
+                    $el = $(el).data(dataLazied, forceShow ? -1 : 1);
 
                 // prevent duplicates
                 if (duplicate) {

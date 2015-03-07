@@ -162,7 +162,7 @@ Demo: [ressio.github.io/lazy-load-xt](http://ressio.github.io/lazy-load-xt)
 There are two ways to initialize elements if auto initialization doesn't suit you:
 
 1. `$(window).lazyLoadXT();` to initialize all elements matching `$.lazyLoadXT.selector`
-3. `$(elements).lazyLoadXT();` to initialize all selected elements.
+2. `$(elements).lazyLoadXT();` to initialize all selected elements.
 
 For example, `$(container).find(selector).lazyLoadXT();` initializes elements matching `selector` inside `container`.
 

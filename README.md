@@ -442,7 +442,7 @@ The code below allows you to use `data-src-3x` attribute for screens with 3x den
 Demo: http://ressio.github.io/lazy-load-xt/demo/retina.htm
 
 But in real world it's better to set `srcAttr` function and choose most suitable image URL among existing ones. Or set
-`src` attribute in `lazyshow` event, like it is done in [Responsive images and srcset](#responsive-images-and-srcset)
+`src` attribute in `lazyshow` event, like it is done in [Responsive images and srcset](#responsive-images)
 addon.
 
 

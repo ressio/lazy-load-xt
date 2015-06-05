@@ -1,6 +1,6 @@
-/*! Lazy Load XT v1.0.6 2014-11-19
+/*! Lazy Load XT v1.0.6 2015-06-05
  * http://ressio.github.io/lazy-load-xt
- * (C) 2014 RESS.io
+ * (C) 2015 RESS.io
  * Licensed under MIT */
 
 (function ($, window, document, undefined) {
@@ -45,15 +45,6 @@
         $data = $.data || function (el, name) {
             return $(el).data(name);
         },
-    // $.contains is not included into DOMtastic, so implement it there
-        $contains = $.contains || function (parent, el) {
-            while (el = el.parentNode) {
-                if (el === parent) {
-                    return true;
-                }
-            }
-            return false;
-        },
         elements = [],
         topLazy = 0,
     /*
@@ -95,6 +86,7 @@
         var blankImage = getOrDef(overrides, 'blankImage'),
             checkDuplicates = getOrDef(overrides, 'checkDuplicates'),
             scrollContainer = getOrDef(overrides, 'scrollContainer'),
+            forceShow = getOrDef(overrides, 'show'),
             elementOptionsOverrides = {},
             prop;
 
@@ -109,12 +101,14 @@
             if (el === window) {
                 $(options.selector).lazyLoadXT(overrides);
             } else {
+                var duplicate = checkDuplicates && $data(el, dataLazied),
+                    $el = $(el).data(dataLazied, forceShow ? -1 : 1);
+
                 // prevent duplicates
-                if (checkDuplicates && $data(el, dataLazied)) {
+                if (duplicate) {
+                    queueCheckLazyElements();
                     return;
                 }
-
-                var $el = $(el).data(dataLazied, 1);
 
                 if (blankImage && el.tagName === 'IMG' && !el.src) {
                     el.src = blankImage;
@@ -126,6 +120,7 @@
                 triggerEvent('init', $el);
 
                 elements.push($el);
+                queueCheckLazyElements();
             }
         });
     };
@@ -191,11 +186,11 @@
                 el = $el[0],
                 objData = $el[lazyLoadXT],
                 removeNode = false,
-                visible = force,
+                visible = force || $data(el, dataLazied) < 0,
                 topEdge;
 
             // remove items that are not in DOM
-            if (!$contains(docElement, el)) {
+            if (!$.contains(docElement, el)) {
                 removeNode = true;
             } else if (force || !objData.visibleOnly || el.offsetWidth || el.offsetHeight) {
 
@@ -211,12 +206,14 @@
                 }
 
                 if (visible) {
+                    $el.on(load_error, triggerLoadOrError);
+
                     triggerEvent('show', $el);
 
                     var srcAttr = objData.srcAttr,
                         src = $isFunction(srcAttr) ? srcAttr($el) : el.getAttribute(srcAttr);
+
                     if (src) {
-                        $el.on(load_error, triggerLoadOrError);
                         el.src = src;
                     }
 

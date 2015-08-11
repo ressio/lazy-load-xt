@@ -137,6 +137,9 @@
      * @param {jQuery} $el
      */
     function triggerEvent(event, $el) {
+        // Don't bother triggering events on elements that we're not keeping track of.
+        if ($.inArray($el, elements) === -1) return;
+
         var handler = options['on' + event];
         if (handler) {
             if ($isFunction(handler)) {

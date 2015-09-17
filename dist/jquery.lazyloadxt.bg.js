@@ -11,9 +11,11 @@
 
     $(document).on('lazyshow', function (e) {
         var $this = $(e.target);
-        $this
-            .css('background-image', "url('" + $this.attr(bgAttr) + "')")
-            .removeAttr(bgAttr);
+        if( typeof( $this.attr(bgAttr) ) != 'undefined' ) {
+            $this
+                .css('background-image', "url('" + $this.attr(bgAttr) + "')")
+                .removeAttr(bgAttr);
+        }        
     });
 
 })(window.jQuery || window.Zepto || window.$);

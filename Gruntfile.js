@@ -53,6 +53,11 @@ module.exports = function (grunt) {
                 dest: 'dist/jquery.<%= pkg.name %>.extra.js'
             },
 
+            jqlight: {
+                src: ['src/jqlight.<%= pkg.name %>.js'],
+                dest: 'dist/jqlight.<%= pkg.name %>.js'
+            },
+
             autoload: {
                 src: ['src/jquery.<%= pkg.name %>.autoload.js'],
                 dest: 'dist/jquery.<%= pkg.name %>.autoload.js'
@@ -106,6 +111,11 @@ module.exports = function (grunt) {
             extra: {
                 src: '<%= concat.extra.dest %>',
                 dest: 'dist/jquery.<%= pkg.name %>.extra.min.js'
+            },
+
+            jqlight: {
+                src: '<%= concat.jqlight.dest %>',
+                dest: 'dist/jqlight.<%= pkg.name %>.min.js'
             },
 
             autoload: {

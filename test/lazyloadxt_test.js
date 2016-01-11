@@ -55,4 +55,4 @@
             start();
         }, 300);
     });
-}(window.jQuery || window.Zepto || window.$));
+}(window.jQLight || window.jQuery || window.Zepto || window.$));

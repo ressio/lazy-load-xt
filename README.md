@@ -7,6 +7,7 @@
 - [About](#about)
 - [Download / Install](#download--install)
 - [Usage](#usage)
+- [jQLight](#jqlight)
 - [Demo](#demo)
 - [Advanced initialization](#advanced-initialization)
 - [Browsers with disabled JavaScript](#browsers-with-disabled-javascript)
@@ -46,7 +47,7 @@ jQueryMobile framework.
 Currently tested in IE 6-11, Chrome 1-31, Firefox 1.5-27.0, Safari 3-7, Opera 10.6-18.0, iOS 5-7, Android 2.3-4.4,
 Amazon Kindle Fire 2 and HD 8.9, Opera Mini 7.
 
-**Required jQuery 1.7+, Zepto 1.0+, or DOMtastic 0.7.3+ (note: `attr`, `class`, `contains`, `data`, `event`, `selector`, and `type` modules are required).**
+**Requires jQuery 1.7+, Zepto 1.0+, DOMtastic 0.7.3+ built with `--jquery-compat`, or [jQLight](#jqlight).**
 
 
 ## Download / Install
@@ -151,6 +152,21 @@ HTML validators:
 PS. In `src` directory you can found `jquery.lazyloadxt.simple.js`, it is initial LazyLoadXT version of minimal size
 with excluded support of on* handlers, lazy* events, `blankImage` option and addons.
 
+
+## jQLight
+
+LazyLoadXT may be used without jQuery framework by loading small
+[`jqlight.lazyloadxt.min.js`](https://raw.github.com/ressio/lazy-load-xt/master/dist/jqlight.lazyloadxt.min.js) script
+(1.3KiB gzipped):
+
+```html
+<script src="jqlight.lazyloadxt.js"></script>
+<script src="jquery.lazyloadxt.js"></script>
+
+<img data-src="lazy.jpg" width="100" height="100">
+```
+
+Note: currently `jquery.lazyloadxt.bg.js` addon is not supported by jQLight.
 
 ## Demo
 

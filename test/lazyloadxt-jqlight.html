@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Lazy Load XT Test Suite</title>
+  <!-- Load local lib and tests. -->
+  <script src="function_bind.js"></script>
+  <script src="../src/jqlight.lazyloadxt.js"></script>
+  <script src="../src/jquery.lazyloadxt.js"></script>
+  <script src="../src/jquery.lazyloadxt.video.js"></script>
+  <script>window.jQLight = $.noConflict();</script>
+  <!-- Load local jQuery. This can be overridden with a ?jquery=___ param. -->
+  <script src="../libs/jquery-loader.js"></script>
+  <!-- Load local QUnit. -->
+  <link rel="stylesheet" href="../libs/qunit/qunit.css" media="screen">
+  <script src="../libs/qunit/qunit.js"></script>
+  <script src="lazyloadxt_test.js"></script>
+</head>
+<body>
+  <div id="qunit"></div>
+  <div id="qunit-fixture">
+  </div>
+  <div id="visible-container">
+      <p><img data-src="http://lorempixel.com/300/200/transport/1" width="300" height="200"></p>
+      <p><img data-src="http://lorempixel.com/300/200/transport/2" width="300" height="200"></p>
+      <p><img data-src="http://lorempixel.com/300/200/transport/3" width="300" height="200"></p>
+      <p><img data-src="http://lorempixel.com/300/200/transport/4" width="300" height="200"></p>
+      <p><img data-src="http://lorempixel.com/300/200/transport/5" width="300" height="200"></p>
+      <p><img data-src="http://lorempixel.com/300/200/transport/6" width="300" height="200"></p>
+      <p><img data-src="http://lorempixel.com/300/200/transport/7" width="300" height="200"></p>
+      <p><img data-src="http://lorempixel.com/300/200/transport/8" width="300" height="200"></p>
+      <p><img data-src="http://lorempixel.com/300/200/transport/9" width="300" height="200"></p>
+      <p><img data-src="http://lorempixel.com/300/200/transport/10" width="300" height="200"></p>
+  </div>
+</body>
+</html>

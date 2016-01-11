@@ -22,7 +22,7 @@
 
             loadEvent: 'pageshow', // check AJAX-loaded content in jQueryMobile
             updateEvent: 'load orientationchange resize scroll touchmove focus', // page-modified events
-            forceEvent: '', // force loading of all elements
+            forceEvent: 'lazyloadall', // force loading of all elements
 
             //onstart: null,
             oninit: {removeClass: 'lazy'}, // init handler

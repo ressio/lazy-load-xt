@@ -226,6 +226,7 @@
             }
 
             if (removeNode) {
+                $data(el, dataLazied, 0);
                 elements.splice(i--, 1);
                 length--;
             }
@@ -309,6 +310,7 @@
     });
 
 })(window.jQuery || window.Zepto || window.$, window, document);
+
 
 (function ($) {
     var options = $.lazyLoadXT;

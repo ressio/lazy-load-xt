@@ -226,6 +226,7 @@
             }
 
             if (removeNode) {
+                $data(el, dataLazied, 0);
                 elements.splice(i--, 1);
                 length--;
             }

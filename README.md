@@ -89,12 +89,12 @@ Addons:
 <table>
   <tbody>
     <tr>
-      <td><a href="#script-based-tagging-of-lazy-loaded-elements">script-based tagging of lazy loaded elements</a></td>
+      <td><a href="#script-based-tagging">script-based tagging of lazy loaded elements</a></td>
       <td><a href="https://raw.github.com/ressio/lazy-load-xt/master/dist/jquery.lazyloadxt.script.js">[jquery.lazyloadxt.script.js</a></td>
       <td><a href="https://raw.github.com/ressio/lazy-load-xt/master/dist/jquery.lazyloadxt.script.min.js">jquery.lazyloadxt.script.min.js</a></td>
     </tr>
     <tr>
-      <td><a href="#responsive-images-and-srcset">Responsive images and srcset</a></td>
+      <td><a href="#responsive-images">Responsive images and srcset</a></td>
       <td><a href="https://raw.github.com/ressio/lazy-load-xt/master/dist/jquery.lazyloadxt.srcset.js">jquery.lazyloadxt.srcset.js</a></td>
       <td><a href="https://raw.github.com/ressio/lazy-load-xt/master/dist/jquery.lazyloadxt.srcset.min.js">jquery.lazyloadxt.srcset.min.js</a></td>
     </tr>
@@ -109,7 +109,7 @@ Addons:
       <td><a href="https://raw.github.com/ressio/lazy-load-xt/master/dist/jquery.lazyloadxt.bg.min.js">jquery.lazyloadxt.bg.min.js</a></td>
     </tr>
     <tr>
-      <td><a href="#deferred-load">Deferred load</a></td>
+      <td><a href="#deferred-autoload">Deferred load</a></td>
       <td><a href="https://raw.github.com/ressio/lazy-load-xt/master/dist/jquery.lazyloadxt.autoload.js">jquery.lazyloadxt.autoload.js</a></td>
       <td><a href="https://raw.github.com/ressio/lazy-load-xt/master/dist/jquery.lazyloadxt.autoload.min.js">jquery.lazyloadxt.autoload.min.js</a></td>
      </tr>
@@ -471,7 +471,7 @@ The code below allows you to use `data-src-3x` attribute for screens with 3x den
 Demo: http://ressio.github.io/lazy-load-xt/demo/retina.htm
 
 But in real world it's better to set `srcAttr` function and choose most suitable image URL among existing ones. Or set
-`src` attribute in `lazyshow` event, like it is done in [Responsive images and srcset](#responsive-images-and-srcset)
+`src` attribute in `lazyshow` event, like it is done in [Responsive images and srcset](#responsive-images)
 addon.
 
 

@@ -841,6 +841,9 @@ Note that any of Lazy Load XT `dist` files may be loaded from CDN, not only `jqu
 
 ## Version History
 
+- [**1.1.0**](https://github.com/ressio/lazy-load-xt/tree/1.1.0) (11.01.2016): jQLight script, remove lazy-hidden class
+  for non-img elements, fix lazy loading if there is one image only, fix issues in bg, srcset, and video addons,
+  new addons for Bootstrap and jQueryMobile events
 - [**1.0.6**](https://github.com/ressio/lazy-load-xt/tree/1.0.6) (19.11.2014): fix work of srcset addons in IE6-8
 - [**1.0.5**](https://github.com/ressio/lazy-load-xt/tree/1.0.5) (05.06.2014): fix picture and script addons
 - [**1.0.4**](https://github.com/ressio/lazy-load-xt/tree/1.0.4) (30.05.2014): fix calls to each() method

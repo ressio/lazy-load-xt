@@ -56,7 +56,7 @@
             return false;
         }
 
-        var list = $.map(srcset.split(','), function (item) {
+        var list = $.map(srcset.replace(/(\s[\d.]+[whx]),/g, '$1 @,@ ').split(' @,@ '), function (item) {
             return {
                 url: reUrl.exec(item)[1],
                 w: parseFloat((reWidth.exec(item) || infty)[1]),

@@ -1,6 +1,6 @@
-/*! Lazy Load XT v1.0.6 2014-11-19
+/*! Lazy Load XT v1.1.0 2016-01-12
  * http://ressio.github.io/lazy-load-xt
- * (C) 2014 RESS.io
+ * (C) 2016 RESS.io
  * Licensed under MIT */
 
 (function ($, window, document, undefined) {
@@ -56,7 +56,7 @@
             return false;
         }
 
-        var list = $.map(srcset.split(','), function (item) {
+        var list = $.map(srcset.replace(/(\s[\d.]+[whx]),/g, '$1 @,@ ').split(' @,@ '), function (item) {
             return {
                 url: reUrl.exec(item)[1],
                 w: parseFloat((reWidth.exec(item) || infty)[1]),

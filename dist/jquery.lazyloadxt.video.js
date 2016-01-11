@@ -1,6 +1,6 @@
-/*! Lazy Load XT v1.0.6 2014-11-19
+/*! Lazy Load XT v1.1.0 2016-01-12
  * http://ressio.github.io/lazy-load-xt
- * (C) 2014 RESS.io
+ * (C) 2016 RESS.io
  * Licensed under MIT */
 
 (function ($) {
@@ -11,18 +11,24 @@
 
     $(document).on('lazyshow', 'video', function (e, $el) {
         var srcAttr = $el.lazyLoadXT.srcAttr,
-            isFuncSrcAttr = $.isFunction(srcAttr);
+            isFuncSrcAttr = $.isFunction(srcAttr),
+            changed = false;
 
-        $el
-            .attr('poster', $el.attr(options.videoPoster))
-            .children('source,track')
+        $el.attr('poster', $el.attr(options.videoPoster));
+        $el.children('source,track')
             .each(function (index, el) {
-                var $child = $(el);
-                $child.attr('src', isFuncSrcAttr ? srcAttr($child) : $child.attr(srcAttr));
+                var $child = $(el),
+                    src = isFuncSrcAttr ? srcAttr($child) : $child.attr(srcAttr);
+                if (src) {
+                    $child.attr('src', src);
+                    changed = true;
+                }
             });
 
         // reload video
-        this.load();
+        if (changed) {
+            this.load();
+        }
     });
 
 })(window.jQuery || window.Zepto || window.$);

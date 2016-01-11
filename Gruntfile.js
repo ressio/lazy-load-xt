@@ -61,6 +61,14 @@ module.exports = function (grunt) {
                 src: ['src/jquery.<%= pkg.name %>.bg.js'],
                 dest: 'dist/jquery.<%= pkg.name %>.bg.js'
             },
+            bootstrap: {
+                src: ['src/jquery.<%= pkg.name %>.bootstrap.js'],
+                dest: 'dist/jquery.<%= pkg.name %>.bootstrap.js'
+            },
+            jquerymobile: {
+                src: ['src/jquery.<%= pkg.name %>.jquerymobile.js'],
+                dest: 'dist/jquery.<%= pkg.name %>.jquerymobile.js'
+            },
             picture: {
                 src: ['src/jquery.<%= pkg.name %>.picture.js'],
                 dest: 'dist/jquery.<%= pkg.name %>.picture.js'
@@ -107,6 +115,14 @@ module.exports = function (grunt) {
             bg: {
                 src: '<%= concat.bg.dest %>',
                 dest: 'dist/jquery.<%= pkg.name %>.bg.min.js'
+            },
+            bootstrap: {
+                src: '<%= concat.bootstrap.dest %>',
+                dest: 'dist/jquery.<%= pkg.name %>.bootstrap.min.js'
+            },
+            jquerymobile: {
+                src: '<%= concat.jquerymobile.dest %>',
+                dest: 'dist/jquery.<%= pkg.name %>.jquerymobile.min.js'
             },
             picture: {
                 src: '<%= concat.picture.dest %>',

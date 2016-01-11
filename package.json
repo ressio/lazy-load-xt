@@ -13,7 +13,26 @@
         "type": "git",
         "url": "git://github.com/ressio/lazy-load-xt.git"
     },
-    "keywords": ["jquery-plugin", "effect", "image", "images", "jquery", "jquerymobile", "lazy", "lazyload", "load", "media", "mobile", "performance", "responsive", "speed", "video", "vimeo", "youtube"],
+    "keywords": [
+        "jquery-plugin",
+        "effect",
+        "image",
+        "images",
+        "jquery",
+        "bootstrap",
+        "jquerymobile",
+        "lazy",
+        "lazyload",
+        "load",
+        "media",
+        "mobile",
+        "performance",
+        "responsive",
+        "speed",
+        "video",
+        "vimeo",
+        "youtube"
+    ],
     "bugs": "https://github.com/ressio/lazy-load-xt/issues",
     "licenses": [
         {

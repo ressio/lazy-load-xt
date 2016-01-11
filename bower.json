@@ -6,7 +6,7 @@
     "authors": ["RESS.io"],
     "homepage": "http://ressio.github.io/lazy-load-xt",
     "license": "MIT",
-    "keywords": ["effect", "image", "images", "jquery", "jquerymobile", "lazy", "lazyload", "load", "media", "mobile", "performance", "responsive", "speed", "video", "vimeo", "youtube"],
+    "keywords": ["effect", "image", "images", "jquery", "jquerymobile", "bootstrap", "lazy", "lazyload", "load", "media", "mobile", "performance", "responsive", "speed", "video", "vimeo", "youtube"],
     "dependencies": {
         "jquery": ">=1.7.0"
     },

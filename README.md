@@ -26,6 +26,7 @@
     - [AJAX](#ajax)
     - [Support of IE6/7](#support-of-ie6-7)
 - [Addons](#addons)
+    - [Bootstrap and jQueryMobile](#bootstrap-and-jquerymobile)
     - [Video](#video)
     - [Responsive images](#responsive-images)
     - [Widgets](#widgets)
@@ -112,6 +113,16 @@ Addons:
       <td><a href="#deferred-load">Deferred load</a></td>
       <td><a href="https://raw.github.com/ressio/lazy-load-xt/master/dist/jquery.lazyloadxt.autoload.js">jquery.lazyloadxt.autoload.js</a></td>
       <td><a href="https://raw.github.com/ressio/lazy-load-xt/master/dist/jquery.lazyloadxt.autoload.min.js">jquery.lazyloadxt.autoload.min.js</a></td>
+     </tr>
+    <tr>
+      <td><a href="#bootstrap-and-jquerymobile">Bootstrap</a></td>
+      <td><a href="https://raw.github.com/ressio/lazy-load-xt/master/dist/jquery.lazyloadxt.bootstrap.js">jquery.lazyloadxt.bootstrap.js</a></td>
+      <td><a href="https://raw.github.com/ressio/lazy-load-xt/master/dist/jquery.lazyloadxt.bootstrap.min.js">jquery.lazyloadxt.bootstrap.min.js</a></td>
+     </tr>
+    <tr>
+      <td><a href="#bootstrap-and-jquerymobile">jQueryMobile</a></td>
+      <td><a href="https://raw.github.com/ressio/lazy-load-xt/master/dist/jquery.lazyloadxt.jquerymobile.js">jquery.lazyloadxt.jquerymobile.js</a></td>
+      <td><a href="https://raw.github.com/ressio/lazy-load-xt/master/dist/jquery.lazyloadxt.jquerymobile.min.js">jquery.lazyloadxt.jquerymobile.min.js</a></td>
      </tr>
   </tbody>
 </table>
@@ -498,6 +509,14 @@ if (parseInt(navigator.userAgent.toLowerCase().split('msie')[1] || 8, 10) < 8)
 
 Lazy Load XT may be easily extended to support other lazyloading-related things. Some examples are part of Lazy Load XT
 project and listed below.
+
+
+### Bootstrap and jQueryMobile
+
+To support [Bootstrap](http://getbootstrap.com/) and [jQueryMobile](http://jquerymobile.com/) frameworks, use
+`<script src="jquery.lazyloadxt.bootstrap.js"></script>` and `<script src="jquery.lazyloadxt.jquerymobile.js"></script>`
+addons, correspondingly. These addons recheck visible images each time related javascript plugin (e.g. Bootstrap's Carousel
+or jQueryMobile's Panel) changes page content.
 
 
 ### Video

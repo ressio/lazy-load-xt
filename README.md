@@ -42,10 +42,9 @@
 
 ## About
 
-Mobile-oriented, fast and extensible jQuery plugin for lazy loading of images/videos with build-in support of
-jQueryMobile framework.
+Mobile-oriented, fast and extensible jQuery plugin for lazy loading of images/videos.
 
-Currently tested in IE 6-11, Chrome 1-31, Firefox 1.5-27.0, Safari 3-7, Opera 10.6-18.0, iOS 5-7, Android 2.3-4.4,
+Currently tested in IE 6-11, Chrome 1-47, Firefox 1.5-43.0, Safari 3-9, Opera 10.6-34.0, iOS 5-9, Android 2.3-5.1,
 Amazon Kindle Fire 2 and HD 8.9, Opera Mini 7.
 
 **Requires jQuery 1.7+, Zepto 1.0+, DOMtastic 0.7.3+ built with `--jquery-compat`, or [jQLight](#jqlight).**
@@ -198,6 +197,9 @@ You can pass optional argument to override default `$.lazyLoadXT` options. The f
 
 Note: don’t forget to disable auto initialization with `$.lazyLoadXT.autoInit=false;` if you like to use manual
 initialization of all elements.
+
+To manually show elements (may be necessary for integrating Lazy Load XT with some 3rdparty plugins), call
+`$(elements).lazyLoadXT({show: true});`.
 
 
 ## Browsers with disabled JavaScript

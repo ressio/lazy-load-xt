@@ -298,13 +298,13 @@
         triggerEvent('start', $window);
 
         $window
-            .on(options.loadEvent, initLazyElements)
             .on(options.updateEvent, queueCheckLazyElements)
             .on(options.forceEvent, forceLoadAll);
 
         $(document).on(options.updateEvent, queueCheckLazyElements);
 
         if (options.autoInit) {
+            $window.on(options.loadEvent, initLazyElements);
             initLazyElements(); // standard initialization
         }
     });

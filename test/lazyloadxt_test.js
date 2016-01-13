@@ -27,6 +27,7 @@
         // This will run before each test in this module.
         setup: function () {
             this.elems = $('#qunit-fixture');
+            $(window).lazyLoadXT();
         }
     });
 
@@ -35,24 +36,25 @@
         strictEqual(this.elems.lazyLoadXT(), this.elems, 'should be chainable');
     });
 
-    asyncTest('is lazy loaded', function () {
+    asyncTest('is lazy loading', function () {
         expect(5);
+        var $img = $('img'),
+            cntinit = $img.filter(function (index, el) {
+                el = el || this;
+                return $(el).data('lazied');
+            }).length;
+        ok($img.length > 0, 'images should be presented');
+        ok(cntinit > 0, 'images should be initialized');
+        ok(cntinit === $img.length, 'all images should be initialized');
         setTimeout(function () {
             var $img = $('img'),
-                cntinit = $img.filter(function (index, el) {
-                    el = el || this;
-                    return $(el).data('lazied');
-                }).length,
                 cntnow = $img.filter(function (index, el) {
                     el = el || this;
-                    return $(el).data('lazied') && ($(el).attr('src') === $(el).attr('data-src'));
+                    return ($(el).attr('src') === $(el).attr('data-src'));
                 }).length;
-            ok($img.length > 0, 'images should be presented');
-            ok(cntinit > 0, 'images should be initialized');
-            ok(cntinit === $img.length, 'all images should be initialized');
             ok(cntnow > 0, 'some images should be displayed');
             ok(cntnow < $img.length, 'not all images should be displayed');
             start();
-        }, 300);
+        }, 200);
     });
 }(window.jQLight || window.jQuery || window.Zepto || window.$));

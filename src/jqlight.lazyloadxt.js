@@ -6,6 +6,10 @@
 (function (window, document, Element, undefined) {
     'use strict';
 
+    var prev_$ = window.$,
+        DATAKEYPROP = '__jqlight_data__',
+        matches = Element.matches || Element.matchesSelector || Element.mozMatchesSelector || Element.msMatchesSelector || Element.oMatchesSelector || Element.webkitMatchesSelector;
+
     function Wrapper(collection) {
         if (collection) {
             for (var i = 0, length = collection.length; i < length; i++) {
@@ -28,12 +32,10 @@
         length: 0
     };
 
-    $.fn.extend = $.extend = function (target) {
-        var options, name, copy, i = 0, length = arguments.length;
-        if (length <= 1) {
-            target = this;
-        } else {
-            i = 1;
+    $.fn.extend = $.extend = function () {
+        var options, name, copy, target = this, i = 0, length = arguments.length;
+        if (length > 1) {
+            target = arguments[i++];
         }
         for (; i < length; i++) {
             options = arguments[i];
@@ -46,9 +48,6 @@
         }
         return target;
     };
-
-    var prev_$ = window.$;
-    window.$ = $;
 
     $.extend({
         noConflict: function () {
@@ -105,7 +104,6 @@
         }
     });
 
-    var DATAKEYPROP = '__jqlight_data__';
     $.fn.extend({
         each: function (callback) {
             $.each(this, function (index, elem) {
@@ -207,6 +205,8 @@
         }
     });
 
+    window.$ = $;
+
     function eachClass(obj, value, callback) {
         var classes = ( value || '' ).match(/\S+/g) || [],
             elem, cur, clazz, j, origValue, finalValue,
@@ -228,8 +228,6 @@
         }
         return obj;
     }
-
-    var matches = Element.matches || Element.matchesSelector || Element.mozMatchesSelector || Element.msMatchesSelector || Element.oMatchesSelector || Element.webkitMatchesSelector;
 
     function delegateHandler(selector, handler, event) {
         var node = event.target;

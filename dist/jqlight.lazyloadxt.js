@@ -1,9 +1,13 @@
-/*! Lazy Load XT v1.1.0 2016-01-12
+/*! Lazy Load XT v1.1.0 2016-01-28
  * http://ressio.github.io/lazy-load-xt
  * (C) 2016 RESS.io
  * Licensed under MIT */
 
 (function (window, document, Element, undefined) {
+    var prev_$ = window.$,
+        DATAKEYPROP = '__jqlight_data__',
+        matches = Element.matches || Element.matchesSelector || Element.mozMatchesSelector || Element.msMatchesSelector || Element.oMatchesSelector || Element.webkitMatchesSelector;
+
     function Wrapper(collection) {
         if (collection) {
             for (var i = 0, length = collection.length; i < length; i++) {
@@ -21,18 +25,15 @@
             : (selector && (selector === window || selector.nodeType) ? [selector] : selector));
     }
 
-    $.fn = {
+    Wrapper.prototype = $.fn = {
         constructor: Wrapper,
         length: 0
     };
-    Wrapper.prototype = $.fn;
 
-    $.extend = function (target) {
-        var options, name, copy, i = 0, length = arguments.length;
-        if (length <= 1) {
-            target = this;
-        } else {
-            i = 1;
+    $.fn.extend = $.extend = function () {
+        var options, name, copy, target = this, i = 0, length = arguments.length;
+        if (length > 1) {
+            target = arguments[i++];
         }
         for (; i < length; i++) {
             options = arguments[i];
@@ -45,10 +46,6 @@
         }
         return target;
     };
-    $.fn.extend = $.extend;
-
-    var prev_$ = window.$;
-    window.$ = $;
 
     $.extend({
         noConflict: function () {
@@ -69,36 +66,34 @@
             return false;
         },
         each: function (array, callback) {
-            var value, i = 0, length = array.length;
-            for (; i < length; i++) {
-                value = array[i];
-                if (callback.call(value, i, value) === false) {
+            for (var i = 0, length = array.length ; i < length; i++) {
+                if (callback(i, array[i]) === false) {
                     return false;
                 }
             }
             return true;
         },
-        grep: function (elems, callback, invert) {
+        grep: function (array, callback, invert) {
             var callbackInverse,
                 matches = [],
                 i = 0,
-                length = elems.length,
+                length = array.length,
                 callbackExpect = !invert;
             for (; i < length; i++) {
-                callbackInverse = !callback(i, elems[i]);
+                callbackInverse = !callback(i, array[i]);
                 if (callbackInverse !== callbackExpect) {
-                    matches.push(elems[i]);
+                    matches.push(array[i]);
                 }
             }
             return matches;
         },
-        map: function (elems, callback) {
+        map: function (array, callback) {
             var value,
                 i = 0,
-                length = elems.length,
+                length = array.length,
                 ret = [];
             for (; i < length; i++) {
-                value = callback(i, elems[i]);
+                value = callback(array[i], i);
                 if (value != null) {
                     ret.push(value);
                 }
@@ -107,11 +102,22 @@
         }
     });
 
-    var DATAKEYPROP = '__jqlight_data__';
     $.fn.extend({
-        each: function (callback, args) {
-            $.each(this, callback, args);
+        each: function (callback) {
+            $.each(this, function (index, elem) {
+                return callback.call(elem, index, elem);
+            });
             return this;
+        },
+        map: function (callback) {
+            return $($.map(this, function (elem, index) {
+                return callback.call(elem, index, elem);
+            }));
+        },
+        filter: function (callback) {
+            return $($.grep(this, function (index, elem) {
+                return callback.call(elem, index, elem);
+            }));
         },
         ready: function (fn) {
             if (/complete|loaded|interactive/.test(document.readyState) && document.body) {
@@ -138,7 +144,7 @@
                 selector = undefined;
             }
             types = types.split(' ');
-            return this.each(function (i, elem) {
+            return this.each(function (index, elem) {
                 var listener = selector ? delegateHandler.bind(elem, selector, fn) : fn;
                 $.each(types, function (j, eventName) {
                     if (eventName) {
@@ -148,13 +154,14 @@
             });
         },
         off: function (types, selector, fn) {
+            // Note: off() for delegated events is not supported
             if (selector === false || $.isFunction(selector)) {
                 // ( types [, fn] )
                 fn = selector;
-                selector = undefined;
+                // selector = undefined;
             }
             types = types.split(' ');
-            return this.each(function (i, elem) {
+            return this.each(function (index, elem) {
                 $.each(types, function (j, eventName) {
                     if (eventName) {
                         elem.removeEventListener(eventName, fn);
@@ -179,28 +186,24 @@
                 var elem = this[0];
                 return elem && elem[DATAKEYPROP] ? elem[DATAKEYPROP][key] : undefined;
             }
-            this.each(function (i, elem) {
+            this.each(function (index, elem) {
                 elem[DATAKEYPROP] = elem[DATAKEYPROP] || {};
                 elem[DATAKEYPROP][key] = value;
             });
             return this;
         },
-        map: function (callback) {
-            return $($.map(this, callback));
-        },
-        filter: function (callback) {
-            return $($.grep(this, callback));
-        },
         attr: function (name, value) {
             if (value === undefined) {
                 return this.length ? this[0].getAttribute(name) : undefined;
             }
-            $.each(this, function (i, elem) {
-                elem.setAttribute(name, value + '');
+            this.each(function () {
+                this.setAttribute(name, value + '');
             });
             return this;
         }
     });
+
+    window.$ = $;
 
     function eachClass(obj, value, callback) {
         var classes = ( value || '' ).match(/\S+/g) || [],
@@ -212,8 +215,7 @@
             if (elem.nodeType === 1) {
                 origValue = elem.className;
                 cur = origValue ? ( ' ' + origValue + ' ' ).replace(/[\t\r\n\f]/g, ' ') : ' ';
-                j = 0;
-                while ((clazz = classes[j++])) {
+                for (j = 0; (clazz = classes[j++]); ) {
                     cur = callback(cur, clazz, cur.indexOf(' ' + clazz + ' ') >= 0);
                 }
                 finalValue = cur.slice(1, -1);
@@ -226,27 +228,12 @@
     }
 
     function delegateHandler(selector, handler, event) {
-        var currentTarget = closest.call([event.target], selector, this)[0];
-        if (currentTarget && currentTarget !== this) {
-            handler.call(currentTarget, event);
-        }
-    }
-
-    var matches = Element.matches || Element.matchesSelector || Element.mozMatchesSelector || Element.msMatchesSelector || Element.oMatchesSelector || Element.webkitMatchesSelector;
-
-    function closest(selector, context) {
-        var nodes = [];
-        $.each(this, function (i, node) {
-            while (node && node !== context) {
-                if (matches.call(node, selector)) {
-                    nodes.push(node);
-                    break;
-                }
-                node = node.parentElement;
+        var node = event.target;
+        while (node && node !== this) {
+            if (matches.call(node, selector)) {
+                return handler.call(node, event);
             }
-        });
-        return $($.grep(nodes, function (index, item) {
-            return nodes.indexOf(item) === index;
-        }));
+            node = node.parentElement;
+        }
     }
 })(window, document, Element.prototype);

@@ -1,7 +1,14 @@
+/*global define*/
 /*jslint browser:true */
 /*jshint browser:true, jquery:true */
 
-(function ($) {
+(function(root, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['jquery'], factory);
+    } else {
+        factory(root.jQuery || root.$);
+    }
+}(window, function($) {
     'use strict';
 
     var options = $.lazyLoadXT;
@@ -31,4 +38,4 @@
         }
     });
 
-})(window.jQuery || window.Zepto || window.$);
+}));

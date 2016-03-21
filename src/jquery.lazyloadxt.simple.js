@@ -1,9 +1,16 @@
+/*global define*/
 /*jslint browser:true, plusplus:true, vars:true */
 /*jshint browser:true, jquery:true */
 
 /* SIMPLE VERSION IS NO LONGER SUPPORTED. USE jquery.lazyloadxt.js INSTEAD. */
 
-(function ($, window, document) {
+(function(root, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['jquery'], factory);
+    } else {
+        factory(root.jQuery || root.$);
+    }
+}(window, function($) {
     'use strict';
 
     // options
@@ -184,4 +191,4 @@
         initLazyElements(); // standard initialization
     });
 
-})(window.jQuery || window.Zepto, window, document);
+}));

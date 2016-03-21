@@ -1,9 +1,16 @@
-/*! Lazy Load XT v1.1.0 2016-01-12
+/*! Lazy Load XT v1.1.0 2016-03-21
  * http://ressio.github.io/lazy-load-xt
  * (C) 2016 RESS.io
  * Licensed under MIT */
+/*global define*/
 
-(function ($, window) {
+(function(root, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['jquery'], factory);
+    } else {
+        factory(root.jQuery || root.$);
+    }
+}(window, function($) {
     $.lazyLoadXT.forceEvent += ' beforeprint';
 
     if (window.matchMedia) {
@@ -16,4 +23,4 @@
             });
     }
 
-})(window.jQuery || window.Zepto || window.$, window);
+}));

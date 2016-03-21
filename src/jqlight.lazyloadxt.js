@@ -1,9 +1,16 @@
+/*global define*/
 /*jslint browser:true, plusplus:true, vars:true */
 /*jshint browser:true, jquery:true, eqnull:true */
 /*jshint -W040:false */ /* to don't alert on "this" in triggerLoadOrError */
 /*jshint -W089:false */
 
-(function (window, document, Element, undefined) {
+(function(root, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define([], factory);
+    } else {
+        factory(root, document, Element.prototype);
+    }
+}(typeof window !== "undefined" ? window : this, function(window, document, Element) {
     'use strict';
 
     function Wrapper(collection) {
@@ -240,4 +247,4 @@
             node = node.parentElement;
         }
     }
-})(window, document, Element.prototype);
+}));

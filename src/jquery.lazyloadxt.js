@@ -1,8 +1,16 @@
+/*global define*/
 /*jslint browser:true, plusplus:true, vars:true */
 /*jshint browser:true, jquery:true */
 /*jshint -W040:false */ /* to don't alert on "this" in triggerLoadOrError */
 
-(function ($, window, document, undefined) {
+// UMD dance - https://github.com/umdjs/umd
+(function(root, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['jquery'], factory);
+    } else {
+        factory(root.jQuery || root.$);
+    }
+}(window, function($) {
     'use strict';
 
     // options
@@ -310,4 +318,4 @@
         }
     });
 
-})(window.jQuery || window.Zepto || window.$, window, document);
+}));

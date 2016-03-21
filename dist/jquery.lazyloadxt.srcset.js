@@ -1,16 +1,23 @@
-/*! Lazy Load XT v1.1.0 2016-01-12
+/*! Lazy Load XT v1.1.0 2016-03-21
  * http://ressio.github.io/lazy-load-xt
  * (C) 2016 RESS.io
  * Licensed under MIT */
+/*global define*/
 
-(function ($, window, document, undefined) {
+(function(root, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['jquery'], factory);
+    } else {
+        factory(root.jQuery || root.$);
+    }
+}(window, function($) {
     var options = $.lazyLoadXT,
+        documentElement = document.documentElement,
         srcsetSupport = (function () {
             return 'srcset' in (new Image());
         })(),
-        reUrl = /^\s*(\S*)/,
+        reUrl = /^\s*(\S+)/,
         reWidth = /\S\s+(\d+)w/,
-        reHeight = /\S\s+(\d+)h/,
         reDpr = /\S\s+([\d\.]+)x/,
         infty = [0, Infinity],
         one = [0, 1],
@@ -22,7 +29,6 @@
         },
         viewport = {
             w: 0,
-            h: 0,
             x: 0
         },
         property,
@@ -49,6 +55,10 @@
         return item[property] === limit;
     }
 
+    function splitSrcset(srcset) {
+        return srcset.replace(/^\s+|\s+$/g, '').replace(/(\s+[\d\.]+[wx]),\s*|\s*,\s+/g, '$1 @,@ ').split(' @,@ ');
+    }
+
     function parseSrcset($el) {
         var srcset = $el.attr(options.srcsetAttr);
 
@@ -56,11 +66,10 @@
             return false;
         }
 
-        var list = $.map(srcset.replace(/(\s[\d.]+[whx]),/g, '$1 @,@ ').split(' @,@ '), function (item) {
+        var list = $.map(splitSrcset(srcset), function (item) {
             return {
                 url: reUrl.exec(item)[1],
                 w: parseFloat((reWidth.exec(item) || infty)[1]),
-                h: parseFloat((reHeight.exec(item) || infty)[1]),
                 x: parseFloat((reDpr.exec(item) || one)[1])
             };
         });
@@ -69,26 +78,22 @@
             return false;
         }
 
-        var documentElement = document.documentElement,
-            whx,
-            src;
-
         viewport = {
             w: window.innerWidth || documentElement.clientWidth,
-            h: window.innerHeight || documentElement.clientHeight,
             x: window.devicePixelRatio || 1
         };
 
-        // Notice for DOMtastic users: currently $.grep method is not implemented in DOMtastic
+        var wx,
+            src;
 
-        for (whx in viewport) {
-            property = whx;
+        for (wx in viewport) {
+            property = wx;
             limit = mathFilter(list, 'max');
             list = $.grep(list, compareMax);
         }
 
-        for (whx in viewport) {
-            property = whx;
+        for (wx in viewport) {
+            property = wx;
             limit = mathFilter(list, 'min');
             list = $.grep(list, compareMin);
         }
@@ -106,7 +111,16 @@
         var srcset = $el.attr(options.srcsetAttr);
 
         if (srcset) {
-            if (!options.srcsetExtended && srcsetSupport) {
+            if (srcsetSupport) {
+                if (options.srcsetExtended) {
+                    srcset = $.map(splitSrcset(srcset), function (item) {
+                        var i = item.indexOf(' ');
+                        if (i < 0) {
+                            i = item.length;
+                        }
+                        return ($el.attr(options.srcsetBaseAttr) || '') + item.substr(0, i) + ($el.attr(options.srcsetExtAttr) || '') + item.substr(i);
+                    }).join(', ');
+                }
                 $el.attr('srcset', srcset);
             } else {
                 $el.lazyLoadXT.srcAttr = parseSrcset;
@@ -114,4 +128,4 @@
         }
     });
 
-})(window.jQuery || window.Zepto || window.$, window, document);
+}));

@@ -1,7 +1,14 @@
+/*global define*/
 /*jslint browser:true, plusplus:true, vars:true, regexp:false */
 /*jshint browser:true, jquery:true */
 
-(function ($, window, document) {
+(function(root, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['jquery'], factory);
+    } else {
+        factory(root.jQuery || root.$);
+    }
+}(window, function($) {
     'use strict';
 
     var options = $.lazyLoadXT,
@@ -65,4 +72,4 @@
             elOptions.srcAttr = parsePicture;
         });
 
-})(window.jQuery || window.Zepto || window.$, window, document);
+}));

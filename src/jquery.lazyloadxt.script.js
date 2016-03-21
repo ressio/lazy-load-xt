@@ -1,8 +1,15 @@
+/*global define*/
 /*jslint browser:true, plusplus:true, vars:true */
 /*jshint browser:true, jquery:true */
 /*jshint -W060:false */ /* we use document.write */
 
-(function ($, window, document) {
+(function(root, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['jquery'], factory);
+    } else {
+        factory(root.jQuery);
+    }
+}(window, function($) {
     'use strict';
 
     var options = $.lazyLoadXT,
@@ -57,4 +64,4 @@
         $(window).lazyLoadXT();
     });
 
-})(window.jQuery || window.Zepto || window.$, window, document);
+}));

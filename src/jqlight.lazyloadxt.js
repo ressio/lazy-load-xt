@@ -175,7 +175,7 @@
             return this.each(function () {
                 var evt;
                 if (window.CustomEvent) {
-                    evt = new CustomEvent(type, {detail: data});
+                    evt = new CustomEvent(type, {bubbles: true, cancelable: true, detail: data});
                 } else {
                     evt = document.createEvent('CustomEvent');
                     evt.initCustomEvent(type, true, true, data);
@@ -233,7 +233,7 @@
         var node = event.target;
         while (node && node !== this) {
             if (matches.call(node, selector)) {
-                return handler.call(node, event);
+                return handler.apply(node, [].concat(event, event.detail));
             }
             node = node.parentElement;
         }

@@ -6,8 +6,8 @@
     "homepage": "http://ressio.github.io/lazy-load-xt",
     "author": {
         "name": "RESS.io",
-        "email": "hello@ress.io",
-        "url": "http://ress.io/"
+        "email": "denis@mobilejoomla.com",
+        "url": "http://ressio.github.io/"
     },
     "keywords": ["effect", "image", "images", "jquery", "jquerymobile", "lazy", "lazyload", "load", "media", "mobile", "performance", "responsive", "speed", "video", "vimeo", "youtube"],
     "bugs": "https://github.com/ressio/lazy-load-xt/issues",

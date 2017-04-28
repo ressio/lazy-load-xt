@@ -90,7 +90,7 @@ Addons:
   <tbody>
     <tr>
       <td><a href="#script-based-tagging">script-based tagging of lazy loaded elements</a></td>
-      <td><a href="https://raw.github.com/ressio/lazy-load-xt/master/dist/jquery.lazyloadxt.script.js">[jquery.lazyloadxt.script.js</a></td>
+      <td><a href="https://raw.github.com/ressio/lazy-load-xt/master/dist/jquery.lazyloadxt.script.js">jquery.lazyloadxt.script.js</a></td>
       <td><a href="https://raw.github.com/ressio/lazy-load-xt/master/dist/jquery.lazyloadxt.script.min.js">jquery.lazyloadxt.script.min.js</a></td>
     </tr>
     <tr>

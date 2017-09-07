@@ -829,7 +829,7 @@ function addLazyLoading($html) {
 
 Lazy Load XT may be loaded from [jsDelivr CDN](http://www.jsdelivr.com/#!jquery.lazyloadxt)
 ```html
-<script src="//cdn.jsdelivr.net/jquery.lazyloadxt/1.0.0/jquery.lazyloadxt.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/lazyloadxt@1.1.0/dist/jquery.lazyloadxt.min.js"></script>
 ```
 or [CDNJS CDN](http://cdnjs.com/libraries/jquery.lazyloadxt/)
 ```html

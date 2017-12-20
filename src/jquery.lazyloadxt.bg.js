@@ -13,10 +13,12 @@
         var $this = $(e.target),
             url = $this.attr(bgAttr);
         if (!!url) {
-            $this
-                .css('background-image', "url('" + url + "')")
-                .removeAttr(bgAttr)
-                .triggerHandler('load');
+            $('<img/>').attr('src', url).load(function() {
+                $this
+                    .css('background-image', "url('" + url + "')")
+                    .removeAttr(bgAttr)
+                    .triggerHandler('load');
+            });
         }
     });
 

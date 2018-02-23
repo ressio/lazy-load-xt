@@ -10,7 +10,7 @@
     options.selector += ',picture';
 
     function parsePicture($el) {
-        var srcAttr = $el.lazyLoadXT.srcAttr,
+        var srcAttr = $el.lazyLoadXT.srcAttrS,
             isFuncSrcAttr = $.isFunction(srcAttr),
             $img = $el.children('img'),
             src = isFuncSrcAttr ? srcAttr($img) : $img.attr(srcAttr);

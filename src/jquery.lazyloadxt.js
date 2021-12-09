@@ -215,7 +215,10 @@
                         src = $isFunction(srcAttr) ? srcAttr($el) : el.getAttribute(srcAttr);
 
                     if (src) {
-                        el.src = src;
+                        if ( el.tagName === 'IFRAME' )
+                            el.contentWindow.location.replace( src );
+                        else
+                            el.src = src;
                     }
 
                     removeNode = true;

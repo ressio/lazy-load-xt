@@ -1,6 +1,6 @@
-/*! Lazy Load XT v1.1.0 2016-01-12
+/*! Lazy Load XT v1.1.0 2018-02-23
  * http://ressio.github.io/lazy-load-xt
- * (C) 2016 RESS.io
+ * (C) 2018 RESS.io
  * Licensed under MIT */
 
 (function ($, window, document) {
@@ -10,7 +10,7 @@
     options.selector += ',picture';
 
     function parsePicture($el) {
-        var srcAttr = $el.lazyLoadXT.srcAttr,
+        var srcAttr = $el.lazyLoadXT.srcAttrS,
             isFuncSrcAttr = $.isFunction(srcAttr),
             $img = $el.children('img'),
             src = isFuncSrcAttr ? srcAttr($img) : $img.attr(srcAttr);

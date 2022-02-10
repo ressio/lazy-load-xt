@@ -8,7 +8,7 @@
     // options
     var lazyLoadXT = 'lazyLoadXT',
         dataLazied = 'lazied',
-        load_error = 'load error',
+        load_error = 'load loadeddata error',
         classLazyHidden = 'lazy-hidden',
         docElement = document.documentElement || document.body,
     //  force load all images in Opera Mini and some mobile browsers without scroll event or getBoundingClientRect()
@@ -159,6 +159,9 @@
      * @param {Event} e
      */
     function triggerLoadOrError(e) {
+        if (e.type === 'loadeddata') {
+            e.type = 'load';
+        }
         triggerEvent(e.type, $(this).off(load_error, triggerLoadOrError));
     }
 
